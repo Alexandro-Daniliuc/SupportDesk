@@ -12,33 +12,35 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
+package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
+import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.CorrelationController;
+import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.TicketController;
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
 import it.uniroma2.dicii.ispw.supportdesk.exception.CorrelationEngineException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
+import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
 import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
-import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.CorrelationEngine;
 
 import java.util.List;
 
-public class CorrelationController {
+@SuppressWarnings("java:S6548")
+public final class CorrelationFacade {
 
+    private CorrelationFacade() {}
 
-    public List<TicketRecord> findCorrelations(Ticket target)
-            throws CorrelationEngineException, DAOException {
-        List<Ticket> all = PersistenceLayer.getInstance().findAllTickets();
-        List<Ticket> candidates = all.stream()
-                .filter(t -> t.getId() != target.getId())
-                .toList();
-        try {
-            List<Ticket> correlated = CorrelationEngine.getInstanceSingleton()
-                    .findCorrelatedTickets(target, candidates);
-            return correlated.stream().map(TicketController::toRecord).toList();
-        } catch (Exception e) {
-            throw new CorrelationEngineException(
-                    "Errore nell'analisi di correlazione per ticket " + target.getId(), e);
-        }
+    private static final class Holder {
+        private static final CorrelationFacade INSTANCE = new CorrelationFacade();
+    }
+
+    public static CorrelationFacade getInstanceSingleton() {
+        return Holder.INSTANCE;
+    }
+
+    public List<TicketRecord> findCorrelations(int ticketId)
+            throws DAOException, TicketNotFoundException, CorrelationEngineException {
+        Ticket target = PersistenceLayer.getInstance().getTicketById(ticketId);
+        return new CorrelationController().findCorrelations(target);
     }
 }

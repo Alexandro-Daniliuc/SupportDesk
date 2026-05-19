@@ -31,7 +31,7 @@ public final class SlaFacade {
         private static final SlaFacade INSTANCE = new SlaFacade();
     }
 
-    public static SlaFacade getInstance() {
+    public static SlaFacade getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 

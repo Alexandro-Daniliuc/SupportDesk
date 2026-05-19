@@ -50,7 +50,7 @@ public class OpenTicketControllerGrafico {
 
     @FXML
     public void initialize() {
-        ticketFacade = SubmitTicketFacade.getInstance();   // step 3 SD: Initialize TicketFacade
+        ticketFacade = SubmitTicketFacade.getInstanceSingleton();   // step 3 SD: Initialize TicketFacade
         categoryBox.setItems(FXCollections.observableArrayList(Category.values()));
         priorityBox.setItems(FXCollections.observableArrayList(Priority.values()));
         showForm();

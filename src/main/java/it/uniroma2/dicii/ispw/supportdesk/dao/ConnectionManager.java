@@ -49,7 +49,7 @@ public final class ConnectionManager {
         private static final ConnectionManager INSTANCE = new ConnectionManager();
     }
 
-    public static ConnectionManager getInstance() {
+    public static ConnectionManager getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 

@@ -34,7 +34,7 @@ public class SupportDeskApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         SceneNavigator.init(stage);
-        if (ApplicationModeManager.getInstance().getMode() != ApplicationMode.DEMO) {
+        if (ApplicationModeManager.getInstanceSingleton().getMode() != ApplicationMode.DEMO) {
             rescheduleSlaTimers();
         }
         SceneNavigator.navigateTo("login.fxml", "SupportDesk — Login");

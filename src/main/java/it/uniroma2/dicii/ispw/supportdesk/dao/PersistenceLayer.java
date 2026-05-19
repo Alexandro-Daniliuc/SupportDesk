@@ -27,12 +27,14 @@ import java.util.List;
 
 public abstract class PersistenceLayer {
 
-    protected TicketDAO   ticketDAO;
-    protected UserDAO     userDAO;
-    protected CommentDAO  commentDAO;
+    protected TicketDAO         ticketDAO;
+    protected UserDAO           userDAO;
+    protected CommentDAO        commentDAO;
+    protected KnowledgeBaseDAO  knowledgeBaseDAO;
+    protected NotificationDAO   notificationDAO;
 
     public static PersistenceLayer getInstance() {
-        ApplicationMode mode = ApplicationModeManager.getInstance().getMode();
+        ApplicationMode mode = ApplicationModeManager.getInstanceSingleton().getMode();
         if (mode == ApplicationMode.DEMO) {
             return new PersistenceLayerDemo();
         }
@@ -91,5 +93,33 @@ public abstract class PersistenceLayer {
 
     public List<Comment> findAllComments() throws DAOException {
         return commentDAO.findAll();
+    }
+
+    // ── KnowledgeBase ─────────────────────────────────────────────────────────
+
+    public void saveKnowledgeEntry(it.uniroma2.dicii.ispw.supportdesk.model.KnowledgeEntry entry) throws DAOException {
+        knowledgeBaseDAO.insert(entry);
+    }
+
+    public java.util.List<it.uniroma2.dicii.ispw.supportdesk.model.KnowledgeEntry> findAllKnowledgeEntries() throws DAOException {
+        return knowledgeBaseDAO.findAll();
+    }
+
+    public java.util.List<it.uniroma2.dicii.ispw.supportdesk.model.KnowledgeEntry> findKnowledgeEntriesByKeyword(String keyword) throws DAOException {
+        return knowledgeBaseDAO.findByKeyword(keyword);
+    }
+
+    // ── Notification ──────────────────────────────────────────────────────────
+
+    public void saveNotification(it.uniroma2.dicii.ispw.supportdesk.model.Notification notification) throws DAOException {
+        notificationDAO.insert(notification);
+    }
+
+    public java.util.List<it.uniroma2.dicii.ispw.supportdesk.model.Notification> findNotificationsByRole(it.uniroma2.dicii.ispw.supportdesk.enumerator.Role role) throws DAOException {
+        return notificationDAO.findByRole(role);
+    }
+
+    public void markNotificationAsRead(int notificationId) throws DAOException {
+        notificationDAO.markAsRead(notificationId);
     }
 }

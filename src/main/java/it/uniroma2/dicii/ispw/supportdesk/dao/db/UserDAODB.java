@@ -36,7 +36,7 @@ public class UserDAODB implements UserDAO {
 
     @Override
     public User findByEmail(String email) throws DAOException {
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_FIND_BY_EMAIL)) {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
@@ -51,7 +51,7 @@ public class UserDAODB implements UserDAO {
     @Override
     public List<User> findByRole(Role role) throws DAOException {
         List<User> list = new ArrayList<>();
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_FIND_BY_ROLE)) {
             ps.setString(1, role.name());
             try (ResultSet rs = ps.executeQuery()) {
@@ -65,7 +65,7 @@ public class UserDAODB implements UserDAO {
 
     @Override
     public void insert(User user) throws DAOException {
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_INSERT)) {
             ps.setString(1, user.obtainName());
             ps.setString(2, user.obtainSurname());

@@ -39,7 +39,7 @@ public final class ConfigLoader {
         private static final ConfigLoader INSTANCE = new ConfigLoader();
     }
 
-    public static ConfigLoader getInstance() {
+    public static ConfigLoader getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 

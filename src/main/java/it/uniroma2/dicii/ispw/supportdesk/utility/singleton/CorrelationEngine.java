@@ -29,7 +29,7 @@ public final class CorrelationEngine {
         private static final CorrelationEngine INSTANCE = new CorrelationEngine();
     }
 
-    public static CorrelationEngine getInstance() {
+    public static CorrelationEngine getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 

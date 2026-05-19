@@ -37,4 +37,14 @@ public class DAOFactoryFile extends DAOAbstractFactory {
     public CommentDAO createCommentDAO() {
         return new CommentDAOFile();
     }
+
+    @Override
+    public it.uniroma2.dicii.ispw.supportdesk.dao.KnowledgeBaseDAO createKnowledgeBaseDAO() {
+        throw new UnsupportedOperationException("KnowledgeBaseDAO non implementato per questa modalità");
+    }
+
+    @Override
+    public it.uniroma2.dicii.ispw.supportdesk.dao.NotificationDAO createNotificationDAO() {
+        throw new UnsupportedOperationException("NotificationDAO non implementato per questa modalità");
+    }
 }

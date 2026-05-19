@@ -27,7 +27,7 @@ public final class UserSession {
         private static final UserSession INSTANCE = new UserSession();
     }
 
-    public static UserSession getInstance() {
+    public static UserSession getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 

@@ -15,6 +15,8 @@
 package it.uniroma2.dicii.ispw.supportdesk.dao.factory;
 
 import it.uniroma2.dicii.ispw.supportdesk.dao.CommentDAO;
+import it.uniroma2.dicii.ispw.supportdesk.dao.KnowledgeBaseDAO;
+import it.uniroma2.dicii.ispw.supportdesk.dao.NotificationDAO;
 import it.uniroma2.dicii.ispw.supportdesk.dao.TicketDAO;
 import it.uniroma2.dicii.ispw.supportdesk.dao.UserDAO;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.ApplicationMode;
@@ -34,4 +36,8 @@ public abstract class DAOAbstractFactory {
     public abstract UserDAO createUserDAO();
 
     public abstract CommentDAO createCommentDAO();
+
+    public abstract KnowledgeBaseDAO createKnowledgeBaseDAO();
+
+    public abstract NotificationDAO createNotificationDAO();
 }

@@ -12,8 +12,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-package it.uniroma2.dicii.ispw.supportdesk.utility.observer;
+package it.uniroma2.dicii.ispw.supportdesk.dao;
 
-public interface TicketObserver {
-    void update(EventType event);
+import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
+import it.uniroma2.dicii.ispw.supportdesk.model.KnowledgeEntry;
+
+import java.util.List;
+
+public interface KnowledgeBaseDAO {
+    void insert(KnowledgeEntry entry) throws DAOException;
+    List<KnowledgeEntry> findAll() throws DAOException;
+    List<KnowledgeEntry> findByKeyword(String keyword) throws DAOException;
 }

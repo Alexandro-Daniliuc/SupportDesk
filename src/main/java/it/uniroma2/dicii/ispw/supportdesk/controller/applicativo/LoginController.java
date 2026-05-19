@@ -51,14 +51,14 @@ public class LoginController {
         }
         String inputHash = sha256(bean.getPassword());
         verifyPassword(inputHash, user);
-        UserSession.getInstance().login(user);
+        UserSession.getInstanceSingleton().login(user);
         log.info("Autenticazione riuscita per {}", bean.getEmail());
         return toRecord(user);
     }
 
     private void verifyPassword(String inputHash, User user) throws AuthenticationException {
         boolean valid;
-        if (ApplicationModeManager.getInstance().getMode() == ApplicationMode.DEMO) {
+        if (ApplicationModeManager.getInstanceSingleton().getMode() == ApplicationMode.DEMO) {
             valid = DEMO_CREDENTIAL_HASH.equals(inputHash) || DEMO_CREDENTIAL_HASH.equals(user.obtainPasswordHash());
         } else {
             valid = user.obtainPasswordHash().equals(inputHash);

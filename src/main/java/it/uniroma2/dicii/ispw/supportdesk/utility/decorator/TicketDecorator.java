@@ -21,7 +21,7 @@ import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
 
 import java.time.LocalDateTime;
 
-public abstract class TicketDecorator {
+public abstract class TicketDecorator implements TicketComponent {
 
     protected final Ticket ticket;
 

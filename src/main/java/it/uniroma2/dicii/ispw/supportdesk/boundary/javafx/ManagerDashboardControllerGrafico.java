@@ -14,7 +14,7 @@
  */
 package it.uniroma2.dicii.ispw.supportdesk.boundary.javafx;
 
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.CorrelationController;
+import it.uniroma2.dicii.ispw.supportdesk.utility.facade.CorrelationFacade;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.SupportDeskException;
 import it.uniroma2.dicii.ispw.supportdesk.fx.SceneNavigator;
@@ -36,7 +36,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
     private static final String COL_STATUS = "status";
     private static final String ERR_TITLE = "Errore";
 
-    private final CorrelationController correlationController = new CorrelationController();
+
 
     @FXML private Label welcomeLabel;
 
@@ -91,7 +91,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
     @FXML
     public void onCheckSla() {
         try {
-            List<TicketRecord> expiring = SlaFacade.getInstance().getTicketsWithSlaExpiringSoon();
+            List<TicketRecord> expiring = SlaFacade.getInstanceSingleton().getTicketsWithSlaExpiringSoon();
             slaTable.setItems(FXCollections.observableArrayList(expiring));
         } catch (DAOException e) {
             log.error("Errore controllo SLA", e);
@@ -111,16 +111,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
             return;
         }
         try {
-            TicketRecord target = ViewTicketsFacade.getInstance().getAllTickets()
-                    .stream().filter(t -> t.id() == ticketId).findFirst().orElse(null);
-            if (target == null) {
-                correlationErrorLabel.setText("Ticket ID " + ticketId + " non trovato.");
-                return;
-            }
-            List<TicketRecord> correlated = correlationController.findCorrelations(
-                    new it.uniroma2.dicii.ispw.supportdesk.model.Ticket.Builder(
-                            target.id(), target.title(), target.description(),
-                            target.category(), target.priority()).build());
+            List<TicketRecord> correlated = CorrelationFacade.getInstanceSingleton().findCorrelations(ticketId);
             correlatedTable.setItems(FXCollections.observableArrayList(correlated));
         } catch (DAOException e) {
             log.error("Errore ricerca ticket correlati", e);
@@ -132,7 +123,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
 
     @FXML
     public void onLogout() throws IOException {
-        UserSession.getInstance().logout();
+        UserSession.getInstanceSingleton().logout();
         SessionContext.clear();
         SceneNavigator.navigateTo("login.fxml", "Login");
     }
@@ -140,7 +131,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
     private void loadAllTickets() {
         try {
             allTicketsTable.setItems(FXCollections.observableArrayList(
-                    ViewTicketsFacade.getInstance().getAllTickets()));
+                    ViewTicketsFacade.getInstanceSingleton().getAllTickets()));
         } catch (DAOException e) {
             log.error("Errore caricamento tutti i ticket", e);
             showError(ERR_TITLE, "Impossibile caricare i ticket.");

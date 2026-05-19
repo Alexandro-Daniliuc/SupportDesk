@@ -32,7 +32,7 @@ public final class SubmitTicketFacade {
         private static final SubmitTicketFacade INSTANCE = new SubmitTicketFacade();
     }
 
-    public static SubmitTicketFacade getInstance() {
+    public static SubmitTicketFacade getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 
@@ -43,8 +43,8 @@ public final class SubmitTicketFacade {
         TicketController ctrl = new TicketController();
         ctrl.attach(new TechnicianNotificationObserver());
         ctrl.attach(new ManagerNotificationObserver());
-        String authorEmail = UserSession.getInstance().getCurrentUser() != null
-                ? UserSession.getInstance().getCurrentUser().obtainEmail()
+        String authorEmail = UserSession.getInstanceSingleton().getCurrentUser() != null
+                ? UserSession.getInstanceSingleton().getCurrentUser().obtainEmail()
                 : "unknown";
         return ctrl.openTicket(bean, authorEmail);
     }

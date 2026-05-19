@@ -35,7 +35,7 @@ public class CommentDAODB implements CommentDAO {
 
     @Override
     public void insert(Comment comment) throws DAOException {
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_INSERT)) {
             ps.setInt(1, comment.getId());
             ps.setInt(2, comment.getTicketId());
@@ -51,7 +51,7 @@ public class CommentDAODB implements CommentDAO {
     @Override
     public List<Comment> findByTicketId(int ticketId) throws DAOException {
         List<Comment> list = new ArrayList<>();
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_FIND_BY_TICKET)) {
             ps.setInt(1, ticketId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -66,7 +66,7 @@ public class CommentDAODB implements CommentDAO {
     @Override
     public List<Comment> findAll() throws DAOException {
         List<Comment> list = new ArrayList<>();
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_FIND_ALL);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) list.add(mapRow(rs));

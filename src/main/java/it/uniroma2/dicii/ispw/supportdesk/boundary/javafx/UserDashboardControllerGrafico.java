@@ -100,7 +100,7 @@ public class UserDashboardControllerGrafico extends AbstractDashboardControllerG
         }
         actionErrorLabel.setText("");
         try {
-            ViewTicketsFacade.getInstance().addComment(bean);
+            ViewTicketsFacade.getInstanceSingleton().addComment(bean);
             commentField.clear();
             loadComments(selected.id());
         } catch (DAOException e) {
@@ -120,7 +120,7 @@ public class UserDashboardControllerGrafico extends AbstractDashboardControllerG
         }
         actionErrorLabel.setText("");
         try {
-            ViewTicketsFacade.getInstance().changeStatus(selected.id(), TicketStatus.REOPENED);
+            ViewTicketsFacade.getInstanceSingleton().changeStatus(selected.id(), TicketStatus.REOPENED);
             loadMyTickets();
             hideDetail();
             ticketTable.getSelectionModel().clearSelection();
@@ -144,14 +144,14 @@ public class UserDashboardControllerGrafico extends AbstractDashboardControllerG
 
     @FXML
     public void onLogout() throws IOException {
-        UserSession.getInstance().logout();
+        UserSession.getInstanceSingleton().logout();
         SessionContext.clear();
         SceneNavigator.navigateTo("login.fxml", "Login");
     }
 
     private void loadMyTickets() {
         try {
-            List<TicketRecord> tickets = ViewTicketsFacade.getInstance()
+            List<TicketRecord> tickets = ViewTicketsFacade.getInstanceSingleton()
                     .getTicketsByUser(SessionContext.getCurrentUser().email());
             ticketTable.setItems(FXCollections.observableArrayList(tickets));
         } catch (DAOException e) {
@@ -174,7 +174,7 @@ public class UserDashboardControllerGrafico extends AbstractDashboardControllerG
     private void loadComments(int ticketId) {
         if (commentsList == null) return;
         try {
-            List<CommentRecord> comments = ViewTicketsFacade.getInstance().getCommentsForTicket(ticketId);
+            List<CommentRecord> comments = ViewTicketsFacade.getInstanceSingleton().getCommentsForTicket(ticketId);
             List<String> display = comments.stream()
                     .map(c -> "[" + c.authorEmail() + "] " + c.text())
                     .toList();

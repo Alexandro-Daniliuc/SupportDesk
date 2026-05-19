@@ -12,15 +12,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-package it.uniroma2.dicii.ispw.supportdesk.utility.strategy;
+package it.uniroma2.dicii.ispw.supportdesk.utility.decorator;
 
-import it.uniroma2.dicii.ispw.supportdesk.exception.AssignmentException;
-import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
-import it.uniroma2.dicii.ispw.supportdesk.model.User;
+import it.uniroma2.dicii.ispw.supportdesk.enumerator.Category;
+import it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority;
+import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
-public interface AssignmentStrategy {
-    String ERR_NESSUN_TECNICO = "Nessun tecnico disponibile";
-    User assign(Ticket ticket, List<User> technicians) throws AssignmentException;
+public interface TicketComponent {
+    int getId();
+    String getTitle();
+    String getDescription();
+    Category getCategory();
+    Priority getPriority();
+    TicketStatus getStatus();
+    LocalDateTime getDataApertura();
+    LocalDateTime getScadenzaSla();
+    String getDisplaySummary();
 }

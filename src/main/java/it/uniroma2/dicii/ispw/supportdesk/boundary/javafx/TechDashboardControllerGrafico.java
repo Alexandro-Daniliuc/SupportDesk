@@ -14,7 +14,7 @@
  */
 package it.uniroma2.dicii.ispw.supportdesk.boundary.javafx;
 
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.KnowledgeBaseController;
+import it.uniroma2.dicii.ispw.supportdesk.utility.facade.KnowledgeBaseFacade;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.KnowledgeBaseException;
@@ -35,7 +35,7 @@ import java.util.List;
 
 public class TechDashboardControllerGrafico extends AbstractDashboardControllerGrafico {
 
-    private final KnowledgeBaseController kbController = new KnowledgeBaseController();
+
 
     @FXML private Label welcomeLabel;
     @FXML private Label actionErrorLabel;
@@ -111,19 +111,22 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             return;
         }
         try {
-            List<KnowledgeEntryRecord> results = kbController.searchEntries(keyword);
+            List<KnowledgeEntryRecord> results = KnowledgeBaseFacade.getInstanceSingleton().searchEntries(keyword);
             List<String> display = results.stream()
                     .map(r -> "[" + r.authorName() + "] " + r.title() + " — " + r.content())
                     .toList();
             kbResultsList.setItems(FXCollections.observableArrayList(display));
         } catch (KnowledgeBaseException e) {
             showError("Knowledge Base", e.getMessage());
+        } catch (DAOException e) {
+            log.error("Errore ricerca knowledge base", e);
+            showError("Errore", "Errore interno del sistema.");
         }
     }
 
     @FXML
     public void onLogout() throws IOException {
-        UserSession.getInstance().logout();
+        UserSession.getInstanceSingleton().logout();
         SessionContext.clear();
         SceneNavigator.navigateTo("login.fxml", "Login");
     }
@@ -131,7 +134,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     private void loadAssignedTickets() {
         actionErrorLabel.setText("");
         try {
-            List<TicketRecord> tickets = ViewTicketsFacade.getInstance()
+            List<TicketRecord> tickets = ViewTicketsFacade.getInstanceSingleton()
                     .getAllTickets();
             ticketTable.setItems(FXCollections.observableArrayList(tickets));
         } catch (DAOException e) {
@@ -143,7 +146,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     private void changeStatus(int ticketId, TicketStatus newStatus) {
         actionErrorLabel.setText("");
         try {
-            ViewTicketsFacade.getInstance().changeStatus(ticketId, newStatus);
+            ViewTicketsFacade.getInstanceSingleton().changeStatus(ticketId, newStatus);
             loadAssignedTickets();
         } catch (DAOException e) {
             log.error("Errore cambio stato ticket {}", ticketId, e);
@@ -163,7 +166,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     private void loadComments(int ticketId) {
         if (commentsList == null) return;
         try {
-            List<CommentRecord> comments = ViewTicketsFacade.getInstance().getCommentsForTicket(ticketId);
+            List<CommentRecord> comments = ViewTicketsFacade.getInstanceSingleton().getCommentsForTicket(ticketId);
             List<String> display = comments.stream()
                     .map(c -> "[" + c.authorEmail() + "] " + c.text())
                     .toList();

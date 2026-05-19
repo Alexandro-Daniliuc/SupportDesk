@@ -29,7 +29,7 @@ public final class ApplicationModeManager {
     private volatile ApplicationMode mode;
 
     private ApplicationModeManager() {
-        String raw = ConfigLoader.getInstance().get(MODE_KEY, ApplicationMode.DEMO.name());
+        String raw = ConfigLoader.getInstanceSingleton().get(MODE_KEY, ApplicationMode.DEMO.name());
         mode = parseMode(raw);
     }
 
@@ -37,7 +37,7 @@ public final class ApplicationModeManager {
         private static final ApplicationModeManager INSTANCE = new ApplicationModeManager();
     }
 
-    public static ApplicationModeManager getInstance() {
+    public static ApplicationModeManager getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 

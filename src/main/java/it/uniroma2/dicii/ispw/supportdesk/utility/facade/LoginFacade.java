@@ -30,7 +30,7 @@ public final class LoginFacade {
         private static final LoginFacade INSTANCE = new LoginFacade();
     }
 
-    public static LoginFacade getInstance() {
+    public static LoginFacade getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 

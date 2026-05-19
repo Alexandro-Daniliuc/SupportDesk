@@ -42,7 +42,7 @@ public final class ViewTicketsFacade {
         private static final ViewTicketsFacade INSTANCE = new ViewTicketsFacade();
     }
 
-    public static ViewTicketsFacade getInstance() {
+    public static ViewTicketsFacade getInstanceSingleton() {
         return Holder.INSTANCE;
     }
 

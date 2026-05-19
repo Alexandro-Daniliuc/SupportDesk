@@ -25,17 +25,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class KnowledgeBaseController {
 
     private static final Logger log = LoggerFactory.getLogger(KnowledgeBaseController.class);
-
-
-    private final List<KnowledgeEntry> entries = new CopyOnWriteArrayList<>();
-    private final AtomicInteger idGen = new AtomicInteger(1);
+    private static final AtomicInteger idGen = new AtomicInteger(1);
 
     public KnowledgeEntryRecord addEntry(String title, String content, String authorEmail)
             throws KnowledgeBaseException, DAOException {
@@ -47,29 +42,23 @@ public class KnowledgeBaseController {
             throw new KnowledgeBaseException("Autore non trovato: " + authorEmail);
         }
         KnowledgeEntry entry = new KnowledgeEntry(idGen.getAndIncrement(), title, content, author);
-        entries.add(entry);
+        PersistenceLayer.getInstance().saveKnowledgeEntry(entry);
         log.info("Voce knowledge base aggiunta: {}", title);
         return toRecord(entry);
     }
 
-    public List<KnowledgeEntryRecord> searchEntries(String keyword) throws KnowledgeBaseException {
+    public List<KnowledgeEntryRecord> searchEntries(String keyword)
+            throws KnowledgeBaseException, DAOException {
         if (keyword == null || keyword.isBlank()) {
             throw new KnowledgeBaseException("Keyword di ricerca non valida");
         }
-        String kw = keyword.toLowerCase(Locale.ITALIAN);
-        return entries.stream()
-                .filter(e -> matchesKeyword(e, kw))
-                .map(this::toRecord)
-                .toList();
+        return PersistenceLayer.getInstance().findKnowledgeEntriesByKeyword(keyword)
+                .stream().map(this::toRecord).toList();
     }
 
-    public List<KnowledgeEntryRecord> getAllEntries() {
-        return entries.stream().map(this::toRecord).toList();
-    }
-
-    private boolean matchesKeyword(KnowledgeEntry e, String kw) {
-        return e.getTitle().toLowerCase(Locale.ITALIAN).contains(kw)
-                || e.getContent().toLowerCase(Locale.ITALIAN).contains(kw);
+    public List<KnowledgeEntryRecord> getAllEntries() throws DAOException {
+        return PersistenceLayer.getInstance().findAllKnowledgeEntries()
+                .stream().map(this::toRecord).toList();
     }
 
     private KnowledgeEntryRecord toRecord(KnowledgeEntry e) {

@@ -59,9 +59,9 @@ public class TicketController implements TicketSubject {
     }
 
     @Override
-    public void notifyObservers(EventType eventType, Object payload) {
+    public void notifyObservers(EventType eventType) {
         for (TicketObserver o : observers) {
-            o.update(eventType, payload);
+            o.update(eventType);
         }
     }
 
@@ -76,7 +76,7 @@ public class TicketController implements TicketSubject {
                 bean.getCategory(), bean.getPriority())
                 .authorEmail(authorEmail)
                 .build();
-        notifyObservers(EventType.TICKET_OPEN, ticket);
+        notifyObservers(EventType.TICKET_OPEN);
         PersistenceLayer.getInstance().saveTicket(ticket);
         launchBackgroundTasks(ticket);
         log.info("Ticket {} aperto da {}", ticket.getId(), authorEmail);
@@ -102,9 +102,9 @@ public class TicketController implements TicketSubject {
         Ticket ticket = PersistenceLayer.getInstance().getTicketById(id);
         ticket.cambiaStato(newStatus);
         PersistenceLayer.getInstance().updateTicket(ticket);
-        notifyObservers(EventType.TICKET_CAMBIO_STATO, ticket);
+        notifyObservers(EventType.TICKET_CAMBIO_STATO);
         if (newStatus == TicketStatus.RESOLVED) {
-            notifyObservers(EventType.TICKET_RISOLTO, ticket);
+            notifyObservers(EventType.TICKET_RISOLTO);
         }
         log.info("Ticket {} passato a stato {}", id, newStatus);
         return toRecord(ticket);
@@ -116,22 +116,22 @@ public class TicketController implements TicketSubject {
         long msToWarning = Duration.between(now, ticket.getScadenzaSla().minusHours(SLA_WARNING_HOURS)).toMillis();
 
         if (msToExpiry <= 0) {
-            notifyObservers(EventType.SLA_VIOLATO, ticket);
+            notifyObservers(EventType.SLA_VIOLATO);
             return;
         }
 
         if (msToWarning > 0) {
-            SLA_SCHEDULER.schedule(() -> notifyObservers(EventType.SLA_IN_SCADENZA, ticket),
+            SLA_SCHEDULER.schedule(() -> notifyObservers(EventType.SLA_IN_SCADENZA),
                     msToWarning, TimeUnit.MILLISECONDS);
         } else {
-            notifyObservers(EventType.SLA_IN_SCADENZA, ticket);
+            notifyObservers(EventType.SLA_IN_SCADENZA);
         }
 
         SLA_SCHEDULER.schedule(() -> {
                 try {
                     Ticket current = PersistenceLayer.getInstance().getTicketById(ticket.getId());
                     if (!isTerminated(current)) {
-                        notifyObservers(EventType.SLA_VIOLATO, current);
+                        notifyObservers(EventType.SLA_VIOLATO);
                     }
                 } catch (Exception e) {
                     log.warn("Controllo SLA fallito per ticket {}", ticket.getId());
@@ -166,10 +166,10 @@ public class TicketController implements TicketSubject {
             AssignmentController ac = new AssignmentController();
             try {
                 ac.assign(ticket);
-                notifyObservers(EventType.TICKET_CAMBIO_STATO, ticket);
+                notifyObservers(EventType.TICKET_CAMBIO_STATO);
             } catch (AssignmentException e) {
                 log.info("Nessun tecnico disponibile per ticket {} — richiesta assegnazione manuale", id);
-                notifyObservers(EventType.ASSEGNAZIONE_MANUALE, ticket);
+                notifyObservers(EventType.ASSEGNAZIONE_MANUALE);
             } catch (Exception e) {
                 log.info("Assegnazione non disponibile per ticket {}", id);
             }

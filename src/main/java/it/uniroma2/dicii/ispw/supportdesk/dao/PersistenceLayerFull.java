@@ -21,7 +21,7 @@ public class PersistenceLayerFull extends PersistenceLayer {
 
     PersistenceLayerFull() {
         DAOAbstractFactory factory = DAOAbstractFactory.getFactory(
-            ApplicationModeManager.getInstance().getMode()
+            ApplicationModeManager.getInstanceSingleton().getMode()
         );
         this.ticketDAO  = factory.createTicketDAO();
         this.userDAO    = factory.createUserDAO();

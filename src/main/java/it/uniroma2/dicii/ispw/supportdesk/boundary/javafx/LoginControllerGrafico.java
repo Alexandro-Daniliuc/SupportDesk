@@ -49,7 +49,7 @@ public class LoginControllerGrafico {
         bean.setPassword(passwordField.getText());
 
         try {
-            LoginRecord loginRecord = LoginFacade.getInstance().login(bean);
+            LoginRecord loginRecord = LoginFacade.getInstanceSingleton().login(bean);
             navigateToDashboard(loginRecord);
         } catch (DAOException e) {
             log.error("Errore DAO durante il login", e);

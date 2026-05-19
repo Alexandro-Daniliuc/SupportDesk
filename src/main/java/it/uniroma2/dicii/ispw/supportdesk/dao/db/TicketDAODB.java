@@ -45,7 +45,7 @@ public class TicketDAODB implements TicketDAO {
 
     @Override
     public void insert(Ticket ticket) throws DAOException {
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_INSERT)) {
             ps.setString(1, ticket.getTitle());
             ps.setString(2, ticket.getDescription());
@@ -63,7 +63,7 @@ public class TicketDAODB implements TicketDAO {
 
     @Override
     public Ticket findById(int id) throws DAOException, TicketNotFoundException {
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_FIND_BY_ID)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -78,7 +78,7 @@ public class TicketDAODB implements TicketDAO {
     @Override
     public List<Ticket> findAll() throws DAOException {
         List<Ticket> list = new ArrayList<>();
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_FIND_ALL);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) list.add(mapRow(rs));
@@ -91,7 +91,7 @@ public class TicketDAODB implements TicketDAO {
     @Override
     public List<Ticket> findByUserEmail(String email) throws DAOException {
         List<Ticket> list = new ArrayList<>();
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_FIND_BY_EMAIL)) {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
@@ -105,7 +105,7 @@ public class TicketDAODB implements TicketDAO {
 
     @Override
     public void update(Ticket ticket) throws DAOException, TicketNotFoundException {
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_UPDATE)) {
             ps.setString(1, ticket.getStatus().name());
             String techEmail = ticket.getAssignedTechnician() != null
@@ -121,7 +121,7 @@ public class TicketDAODB implements TicketDAO {
 
     @Override
     public void delete(int id) throws DAOException {
-        try (Connection conn = ConnectionManager.getInstance().getConnection();
+        try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_DELETE)) {
             ps.setInt(1, id);
             ps.executeUpdate();
