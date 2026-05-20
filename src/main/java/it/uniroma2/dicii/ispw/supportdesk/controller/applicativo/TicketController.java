@@ -17,7 +17,6 @@ package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 import it.uniroma2.dicii.ispw.supportdesk.bean.TicketBean;
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
-import it.uniroma2.dicii.ispw.supportdesk.exception.AssignmentException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
@@ -155,27 +154,7 @@ public class TicketController implements TicketSubject {
             }
         });
 
-        Thread coordinator = new Thread(() -> {
-            correlation.start();
-            try {
-                correlation.join();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                return;
-            }
-            AssignmentController ac = new AssignmentController();
-            try {
-                ac.assign(ticket);
-                notifyObservers(EventType.TICKET_CAMBIO_STATO);
-            } catch (AssignmentException e) {
-                log.info("Nessun tecnico disponibile per ticket {} — richiesta assegnazione manuale", id);
-                notifyObservers(EventType.ASSEGNAZIONE_MANUALE);
-            } catch (Exception e) {
-                log.info("Assegnazione non disponibile per ticket {}", id);
-            }
-        });
-
-        coordinator.start();
+        correlation.start();
     }
 
     static TicketRecord toRecord(Ticket t) {
