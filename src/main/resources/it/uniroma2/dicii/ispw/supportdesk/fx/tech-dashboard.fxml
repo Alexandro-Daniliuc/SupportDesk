@@ -137,6 +137,29 @@
 
                 <ListView fx:id="kbResultsList" prefHeight="120"
                           style="-fx-border-color: #E0E0E0; -fx-border-radius: 4;"/>
+
+                <Separator/>
+
+                <Label text="Aggiungi entry alla Knowledge Base"
+                       style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #37474F;"/>
+
+                <TextField fx:id="kbTitleField" promptText="Titolo entry..."
+                           style="-fx-padding: 8; -fx-background-radius: 4;
+                                  -fx-border-color: #E0E0E0; -fx-border-radius: 4;"/>
+
+                <TextArea fx:id="kbContentField" promptText="Contenuto / soluzione..."
+                          prefHeight="80" wrapText="true"
+                          style="-fx-padding: 8; -fx-background-radius: 4;
+                                 -fx-border-color: #E0E0E0; -fx-border-radius: 4;"/>
+
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Label fx:id="kbAddErrorLabel" text=""
+                           style="-fx-text-fill: #C62828; -fx-font-size: 11px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Aggiungi entry" onAction="#onAddKbEntry"
+                            style="-fx-background-color: #1565C0; -fx-text-fill: white;
+                                   -fx-font-weight: bold; -fx-padding: 8 16; -fx-background-radius: 4; -fx-cursor: hand;"/>
+                </HBox>
             </VBox>
 
         </VBox>

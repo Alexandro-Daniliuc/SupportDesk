@@ -1,24 +1,7 @@
-/*
- * SupportDesk — ISPW Project
- * Copyright (C) 2026  Alexandro Daniliuc
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
 package it.uniroma2.dicii.ispw.supportdesk.fx;
 
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.TicketController;
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.ApplicationMode;
-import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
-import it.uniroma2.dicii.ispw.supportdesk.utility.observer.ManagerNotificationObserver;
+import it.uniroma2.dicii.ispw.supportdesk.utility.facade.SlaFacade;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.ApplicationModeManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -42,11 +25,7 @@ public class SupportDeskApp extends Application {
 
     private void rescheduleSlaTimers() {
         try {
-            TicketController tc = new TicketController();
-            tc.attach(new ManagerNotificationObserver());
-            PersistenceLayer.getInstance().findAllTickets().stream()
-                    .filter(t -> t.getStatus() != TicketStatus.RESOLVED && t.getStatus() != TicketStatus.CLOSED)
-                    .forEach(tc::schedulaSlaTimer);
+            SlaFacade.getInstanceSingleton().rescheduleAllSlaTimers();
         } catch (Exception e) {
             log.warn("Impossibile ricaricare timer SLA al boot: {}", e.getMessage());
         }

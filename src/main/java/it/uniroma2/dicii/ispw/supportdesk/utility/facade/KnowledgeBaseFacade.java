@@ -1,17 +1,3 @@
-/*
- * SupportDesk — ISPW Project
- * Copyright (C) 2026  Alexandro Daniliuc
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
 package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.KnowledgeBaseController;
@@ -24,7 +10,11 @@ import java.util.List;
 @SuppressWarnings("java:S6548")
 public final class KnowledgeBaseFacade {
 
-    private KnowledgeBaseFacade() {}
+    private final KnowledgeBaseController knowledgeBaseController;
+
+    private KnowledgeBaseFacade() {
+        knowledgeBaseController = new KnowledgeBaseController();
+    }
 
     private static final class Holder {
         private static final KnowledgeBaseFacade INSTANCE = new KnowledgeBaseFacade();
@@ -36,15 +26,15 @@ public final class KnowledgeBaseFacade {
 
     public List<KnowledgeEntryRecord> searchEntries(String keyword)
             throws KnowledgeBaseException, DAOException {
-        return new KnowledgeBaseController().searchEntries(keyword);
+        return knowledgeBaseController.searchEntries(keyword);
     }
 
     public List<KnowledgeEntryRecord> getAllEntries() throws DAOException {
-        return new KnowledgeBaseController().getAllEntries();
+        return knowledgeBaseController.getAllEntries();
     }
 
     public KnowledgeEntryRecord addEntry(String title, String content, String authorEmail)
             throws KnowledgeBaseException, DAOException {
-        return new KnowledgeBaseController().addEntry(title, content, authorEmail);
+        return knowledgeBaseController.addEntry(title, content, authorEmail);
     }
 }

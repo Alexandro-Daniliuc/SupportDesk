@@ -1,17 +1,3 @@
-/*
- * SupportDesk — ISPW Project
- * Copyright (C) 2026  Alexandro Daniliuc
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
@@ -34,18 +20,18 @@ public class NotificationController {
     public NotificationRecord createNotification(String message, Role targetRole, int ticketId)
             throws DAOException {
         Notification n = new Notification(idGen.getAndIncrement(), message, targetRole, ticketId);
-        PersistenceLayer.getInstance().saveNotification(n);
+        PersistenceLayer.getInstanceSingleton().saveNotification(n);
         log.info("Notifica creata per ticket {}", ticketId);
         return toRecord(n);
     }
 
     public List<NotificationRecord> getNotificationsForRole(Role targetRole) throws DAOException {
-        return PersistenceLayer.getInstance().findNotificationsByRole(targetRole)
+        return PersistenceLayer.getInstanceSingleton().findNotificationsByRole(targetRole)
                 .stream().map(this::toRecord).toList();
     }
 
     public void markAsRead(int notificationId) throws DAOException {
-        PersistenceLayer.getInstance().markNotificationAsRead(notificationId);
+        PersistenceLayer.getInstanceSingleton().markNotificationAsRead(notificationId);
     }
 
     private NotificationRecord toRecord(Notification n) {

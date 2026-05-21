@@ -1,17 +1,4 @@
-/*
- * SupportDesk — ISPW Project
- * Copyright (C) 2026  Alexandro Daniliuc
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
+// Lasciato per scopi dimostrativi — pattern Chain of Responsibility non implementato a livello applicativo.
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
@@ -42,14 +29,14 @@ public class AssignmentController {
 
     public void assign(Ticket ticket)
             throws DAOException, AssignmentException, TicketNotFoundException, InvalidTransitionException {
-        List<User> technicians = PersistenceLayer.getInstance().findUsersByRole(Role.TECHNICIAN);
-        List<Ticket> allTickets = PersistenceLayer.getInstance().findAllTickets();
+        List<User> technicians = PersistenceLayer.getInstanceSingleton().findUsersByRole(Role.TECHNICIAN);
+        List<Ticket> allTickets = PersistenceLayer.getInstanceSingleton().findAllTickets();
         Map<String, Integer> workloadMap = computeWorkloadMap(allTickets);
         AssignmentHandler chain = buildChain(workloadMap);
         User technician = chain.handle(ticket, technicians);
         ticket.setAssignedTechnician(technician);
         ticket.cambiaStato(TicketStatus.ASSIGNED);
-        PersistenceLayer.getInstance().updateTicket(ticket);
+        PersistenceLayer.getInstanceSingleton().updateTicket(ticket);
         if (log.isInfoEnabled()) {
             log.info("Ticket {} assegnato a {}", ticket.getId(), technician.obtainEmail());
         }

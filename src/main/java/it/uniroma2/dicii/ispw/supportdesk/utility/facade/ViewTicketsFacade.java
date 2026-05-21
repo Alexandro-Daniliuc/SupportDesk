@@ -1,17 +1,3 @@
-/*
- * SupportDesk — ISPW Project
- * Copyright (C) 2026  Alexandro Daniliuc
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
 package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.bean.CommentBean;
@@ -21,9 +7,11 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
+import it.uniroma2.dicii.ispw.supportdesk.exception.SupportDeskException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.record.CommentRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
+import it.uniroma2.dicii.ispw.supportdesk.record.UserRecord;
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.UserNotificationObserver;
 
 import java.util.List;
@@ -31,10 +19,12 @@ import java.util.List;
 @SuppressWarnings("java:S6548")
 public final class ViewTicketsFacade {
 
-    private final TicketController ticketController = new TicketController();
-    private final CommentController commentController = new CommentController();
+    private final TicketController ticketController;
+    private final CommentController commentController;
 
     private ViewTicketsFacade() {
+        ticketController = new TicketController();
+        commentController = new CommentController();
         ticketController.attach(new UserNotificationObserver());
     }
 
@@ -62,6 +52,15 @@ public final class ViewTicketsFacade {
     public void addComment(CommentBean bean)
             throws ValidationException, DAOException {
         commentController.addComment(bean.getTicketId(), bean.getAuthorEmail(), bean.getText());
+    }
+
+    public List<UserRecord> getAvailableTechnicians() throws DAOException {
+        return ticketController.getAvailableTechnicians();
+    }
+
+    public TicketRecord assignTechnician(int ticketId, String techEmail)
+            throws DAOException, TicketNotFoundException, InvalidTransitionException {
+        return ticketController.assignTechnician(ticketId, techEmail);
     }
 
     public List<CommentRecord> getCommentsForTicket(int ticketId) throws DAOException {

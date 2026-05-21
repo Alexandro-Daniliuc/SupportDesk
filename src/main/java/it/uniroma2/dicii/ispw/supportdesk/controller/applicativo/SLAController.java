@@ -1,17 +1,3 @@
-/*
- * SupportDesk — ISPW Project
- * Copyright (C) 2026  Alexandro Daniliuc
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
@@ -34,7 +20,7 @@ public class SLAController {
     private static final long SLA_WARNING_HOURS = 2;
 
     public boolean isSlaViolated(int ticketId) throws DAOException, TicketNotFoundException {
-        Ticket ticket = PersistenceLayer.getInstance().getTicketById(ticketId);
+        Ticket ticket = PersistenceLayer.getInstanceSingleton().getTicketById(ticketId);
         boolean violated = LocalDateTime.now().isAfter(ticket.getScadenzaSla());
         if (violated) {
             log.warn("SLA violato per ticket {}", ticketId);
@@ -44,7 +30,7 @@ public class SLAController {
 
     public List<TicketRecord> getTicketsWithSlaExpiringSoon() throws DAOException {
         LocalDateTime threshold = LocalDateTime.now().plusHours(SLA_WARNING_HOURS);
-        return PersistenceLayer.getInstance().findAllTickets().stream()
+        return PersistenceLayer.getInstanceSingleton().findAllTickets().stream()
                 .filter(t -> !isTerminated(t) && !t.getScadenzaSla().isAfter(threshold))
                 .map(TicketController::toRecord)
                 .toList();

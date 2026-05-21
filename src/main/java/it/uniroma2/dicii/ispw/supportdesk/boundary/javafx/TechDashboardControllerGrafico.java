@@ -1,17 +1,3 @@
-/*
- * SupportDesk — ISPW Project
- * Copyright (C) 2026  Alexandro Daniliuc
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
 package it.uniroma2.dicii.ispw.supportdesk.boundary.javafx;
 
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.KnowledgeBaseFacade;
@@ -51,6 +37,9 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     @FXML private ListView<String>  commentsList;
     @FXML private TextField         kbSearchField;
     @FXML private ListView<String>  kbResultsList;
+    @FXML private TextField         kbTitleField;
+    @FXML private TextArea          kbContentField;
+    @FXML private Label             kbAddErrorLabel;
 
     @FXML
     public void initialize() {
@@ -90,7 +79,19 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             actionErrorLabel.setText("Seleziona un ticket dalla lista.");
             return;
         }
-        changeStatus(selected.id(), TicketStatus.IN_PROGRESS);
+        actionErrorLabel.setText("");
+        try {
+            if (selected.status() == TicketStatus.OPEN || selected.status() == TicketStatus.REOPENED) {
+                String myEmail = SessionContext.getCurrentUser().email();
+                ViewTicketsFacade.getInstanceSingleton().assignTechnician(selected.id(), myEmail);
+            }
+            changeStatus(selected.id(), TicketStatus.IN_PROGRESS);
+        } catch (DAOException e) {
+            log.error("Errore presa in carico ticket {}", selected.id(), e);
+            showError(ERR_DIALOG_TITLE, "Errore interno del sistema.");
+        } catch (SupportDeskException e) {
+            actionErrorLabel.setText(e.getMessage());
+        }
     }
 
     @FXML
@@ -121,6 +122,31 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
         } catch (DAOException e) {
             log.error("Errore ricerca knowledge base", e);
             showError(ERR_DIALOG_TITLE,"Errore interno del sistema.");
+        }
+    }
+
+    @FXML
+    public void onAddKbEntry() {
+        kbAddErrorLabel.setText("");
+        String title   = kbTitleField.getText().trim();
+        String content = kbContentField.getText().trim();
+        if (title.isBlank() || content.isBlank()) {
+            kbAddErrorLabel.setText("Titolo e contenuto sono obbligatori.");
+            return;
+        }
+        String authorEmail = SessionContext.getCurrentUser().email();
+        try {
+            KnowledgeBaseFacade.getInstanceSingleton().addEntry(title, content, authorEmail);
+            kbTitleField.clear();
+            kbContentField.clear();
+            kbAddErrorLabel.setStyle("-fx-text-fill: #2E7D32; -fx-font-size: 11px;");
+            kbAddErrorLabel.setText("Entry aggiunta con successo.");
+        } catch (KnowledgeBaseException e) {
+            kbAddErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
+            kbAddErrorLabel.setText(e.getMessage());
+        } catch (DAOException e) {
+            log.error("Errore aggiunta entry KB", e);
+            showError(ERR_DIALOG_TITLE, "Errore interno del sistema.");
         }
     }
 

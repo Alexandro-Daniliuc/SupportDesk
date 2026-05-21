@@ -1,17 +1,3 @@
-/*
- * SupportDesk — ISPW Project
- * Copyright (C) 2026  Alexandro Daniliuc
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
@@ -37,12 +23,12 @@ public class KnowledgeBaseController {
         if (title == null || title.isBlank() || content == null || content.isBlank()) {
             throw new KnowledgeBaseException("Titolo e contenuto sono obbligatori");
         }
-        User author = PersistenceLayer.getInstance().findUserByEmail(authorEmail);
+        User author = PersistenceLayer.getInstanceSingleton().findUserByEmail(authorEmail);
         if (author == null) {
             throw new KnowledgeBaseException("Autore non trovato: " + authorEmail);
         }
         KnowledgeEntry entry = new KnowledgeEntry(idGen.getAndIncrement(), title, content, author);
-        PersistenceLayer.getInstance().saveKnowledgeEntry(entry);
+        PersistenceLayer.getInstanceSingleton().saveKnowledgeEntry(entry);
         log.info("Voce knowledge base aggiunta: {}", title);
         return toRecord(entry);
     }
@@ -52,12 +38,12 @@ public class KnowledgeBaseController {
         if (keyword == null || keyword.isBlank()) {
             throw new KnowledgeBaseException("Keyword di ricerca non valida");
         }
-        return PersistenceLayer.getInstance().findKnowledgeEntriesByKeyword(keyword)
+        return PersistenceLayer.getInstanceSingleton().findKnowledgeEntriesByKeyword(keyword)
                 .stream().map(this::toRecord).toList();
     }
 
     public List<KnowledgeEntryRecord> getAllEntries() throws DAOException {
-        return PersistenceLayer.getInstance().findAllKnowledgeEntries()
+        return PersistenceLayer.getInstanceSingleton().findAllKnowledgeEntries()
                 .stream().map(this::toRecord).toList();
     }
 
