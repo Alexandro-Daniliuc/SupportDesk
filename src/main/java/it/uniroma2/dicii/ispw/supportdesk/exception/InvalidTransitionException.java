@@ -25,7 +25,7 @@ public class InvalidTransitionException extends SupportDeskException {
         super("Transizione non valida: " + from + " -> " + to);
     }
 
-    public InvalidTransitionException(TicketStatus from, TicketStatus to, Throwable cause) {
-        super("Transizione non valida: " + from + " -> " + to, cause);
+    public InvalidTransitionException(String message) {
+        super(message);
     }
 }

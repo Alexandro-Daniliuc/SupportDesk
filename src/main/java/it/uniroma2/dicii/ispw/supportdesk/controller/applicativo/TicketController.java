@@ -16,7 +16,10 @@ package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.bean.TicketBean;
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
+import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
+import it.uniroma2.dicii.ispw.supportdesk.model.User;
+import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
@@ -98,6 +101,12 @@ public class TicketController implements TicketSubject {
 
     public TicketRecord changeStatus(int id, TicketStatus newStatus)
             throws DAOException, TicketNotFoundException, InvalidTransitionException {
+        if (newStatus == TicketStatus.REOPENED) {
+            User caller = UserSession.getInstanceSingleton().getCurrentUser();
+            if (caller == null || caller.obtainRole() != Role.USER) {
+                throw new InvalidTransitionException("Solo l'utente può riaprire un ticket");
+            }
+        }
         Ticket ticket = PersistenceLayer.getInstance().getTicketById(id);
         ticket.cambiaStato(newStatus);
         PersistenceLayer.getInstance().updateTicket(ticket);
