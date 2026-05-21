@@ -14,6 +14,7 @@
  */
 package it.uniroma2.dicii.ispw.supportdesk.fx;
 
+import it.uniroma2.dicii.ispw.supportdesk.utility.configloader.ConfigLoader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -22,8 +23,10 @@ import java.io.IOException;
 
 public final class SceneNavigator {
 
-    private static final int SCENE_WIDTH  = 1100;
-    private static final int SCENE_HEIGHT = 700;
+    private static final int SCENE_WIDTH  = Integer.parseInt(
+            ConfigLoader.getInstanceSingleton().get("scene.width", "1100"));
+    private static final int SCENE_HEIGHT = Integer.parseInt(
+            ConfigLoader.getInstanceSingleton().get("scene.height", "700"));
 
     private static Stage stage;
 

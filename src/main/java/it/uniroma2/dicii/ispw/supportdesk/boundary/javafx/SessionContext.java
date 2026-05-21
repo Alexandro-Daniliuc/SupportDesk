@@ -18,7 +18,7 @@ import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
 
 public final class SessionContext {
 
-    private static LoginRecord currentUser;
+    private static volatile LoginRecord currentUser;
 
     private SessionContext() {}
 

@@ -36,14 +36,15 @@ public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    private static final String DEMO_CREDENTIAL_HASH = "DEMO_HASH_PLACEHOLDER";
-    private static final String SHA_256         = "SHA-256";
-    private static final String ERR_CREDENZIALI = "Credenziali non valide";
+    private static final String DEMO_CREDENTIAL_HASH  = "DEMO_HASH_PLACEHOLDER";
+    private static final String SHA_256                = "SHA-256";
+    private static final String ERR_CREDENZIALI        = "Credenziali non valide";
+    private static final String ERR_CREDENZIALI_MISSING = "Credenziali mancanti o non valide";
 
     public LoginRecord authenticate(LoginBean bean)
             throws ValidationException, AuthenticationException, DAOException {
         if (!bean.isValid()) {
-            throw new ValidationException("Credenziali mancanti o non valide");
+            throw new ValidationException(ERR_CREDENZIALI_MISSING);
         }
         User user = PersistenceLayer.getInstance().findUserByEmail(bean.getEmail());
         if (user == null) {
