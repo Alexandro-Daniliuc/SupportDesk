@@ -18,19 +18,19 @@ import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
 
 public final class SessionContext {
 
-    private static volatile LoginRecord currentUser;
+    private static LoginRecord currentUser;
 
     private SessionContext() {}
 
-    public static void setCurrentUser(LoginRecord user) {
+    public static synchronized void setCurrentUser(LoginRecord user) {
         currentUser = user;
     }
 
-    public static LoginRecord getCurrentUser() {
+    public static synchronized LoginRecord getCurrentUser() {
         return currentUser;
     }
 
-    public static void clear() {
+    public static synchronized void clear() {
         currentUser = null;
     }
 }

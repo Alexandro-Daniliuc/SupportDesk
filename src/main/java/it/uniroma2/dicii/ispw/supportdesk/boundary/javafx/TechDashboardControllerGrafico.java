@@ -120,7 +120,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             showError("Knowledge Base", e.getMessage());
         } catch (DAOException e) {
             log.error("Errore ricerca knowledge base", e);
-            showError("Errore", "Errore interno del sistema.");
+            showError(ERR_DIALOG_TITLE,"Errore interno del sistema.");
         }
     }
 
@@ -139,7 +139,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             ticketTable.setItems(FXCollections.observableArrayList(tickets));
         } catch (DAOException e) {
             log.error("Errore caricamento ticket tecnico", e);
-            showError("Errore", "Impossibile caricare i ticket assegnati.");
+            showError(ERR_DIALOG_TITLE,"Impossibile caricare i ticket assegnati.");
         }
     }
 
@@ -150,7 +150,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             loadAssignedTickets();
         } catch (DAOException e) {
             log.error("Errore cambio stato ticket {}", ticketId, e);
-            showError("Errore", "Errore interno del sistema.");
+            showError(ERR_DIALOG_TITLE,"Errore interno del sistema.");
         } catch (SupportDeskException e) {
             actionErrorLabel.setText(e.getMessage());
         }

@@ -22,12 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class KnowledgeBaseDAODemo implements KnowledgeBaseDAO {
 
     private static final List<KnowledgeEntry> STORE = new CopyOnWriteArrayList<>();
-    private static final AtomicInteger nextId = new AtomicInteger(1);
 
     @Override
     public void insert(KnowledgeEntry entry) throws DAOException {

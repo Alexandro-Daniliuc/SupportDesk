@@ -37,6 +37,4 @@ public abstract class TicketDecorator implements TicketComponent {
     public TicketStatus getStatus()       { return ticket.getStatus(); }
     public LocalDateTime getDataApertura(){ return ticket.getDataApertura(); }
     public LocalDateTime getScadenzaSla() { return ticket.getScadenzaSla(); }
-
-    public abstract String getDisplaySummary();
 }

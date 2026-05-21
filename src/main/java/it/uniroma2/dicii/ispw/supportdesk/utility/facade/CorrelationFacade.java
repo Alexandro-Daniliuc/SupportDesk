@@ -15,7 +15,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.CorrelationController;
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.TicketController;
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
 import it.uniroma2.dicii.ispw.supportdesk.exception.CorrelationEngineException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;

@@ -30,6 +30,8 @@ public abstract class AbstractDashboardControllerGrafico {
     protected static final String PROP_PRIORITY     = "priority";
     protected static final String PROP_SCADENZA_SLA = "scadenzaSla";
 
+    protected static final String ERR_DIALOG_TITLE  = "Errore";
+
     @FXML protected VBox  detailPanel;
     @FXML protected Label detailId;
     @FXML protected Label detailTitle;
