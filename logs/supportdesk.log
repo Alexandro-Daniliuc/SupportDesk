@@ -43,3 +43,4 @@
 2026-05-23 00:38:40.505 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
 2026-05-23 00:38:54.070 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 6 assegnato a marco.bianchi@supportdesk.it
 2026-05-23 00:39:11.979 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco.bianchi@supportdesk.it
+2026-05-23 00:41:30.670 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara.neri@azienda.it

@@ -20,7 +20,9 @@ import java.util.List;
 
 public class TechDashboardControllerGrafico extends AbstractDashboardControllerGrafico {
 
-
+    private static final String STYLE_ERROR          = "-fx-text-fill: #C62828; -fx-font-size: 11px;";
+    private static final String STYLE_INFO           = "-fx-text-fill: #1565C0; -fx-font-size: 11px;";
+    private static final String MSG_SELEZIONA_TICKET = "Seleziona un ticket dalla lista.";
 
     @FXML private Label welcomeLabel;
     @FXML private Label actionErrorLabel;
@@ -76,12 +78,12 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     public void onTakeCharge() {
         TicketRecord selected = ticketTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            actionErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
-            actionErrorLabel.setText("Seleziona un ticket dalla lista.");
+            actionErrorLabel.setStyle(STYLE_ERROR);
+            actionErrorLabel.setText(MSG_SELEZIONA_TICKET);
             return;
         }
         if (selected.status() == TicketStatus.IN_PROGRESS) {
-            actionErrorLabel.setStyle("-fx-text-fill: #1565C0; -fx-font-size: 11px;");
+            actionErrorLabel.setStyle(STYLE_INFO);
             actionErrorLabel.setText("Ticket già preso in carico.");
             return;
         }
@@ -104,12 +106,12 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     public void onResolve() {
         TicketRecord selected = ticketTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            actionErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
-            actionErrorLabel.setText("Seleziona un ticket dalla lista.");
+            actionErrorLabel.setStyle(STYLE_ERROR);
+            actionErrorLabel.setText(MSG_SELEZIONA_TICKET);
             return;
         }
         if (selected.status() == TicketStatus.RESOLVED) {
-            actionErrorLabel.setStyle("-fx-text-fill: #1565C0; -fx-font-size: 11px;");
+            actionErrorLabel.setStyle(STYLE_INFO);
             actionErrorLabel.setText("Ticket già risolto.");
             return;
         }
@@ -147,7 +149,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             kbAddErrorLabel.setStyle("-fx-text-fill: #2E7D32; -fx-font-size: 11px;");
             kbAddErrorLabel.setText("Entry aggiunta con successo.");
         } catch (KnowledgeBaseException e) {
-            kbAddErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
+            kbAddErrorLabel.setStyle(STYLE_ERROR);
             kbAddErrorLabel.setText(e.getMessage());
         } catch (DAOException e) {
             log.error("Errore aggiunta entry KB", e);
@@ -163,7 +165,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     }
 
     private void loadAssignedTickets() {
-        actionErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
+        actionErrorLabel.setStyle(STYLE_ERROR);
         actionErrorLabel.setText("");
         try {
             List<TicketRecord> tickets = ViewTicketsFacade.getInstanceSingleton()
@@ -176,7 +178,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     }
 
     private void changeStatus(int ticketId, TicketStatus newStatus) {
-        actionErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
+        actionErrorLabel.setStyle(STYLE_ERROR);
         actionErrorLabel.setText("");
         try {
             ViewTicketsFacade.getInstanceSingleton().changeStatus(ticketId, newStatus);
