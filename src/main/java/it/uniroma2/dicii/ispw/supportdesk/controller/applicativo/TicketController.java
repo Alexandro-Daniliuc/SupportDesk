@@ -162,6 +162,19 @@ public class TicketController implements TicketSubject {
                 .toList();
     }
 
+    public void changePriority(int ticketId, it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority newPriority)
+            throws DAOException, TicketNotFoundException {
+        Ticket t = PersistenceLayer.getInstanceSingleton().getTicketById(ticketId);
+        Ticket updated = new Ticket.Builder(t.getId(), t.getTitle(), t.getDescription(), t.getCategory(), newPriority)
+                .authorEmail(t.getAuthorEmail())
+                .dataApertura(t.getDataApertura())
+                .status(t.getStatus())
+                .build();
+        updated.setAssignedTechnician(t.getAssignedTechnician());
+        PersistenceLayer.getInstanceSingleton().updateTicket(updated);
+        log.info("Priorità ticket {} aggiornata a {}", ticketId, newPriority);
+    }
+
     public TicketRecord assignTechnician(int ticketId, String techEmail)
             throws DAOException, TicketNotFoundException, InvalidTransitionException {
         Ticket ticket = PersistenceLayer.getInstanceSingleton().getTicketById(ticketId);

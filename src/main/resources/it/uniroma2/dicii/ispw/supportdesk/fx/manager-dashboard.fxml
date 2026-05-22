@@ -239,7 +239,7 @@
                     <Label text="Categoria:"   GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
                     <Label fx:id="detailCategory" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
                     <Label text="Priorità:"    GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
-                    <Label fx:id="detailPriority" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <ComboBox fx:id="priorityEditBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
                     <Label text="Stato:"       GridPane.rowIndex="5" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
                     <Label fx:id="detailStatus" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
                     <Label text="Aperto il:"   GridPane.rowIndex="6" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>

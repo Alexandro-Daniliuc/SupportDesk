@@ -119,7 +119,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
             slaTable.setItems(FXCollections.observableArrayList(expiring));
         } catch (DAOException e) {
             log.error("Errore controllo SLA", e);
-            showError(ERR_TITLE, "Errore interno del sistema.");
+            showError(ERR_TITLE, ERR_INTERNAL);
         }
     }
 
@@ -139,7 +139,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
             correlatedTable.setItems(FXCollections.observableArrayList(correlated));
         } catch (DAOException e) {
             log.error("Errore ricerca ticket correlati", e);
-            showError(ERR_TITLE, "Errore interno del sistema.");
+            showError(ERR_TITLE, ERR_INTERNAL);
         } catch (SupportDeskException e) {
             correlationErrorLabel.setText(e.getMessage());
         }
@@ -150,6 +150,11 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
         UserSession.getInstanceSingleton().logout();
         SessionContext.clear();
         SceneNavigator.navigateTo("login.fxml", "Login");
+    }
+
+    @Override
+    protected void refreshAll() {
+        loadAllTickets();
     }
 
     private void loadAllTickets() {
@@ -259,7 +264,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
             assignErrorLabel.setText("Transizione non valida per questo ticket.");
         } catch (DAOException e) {
             log.error("Errore assegnazione ticket {}", selected.id(), e);
-            showError(ERR_TITLE, "Errore interno del sistema.");
+            showError(ERR_TITLE, ERR_INTERNAL);
         }
     }
 
@@ -287,7 +292,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
             reportErrorLabel.setText(e.getMessage());
         } catch (DAOException e) {
             log.error("Errore generazione report", e);
-            showError(ERR_TITLE, "Errore interno del sistema.");
+            showError(ERR_TITLE, ERR_INTERNAL);
         }
     }
 

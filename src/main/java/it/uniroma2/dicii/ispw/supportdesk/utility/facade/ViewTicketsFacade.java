@@ -7,7 +7,6 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
-import it.uniroma2.dicii.ispw.supportdesk.exception.SupportDeskException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.record.CommentRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
@@ -47,6 +46,13 @@ public final class ViewTicketsFacade {
     public TicketRecord changeStatus(int ticketId, TicketStatus newStatus)
             throws DAOException, TicketNotFoundException, InvalidTransitionException {
         return ticketController.changeStatus(ticketId, newStatus);
+    }
+
+    public void changePriority(int ticketId, String priorityName)
+            throws it.uniroma2.dicii.ispw.supportdesk.exception.DAOException,
+                   it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException {
+        ticketController.changePriority(ticketId,
+                it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority.valueOf(priorityName));
     }
 
     public void addComment(CommentBean bean)

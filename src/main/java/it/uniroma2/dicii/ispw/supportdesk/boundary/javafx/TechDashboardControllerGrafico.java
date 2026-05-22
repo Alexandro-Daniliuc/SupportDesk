@@ -7,7 +7,6 @@ import it.uniroma2.dicii.ispw.supportdesk.exception.KnowledgeBaseException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.SupportDeskException;
 import it.uniroma2.dicii.ispw.supportdesk.fx.SceneNavigator;
 import it.uniroma2.dicii.ispw.supportdesk.record.CommentRecord;
-import it.uniroma2.dicii.ispw.supportdesk.record.KnowledgeEntryRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.ViewTicketsFacade;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
@@ -34,9 +33,8 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     @FXML private TableColumn<TicketRecord, String>     colStatus;
     @FXML private TableColumn<TicketRecord, String>     colSla;
 
-    @FXML private ListView<String>  commentsList;
+    @FXML private TextArea          commentsArea;
     @FXML private TextField         kbSearchField;
-    @FXML private ListView<String>  kbResultsList;
     @FXML private TextField         kbTitleField;
     @FXML private TextArea          kbContentField;
     @FXML private Label             kbAddErrorLabel;
@@ -63,6 +61,8 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
 
     @Override
     protected void populateDetail(TicketRecord t) {
+        ticketTable.setVisible(false);
+        ticketTable.setManaged(false);
         super.populateDetail(t);
         loadComments(t.id());
     }
@@ -88,7 +88,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             changeStatus(selected.id(), TicketStatus.IN_PROGRESS);
         } catch (DAOException e) {
             log.error("Errore presa in carico ticket {}", selected.id(), e);
-            showError(ERR_DIALOG_TITLE, "Errore interno del sistema.");
+            showError(ERR_DIALOG_TITLE, ERR_INTERNAL);
         } catch (SupportDeskException e) {
             actionErrorLabel.setText(e.getMessage());
         }
@@ -107,21 +107,14 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     @FXML
     public void onKbSearch() {
         String keyword = kbSearchField.getText().trim();
-        if (keyword.isBlank()) {
-            kbResultsList.setItems(FXCollections.emptyObservableList());
-            return;
-        }
+        if (keyword.isBlank()) return;
         try {
-            List<KnowledgeEntryRecord> results = KnowledgeBaseFacade.getInstanceSingleton().searchEntries(keyword);
-            List<String> display = results.stream()
-                    .map(r -> "[" + r.authorName() + "] " + r.title() + " — " + r.content())
-                    .toList();
-            kbResultsList.setItems(FXCollections.observableArrayList(display));
+            KnowledgeBaseFacade.getInstanceSingleton().searchEntries(keyword);
         } catch (KnowledgeBaseException e) {
             showError("Knowledge Base", e.getMessage());
         } catch (DAOException e) {
             log.error("Errore ricerca knowledge base", e);
-            showError(ERR_DIALOG_TITLE,"Errore interno del sistema.");
+            showError(ERR_DIALOG_TITLE,ERR_INTERNAL);
         }
     }
 
@@ -146,7 +139,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             kbAddErrorLabel.setText(e.getMessage());
         } catch (DAOException e) {
             log.error("Errore aggiunta entry KB", e);
-            showError(ERR_DIALOG_TITLE, "Errore interno del sistema.");
+            showError(ERR_DIALOG_TITLE, ERR_INTERNAL);
         }
     }
 
@@ -176,27 +169,39 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
             loadAssignedTickets();
         } catch (DAOException e) {
             log.error("Errore cambio stato ticket {}", ticketId, e);
-            showError(ERR_DIALOG_TITLE,"Errore interno del sistema.");
+            showError(ERR_DIALOG_TITLE,ERR_INTERNAL);
         } catch (SupportDeskException e) {
             actionErrorLabel.setText(e.getMessage());
         }
+    }
+
+    @Override
+    protected void refreshAll() {
+        loadAssignedTickets();
+    }
+
+    @Override
+    protected void hideDetail() {
+        super.hideDetail();
+        ticketTable.setVisible(true);
+        ticketTable.setManaged(true);
     }
 
     @FXML
     public void onCloseDetail() {
         hideDetail();
         ticketTable.getSelectionModel().clearSelection();
-        if (commentsList != null) commentsList.getItems().clear();
+        if (commentsArea != null) commentsArea.clear();
     }
 
     private void loadComments(int ticketId) {
-        if (commentsList == null) return;
+        if (commentsArea == null) return;
         try {
             List<CommentRecord> comments = ViewTicketsFacade.getInstanceSingleton().getCommentsForTicket(ticketId);
-            List<String> display = comments.stream()
-                    .map(c -> "[" + c.authorEmail() + "] " + c.text())
-                    .toList();
-            commentsList.setItems(FXCollections.observableArrayList(display));
+            String text = comments.stream()
+                    .map(CommentRecord::text)
+                    .collect(java.util.stream.Collectors.joining("\n"));
+            commentsArea.setText(text);
         } catch (DAOException e) {
             log.error("Errore caricamento commenti ticket {}", ticketId, e);
         }

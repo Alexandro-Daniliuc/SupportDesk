@@ -59,6 +59,7 @@
 
                 <!-- DETAIL PANEL inline -->
                 <VBox fx:id="detailPanel" visible="false" managed="false" spacing="6"
+                      prefHeight="360"
                       style="-fx-background-color: #E3F2FD;
                              -fx-background-radius: 6;
                              -fx-border-color: #90CAF9;
@@ -84,7 +85,7 @@
                         <Label text="Categoria:"   GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
                         <Label fx:id="detailCategory" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
                         <Label text="Priorità:"    GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
-                        <Label fx:id="detailPriority" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                        <ComboBox fx:id="priorityEditBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
                         <Label text="Stato:"       GridPane.rowIndex="5" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
                         <Label fx:id="detailStatus" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
                         <Label text="Aperto il:"   GridPane.rowIndex="6" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
@@ -94,11 +95,20 @@
                         <Label text="Tecnico:"     GridPane.rowIndex="8" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
                         <Label fx:id="detailTechnician" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
                     </GridPane>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label fx:id="prioritySaveLabel" text="" style="-fx-font-size: 11px;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="Salva Priorità" onAction="#onSavePriority"
+                                style="-fx-background-color: #1565C0; -fx-text-fill: white;
+                                       -fx-font-weight: bold; -fx-padding: 6 14;
+                                       -fx-background-radius: 4; -fx-cursor: hand;"/>
+                    </HBox>
                     <Separator/>
                     <Label text="Commenti:"
                            style="-fx-font-weight: bold; -fx-text-fill: #455A64; -fx-font-size: 12px;"/>
-                    <ListView fx:id="commentsList" prefHeight="90"
-                              style="-fx-border-color: #90CAF9; -fx-border-radius: 4;"/>
+                    <TextArea fx:id="commentsArea" editable="false" wrapText="true" prefHeight="100"
+                              style="-fx-border-color: #90CAF9; -fx-border-radius: 4;
+                                     -fx-background-radius: 4; -fx-font-size: 12px;"/>
                 </VBox>
 
                 <!-- Azioni sul ticket selezionato -->
@@ -134,9 +144,6 @@
                             style="-fx-background-color: #1565C0; -fx-text-fill: white;
                                    -fx-font-weight: bold; -fx-padding: 8 16; -fx-background-radius: 4; -fx-cursor: hand;"/>
                 </HBox>
-
-                <ListView fx:id="kbResultsList" prefHeight="120"
-                          style="-fx-border-color: #E0E0E0; -fx-border-radius: 4;"/>
 
                 <Separator/>
 
