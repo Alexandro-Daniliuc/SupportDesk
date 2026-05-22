@@ -3,14 +3,11 @@ package it.uniroma2.dicii.ispw.supportdesk.boundary.javafx;
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.CorrelationFacade;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
-import it.uniroma2.dicii.ispw.supportdesk.exception.ReportException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.SupportDeskException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
 import it.uniroma2.dicii.ispw.supportdesk.fx.SceneNavigator;
-import it.uniroma2.dicii.ispw.supportdesk.record.ReportRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.UserRecord;
-import it.uniroma2.dicii.ispw.supportdesk.utility.facade.ReportFacade;
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.SlaFacade;
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.ViewTicketsFacade;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
@@ -18,11 +15,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,20 +67,6 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
     @FXML private ComboBox<String>              technicianComboBox;
     @FXML private Label                         assignErrorLabel;
 
-    // Tab 5 - Report
-    @FXML private TextField                     reportTitleField;
-    @FXML private DatePicker                    reportStartDate;
-    @FXML private DatePicker                    reportEndDate;
-    @FXML private Label                         reportErrorLabel;
-    @FXML private VBox                          reportResultPanel;
-    @FXML private Label                         reportSummaryLabel;
-    @FXML private TableView<TicketRecord>       reportTicketsTable;
-    @FXML private TableColumn<TicketRecord, Integer> repColId;
-    @FXML private TableColumn<TicketRecord, String>  repColTitle;
-    @FXML private TableColumn<TicketRecord, String>  repColCategory;
-    @FXML private TableColumn<TicketRecord, String>  repColStatus;
-    @FXML private TableColumn<TicketRecord, String>  repColSla;
-
     private final List<UserRecord> availableTechnicians = new ArrayList<>();
 
     @FXML
@@ -96,7 +76,6 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
         bindSlaTable();
         bindCorrelatedTable();
         bindAssignTable();
-        bindReportTable();
 
         allTicketsTable.getSelectionModel().selectedItemProperty().addListener(
                 (obs, o, n) -> { if (n != null) populateDetail(n); else hideDetail(); });
@@ -106,6 +85,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
                 (obs, o, n) -> { if (n != null) populateDetail(n); else hideDetail(); });
 
         loadAllTickets();
+        loadAssignTickets();
         loadTechnicians();
     }
 
@@ -200,13 +180,6 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
         assignColTech.setCellValueFactory(new PropertyValueFactory<>("assignedTechnicianName"));
     }
 
-    private void bindReportTable() {
-        repColId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        repColTitle.setCellValueFactory(new PropertyValueFactory<>(COL_TITLE));
-        repColCategory.setCellValueFactory(new PropertyValueFactory<>(PROP_CATEGORY));
-        repColStatus.setCellValueFactory(new PropertyValueFactory<>(COL_STATUS));
-        repColSla.setCellValueFactory(new PropertyValueFactory<>(PROP_SCADENZA_SLA));
-    }
 
     private void loadTechnicians() {
         try {
@@ -268,33 +241,6 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
         }
     }
 
-    @FXML
-    public void onGenerateReport() {
-        reportErrorLabel.setText("");
-        reportResultPanel.setVisible(false);
-        reportResultPanel.setManaged(false);
-        String title = reportTitleField.getText().trim();
-        if (title.isBlank()) {
-            reportErrorLabel.setText("Il titolo è obbligatorio.");
-            return;
-        }
-        LocalDate startDate = reportStartDate.getValue();
-        LocalDate endDate   = reportEndDate.getValue();
-        LocalDateTime start = startDate != null ? startDate.atStartOfDay() : null;
-        LocalDateTime end   = endDate   != null ? endDate.atTime(23, 59, 59) : null;
-        try {
-            ReportRecord report = ReportFacade.getInstanceSingleton().generateReport(title, start, end);
-            reportSummaryLabel.setText("\"" + report.title() + "\" — " + report.totalTickets() + " ticket trovati");
-            reportTicketsTable.setItems(FXCollections.observableArrayList(report.tickets()));
-            reportResultPanel.setVisible(true);
-            reportResultPanel.setManaged(true);
-        } catch (ReportException e) {
-            reportErrorLabel.setText(e.getMessage());
-        } catch (DAOException e) {
-            log.error("Errore generazione report", e);
-            showError(ERR_TITLE, ERR_INTERNAL);
-        }
-    }
 
     @FXML
     public void onCloseDetail() {

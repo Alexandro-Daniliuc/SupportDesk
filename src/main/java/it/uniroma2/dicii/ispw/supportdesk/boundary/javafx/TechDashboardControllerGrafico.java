@@ -76,7 +76,13 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     public void onTakeCharge() {
         TicketRecord selected = ticketTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
+            actionErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
             actionErrorLabel.setText("Seleziona un ticket dalla lista.");
+            return;
+        }
+        if (selected.status() == TicketStatus.IN_PROGRESS) {
+            actionErrorLabel.setStyle("-fx-text-fill: #1565C0; -fx-font-size: 11px;");
+            actionErrorLabel.setText("Ticket già preso in carico.");
             return;
         }
         actionErrorLabel.setText("");
@@ -98,7 +104,13 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     public void onResolve() {
         TicketRecord selected = ticketTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
+            actionErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
             actionErrorLabel.setText("Seleziona un ticket dalla lista.");
+            return;
+        }
+        if (selected.status() == TicketStatus.RESOLVED) {
+            actionErrorLabel.setStyle("-fx-text-fill: #1565C0; -fx-font-size: 11px;");
+            actionErrorLabel.setText("Ticket già risolto.");
             return;
         }
         changeStatus(selected.id(), TicketStatus.RESOLVED);
@@ -151,6 +163,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     }
 
     private void loadAssignedTickets() {
+        actionErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
         actionErrorLabel.setText("");
         try {
             List<TicketRecord> tickets = ViewTicketsFacade.getInstanceSingleton()
@@ -163,6 +176,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
     }
 
     private void changeStatus(int ticketId, TicketStatus newStatus) {
+        actionErrorLabel.setStyle("-fx-text-fill: #C62828; -fx-font-size: 11px;");
         actionErrorLabel.setText("");
         try {
             ViewTicketsFacade.getInstanceSingleton().changeStatus(ticketId, newStatus);

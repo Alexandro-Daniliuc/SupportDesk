@@ -156,60 +156,6 @@
                     </VBox>
                 </Tab>
 
-                <!-- TAB 5: Report -->
-                <Tab text="Report">
-                    <VBox spacing="12">
-                        <padding><Insets top="16" bottom="16" left="16" right="16"/></padding>
-
-                        <Label text="Genera Report"
-                               style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1A237E;"/>
-
-                        <GridPane hgap="16" vgap="10">
-                            <Label text="Titolo:" GridPane.rowIndex="0" GridPane.columnIndex="0"
-                                   style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
-                            <TextField fx:id="reportTitleField" promptText="Titolo report..."
-                                       prefWidth="260" GridPane.rowIndex="0" GridPane.columnIndex="1"
-                                       style="-fx-padding: 7; -fx-background-radius: 4;
-                                              -fx-border-color: #E0E0E0; -fx-border-radius: 4;"/>
-                            <Label text="Da:" GridPane.rowIndex="1" GridPane.columnIndex="0"
-                                   style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
-                            <DatePicker fx:id="reportStartDate"
-                                        GridPane.rowIndex="1" GridPane.columnIndex="1"
-                                        style="-fx-background-radius: 4;"/>
-                            <Label text="A:" GridPane.rowIndex="2" GridPane.columnIndex="0"
-                                   style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
-                            <DatePicker fx:id="reportEndDate"
-                                        GridPane.rowIndex="2" GridPane.columnIndex="1"
-                                        style="-fx-background-radius: 4;"/>
-                        </GridPane>
-
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Button text="Genera Report" onAction="#onGenerateReport"
-                                    style="-fx-background-color: #1565C0; -fx-text-fill: white;
-                                           -fx-font-weight: bold; -fx-padding: 8 16; -fx-background-radius: 4; -fx-cursor: hand;"/>
-                            <Label fx:id="reportErrorLabel" text=""
-                                   style="-fx-text-fill: #C62828; -fx-font-size: 11px;"/>
-                        </HBox>
-
-                        <VBox fx:id="reportResultPanel" visible="false" managed="false" spacing="8"
-                              style="-fx-background-color: #E8F5E9; -fx-background-radius: 6;
-                                     -fx-border-color: #A5D6A7; -fx-border-radius: 6; -fx-border-width: 1;">
-                            <padding><Insets top="12" bottom="12" left="16" right="16"/></padding>
-                            <Label fx:id="reportSummaryLabel" text=""
-                                   style="-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #2E7D32;"/>
-                            <TableView fx:id="reportTicketsTable" prefHeight="200">
-                                <columns>
-                                    <TableColumn fx:id="repColId"       text="ID"           prefWidth="50"/>
-                                    <TableColumn fx:id="repColTitle"    text="Titolo"        prefWidth="230"/>
-                                    <TableColumn fx:id="repColCategory" text="Categoria"     prefWidth="110"/>
-                                    <TableColumn fx:id="repColStatus"   text="Stato"         prefWidth="120"/>
-                                    <TableColumn fx:id="repColSla"      text="Scadenza SLA"  prefWidth="150"/>
-                                </columns>
-                            </TableView>
-                        </VBox>
-                    </VBox>
-                </Tab>
-
             </TabPane>
 
             <!-- DETAIL PANEL condiviso: si popola al click su qualsiasi riga -->
@@ -249,6 +195,14 @@
                     <Label text="Tecnico:"     GridPane.rowIndex="8" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #455A64;"/>
                     <Label fx:id="detailTechnician" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
                 </GridPane>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label fx:id="prioritySaveLabel" text="" style="-fx-font-size: 11px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Salva Priorità" onAction="#onSavePriority"
+                            style="-fx-background-color: #1565C0; -fx-text-fill: white;
+                                   -fx-font-weight: bold; -fx-padding: 6 14;
+                                   -fx-background-radius: 4; -fx-cursor: hand;"/>
+                </HBox>
             </VBox>
 
         </VBox>

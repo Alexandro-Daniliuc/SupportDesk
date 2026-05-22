@@ -27,6 +27,8 @@
 
     <!-- ── CONTENUTO ───────────────────────────────────────────── -->
     <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background-color: #ECEFF1; -fx-background: #ECEFF1; -fx-border-color: transparent;">
         <VBox spacing="16">
             <padding><Insets top="16" bottom="16" left="16" right="16"/></padding>
 
@@ -170,6 +172,7 @@
             </VBox>
 
         </VBox>
+        </ScrollPane>
     </center>
 
 </BorderPane>

@@ -22,3 +22,24 @@
 2026-05-23 00:00:13.609 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 10 assegnato a marco.bianchi@supportdesk.it
 2026-05-23 00:00:13.609 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 10 passato a stato IN_PROGRESS
 2026-05-23 00:01:01.531 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
+2026-05-23 00:23:03.002 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
+2026-05-23 00:23:12.377 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Priorità ticket 10 aggiornata a LOW
+2026-05-23 00:24:49.531 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco.bianchi@supportdesk.it
+2026-05-23 00:25:20.299 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Priorità ticket 8 aggiornata a CRITICAL
+2026-05-23 00:25:29.956 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Priorità ticket 8 aggiornata a LOW
+2026-05-23 00:25:33.800 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 8 assegnato a marco.bianchi@supportdesk.it
+2026-05-23 00:25:33.800 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 8 passato a stato IN_PROGRESS
+2026-05-23 00:25:43.247 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket risolto — email inviata all'utente richiedente.
+2026-05-23 00:25:43.247 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 8 passato a stato RESOLVED
+2026-05-23 00:26:04.359 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara.neri@azienda.it
+2026-05-23 00:26:18.644 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.CommentController - Commento 1 aggiunto al ticket 8 da sara.neri@azienda.it
+2026-05-23 00:26:23.013 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.CommentController - Commento 2 aggiunto al ticket 8 da sara.neri@azienda.it
+2026-05-23 00:26:43.002 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco.bianchi@supportdesk.it
+2026-05-23 00:35:01.993 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco.bianchi@supportdesk.it
+2026-05-23 00:35:16.563 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 9 assegnato a marco.bianchi@supportdesk.it
+2026-05-23 00:35:16.563 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 9 passato a stato IN_PROGRESS
+2026-05-23 00:35:29.567 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Priorità ticket 9 aggiornata a HIGH
+2026-05-23 00:37:53.040 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Priorità ticket 9 aggiornata a LOW
+2026-05-23 00:38:40.505 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
+2026-05-23 00:38:54.070 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 6 assegnato a marco.bianchi@supportdesk.it
+2026-05-23 00:39:11.979 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco.bianchi@supportdesk.it
