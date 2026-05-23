@@ -4,7 +4,6 @@ import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
 
 import java.util.*;
 
-@SuppressWarnings("java:S6548")
 public final class CorrelationEngine {
 
     private static final double DEFAULT_THRESHOLD = 0.30;

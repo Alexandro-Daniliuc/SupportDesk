@@ -13,7 +13,6 @@ import java.util.Properties;
  * Chiavi supportate: {@code app.mode}, {@code scene.width}, {@code scene.height},
  * {@code db.url}, {@code db.user}, {@code db.credential}.
  */
-@SuppressWarnings("java:S6548")
 public final class ConfigLoader {
 
     private static final String DB_PROPERTIES = "db.properties";

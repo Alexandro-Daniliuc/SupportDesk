@@ -25,31 +25,31 @@ public class User {
         this.role = role;
     }
 
-    public int obtainId() {
+    public int getId() {
         return id;
     }
 
-    public String obtainName() {
+    public String getName() {
         return name;
     }
 
-    public String obtainSurname() {
+    public String getSurname() {
         return surname;
     }
 
-    public String obtainEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public String obtainPasswordHash() {
+    public String getPasswordHash() {
         return passwordHash;
     }
 
-    public Role obtainRole() {
+    public Role getRole() {
         return role;
     }
 
-    public String obtainSpecialization() {
+    public String getSpecialization() {
         return specialization;
     }
 

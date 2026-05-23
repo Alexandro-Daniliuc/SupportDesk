@@ -10,7 +10,6 @@ import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
 
 import java.util.List;
 
-@SuppressWarnings("java:S6548")
 public final class CorrelationFacade {
 
     private final CorrelationController correlationController;

@@ -11,11 +11,12 @@ import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.record.CommentRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.UserRecord;
+import it.uniroma2.dicii.ispw.supportdesk.utility.observer.ManagerNotificationObserver;
+import it.uniroma2.dicii.ispw.supportdesk.utility.observer.TechnicianNotificationObserver;
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.UserNotificationObserver;
 
 import java.util.List;
 
-@SuppressWarnings("java:S6548")
 public final class ViewTicketsFacade {
 
     private final TicketController ticketController;
@@ -25,6 +26,8 @@ public final class ViewTicketsFacade {
         ticketController = new TicketController();
         commentController = new CommentController();
         ticketController.attach(new UserNotificationObserver());
+        ticketController.attach(new ManagerNotificationObserver());
+        ticketController.attach(new TechnicianNotificationObserver());
     }
 
     private static final class Holder {

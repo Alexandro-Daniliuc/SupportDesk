@@ -1,5 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
+import it.uniroma2.dicii.ispw.supportdesk.bean.NotificationBean;
 import it.uniroma2.dicii.ispw.supportdesk.bean.TicketBean;
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
@@ -49,9 +50,24 @@ public class TicketController implements TicketSubject {
 
     @Override
     public void notifyObservers(EventType eventType) {
+        NotificationBean notification = buildNotification(eventType);
         for (TicketObserver o : observers) {
-            o.update(eventType);
+            o.update(notification);
         }
+    }
+
+    private NotificationBean buildNotification(EventType eventType) {
+        String message = switch (eventType) {
+            case TICKET_OPEN          -> "Nuovo ticket aperto — in attesa di assegnazione.";
+            case TICKET_IN_CARICO     -> "Il ticket è stato preso in carico da un tecnico.";
+            case TICKET_CAMBIO_STATO  -> "Cambio stato ticket rilevato.";
+            case TICKET_RISOLTO       -> "Ticket risolto — notifica inviata all'utente richiedente.";
+            case SLA_IN_SCADENZA      -> "SLA in scadenza rilevato.";
+            case SLA_VIOLATO          -> "SLA VIOLATO rilevato.";
+            case ASSEGNAZIONE_MANUALE -> "Ticket richiede assegnazione manuale.";
+            default                   -> eventType.name();
+        };
+        return new NotificationBean(eventType, message);
     }
 
     public TicketRecord openTicket(TicketBean bean, String authorEmail)
@@ -90,7 +106,7 @@ public class TicketController implements TicketSubject {
             throws DAOException, TicketNotFoundException, InvalidTransitionException {
         if (newStatus == TicketStatus.REOPENED) {
             User caller = UserSession.getInstanceSingleton().getCurrentUser();
-            if (caller == null || caller.obtainRole() != Role.USER) {
+            if (caller == null || caller.getRole() != Role.USER) {
                 throw new InvalidTransitionException("Solo l'utente può riaprire un ticket");
             }
         }
@@ -98,7 +114,9 @@ public class TicketController implements TicketSubject {
         ticket.cambiaStato(newStatus);
         PersistenceLayer.getInstanceSingleton().updateTicket(ticket);
         notifyObservers(EventType.TICKET_CAMBIO_STATO);
-        if (newStatus == TicketStatus.RESOLVED) {
+        if (newStatus == TicketStatus.IN_PROGRESS) {
+            notifyObservers(EventType.TICKET_IN_CARICO);
+        } else if (newStatus == TicketStatus.RESOLVED) {
             notifyObservers(EventType.TICKET_RISOLTO);
         }
         log.info("Ticket {} passato a stato {}", id, newStatus);
@@ -157,8 +175,8 @@ public class TicketController implements TicketSubject {
         return PersistenceLayer.getInstanceSingleton()
                 .findUsersByRole(Role.TECHNICIAN)
                 .stream()
-                .map(u -> new UserRecord(u.obtainId(), u.obtainName(), u.obtainSurname(),
-                        u.obtainEmail(), u.obtainRole(), u.obtainSpecialization()))
+                .map(u -> new UserRecord(u.getId(), u.getName(), u.getSurname(),
+                        u.getEmail(), u.getRole(), u.getSpecialization()))
                 .toList();
     }
 
@@ -191,7 +209,7 @@ public class TicketController implements TicketSubject {
 
     public static TicketRecord toRecord(Ticket t) {
         String techName = t.getAssignedTechnician() != null
-                ? t.getAssignedTechnician().obtainName() + " " + t.getAssignedTechnician().obtainSurname()
+                ? t.getAssignedTechnician().getName() + " " + t.getAssignedTechnician().getSurname()
                 : null;
         return new TicketRecord(t.getId(), t.getTitle(), t.getDescription(),
                 t.getCategory(), t.getPriority(), t.getStatus(),

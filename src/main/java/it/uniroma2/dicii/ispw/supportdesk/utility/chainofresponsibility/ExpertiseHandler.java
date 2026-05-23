@@ -12,7 +12,7 @@ public class ExpertiseHandler extends AssignmentHandler {
     protected User tryAssign(Ticket ticket, List<User> technicians) {
         String category = ticket.getCategory().name();
         for (User tech : technicians) {
-            if (category.equalsIgnoreCase(tech.obtainSpecialization())) return tech;
+            if (category.equalsIgnoreCase(tech.getSpecialization())) return tech;
         }
         return null;
     }

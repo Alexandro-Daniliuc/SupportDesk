@@ -38,7 +38,7 @@ public class AssignmentController {
         ticket.cambiaStato(TicketStatus.ASSIGNED);
         PersistenceLayer.getInstanceSingleton().updateTicket(ticket);
         if (log.isInfoEnabled()) {
-            log.info("Ticket {} assegnato a {}", ticket.getId(), technician.obtainEmail());
+            log.info("Ticket {} assegnato a {}", ticket.getId(), technician.getEmail());
         }
     }
 
@@ -56,7 +56,7 @@ public class AssignmentController {
         for (Ticket t : allTickets) {
             if (t.getAssignedTechnician() != null && t.getStatus() != TicketStatus.RESOLVED
                     && t.getStatus() != TicketStatus.CLOSED) {
-                String email = t.getAssignedTechnician().obtainEmail();
+                String email = t.getAssignedTechnician().getEmail();
                 map.merge(email, 1, Integer::sum);
             }
         }

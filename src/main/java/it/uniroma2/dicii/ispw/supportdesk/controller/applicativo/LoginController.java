@@ -46,9 +46,9 @@ public class LoginController {
     private void verifyPassword(String inputHash, User user) throws AuthenticationException {
         boolean valid;
         if (ApplicationModeManager.getInstanceSingleton().getMode() == ApplicationMode.DEMO) {
-            valid = DEMO_CREDENTIAL_HASH.equals(inputHash) || DEMO_CREDENTIAL_HASH.equals(user.obtainPasswordHash());
+            valid = DEMO_CREDENTIAL_HASH.equals(inputHash) || DEMO_CREDENTIAL_HASH.equals(user.getPasswordHash());
         } else {
-            valid = user.obtainPasswordHash().equals(inputHash);
+            valid = user.getPasswordHash().equals(inputHash);
         }
         if (!valid) {
             throw new AuthenticationException(ERR_CREDENZIALI);
@@ -71,11 +71,11 @@ public class LoginController {
 
     private LoginRecord toRecord(User user) {
         return new LoginRecord(
-                user.obtainId(),
-                user.obtainName(),
-                user.obtainSurname(),
-                user.obtainEmail(),
-                user.obtainRole()
+                user.getId(),
+                user.getName(),
+                user.getSurname(),
+                user.getEmail(),
+                user.getRole()
         );
     }
 }

@@ -11,7 +11,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-@SuppressWarnings("java:S6548")
 public final class ConnectionManager {
     private static final String DB_PROPS_FILE = "db.properties";
     private static final String KEY_URL  = "db.url";

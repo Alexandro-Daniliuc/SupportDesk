@@ -7,7 +7,6 @@ import it.uniroma2.dicii.ispw.supportdesk.record.KnowledgeEntryRecord;
 
 import java.util.List;
 
-@SuppressWarnings("java:S6548")
 public final class KnowledgeBaseFacade {
 
     private final KnowledgeBaseController knowledgeBaseController;

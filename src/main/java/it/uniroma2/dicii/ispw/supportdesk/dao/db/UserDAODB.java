@@ -53,12 +53,12 @@ public class UserDAODB implements UserDAO {
     public void insert(User user) throws DAOException {
         try (Connection conn = ConnectionManager.getInstanceSingleton().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL_INSERT)) {
-            ps.setString(1, user.obtainName());
-            ps.setString(2, user.obtainSurname());
-            ps.setString(3, user.obtainEmail());
-            ps.setString(4, user.obtainPasswordHash());
-            ps.setString(5, user.obtainRole().name());
-            ps.setString(6, user.obtainSpecialization());
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getSurname());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPasswordHash());
+            ps.setString(5, user.getRole().name());
+            ps.setString(6, user.getSpecialization());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Errore insert user", e);

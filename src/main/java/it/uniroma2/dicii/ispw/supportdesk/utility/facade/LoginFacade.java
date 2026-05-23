@@ -7,7 +7,6 @@ import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
 
-@SuppressWarnings("java:S6548")
 public final class LoginFacade {
 
     private final LoginController loginController;

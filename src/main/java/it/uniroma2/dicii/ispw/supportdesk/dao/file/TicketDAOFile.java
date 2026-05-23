@@ -101,7 +101,7 @@ public class TicketDAOFile implements TicketDAO {
 
     private String buildLine(int id, Ticket t) {
         String techEmail = t.getAssignedTechnician() != null
-            ? t.getAssignedTechnician().obtainEmail() : NULL_TOKEN;
+            ? t.getAssignedTechnician().getEmail() : NULL_TOKEN;
         String authorEmail = t.getAuthorEmail() != null ? t.getAuthorEmail() : NULL_TOKEN;
         return id + SEP + t.getTitle() + SEP + t.getDescription() + SEP
             + t.getCategory().name() + SEP + t.getPriority().name() + SEP

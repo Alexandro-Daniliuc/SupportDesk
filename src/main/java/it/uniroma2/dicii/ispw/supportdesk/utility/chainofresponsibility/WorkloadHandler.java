@@ -21,7 +21,7 @@ public class WorkloadHandler extends AssignmentHandler {
         User best = null;
         int minLoad = MAX_WORKLOAD + 1;
         for (User tech : technicians) {
-            int load = workloadByEmail.getOrDefault(tech.obtainEmail(), 0);
+            int load = workloadByEmail.getOrDefault(tech.getEmail(), 0);
             if (load < MAX_WORKLOAD && load < minLoad) {
                 minLoad = load;
                 best = tech;

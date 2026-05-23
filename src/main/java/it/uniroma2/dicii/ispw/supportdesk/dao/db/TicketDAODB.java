@@ -95,7 +95,7 @@ public class TicketDAODB implements TicketDAO {
              PreparedStatement ps = conn.prepareStatement(SQL_UPDATE)) {
             ps.setString(1, ticket.getStatus().name());
             String techEmail = ticket.getAssignedTechnician() != null
-                ? ticket.getAssignedTechnician().obtainEmail() : null;
+                ? ticket.getAssignedTechnician().getEmail() : null;
             ps.setString(2, techEmail);
             ps.setInt(3, ticket.getId());
             int rows = ps.executeUpdate();

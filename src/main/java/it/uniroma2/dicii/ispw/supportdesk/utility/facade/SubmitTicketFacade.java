@@ -9,7 +9,6 @@ import it.uniroma2.dicii.ispw.supportdesk.utility.observer.ManagerNotificationOb
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.TechnicianNotificationObserver;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 
-@SuppressWarnings("java:S6548")
 public final class SubmitTicketFacade {
 
     private final TicketController ticketController;
@@ -33,7 +32,7 @@ public final class SubmitTicketFacade {
             throw new ValidationException("TicketBean non valido o incompleto");
         }
         String authorEmail = UserSession.getInstanceSingleton().getCurrentUser() != null
-                ? UserSession.getInstanceSingleton().getCurrentUser().obtainEmail()
+                ? UserSession.getInstanceSingleton().getCurrentUser().getEmail()
                 : "unknown";
         return ticketController.openTicket(bean, authorEmail);
     }

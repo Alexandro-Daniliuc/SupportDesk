@@ -11,7 +11,6 @@ import it.uniroma2.dicii.ispw.supportdesk.utility.builder.ReportBuilder;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@SuppressWarnings("java:S6548")
 public final class ReportFacade {
 
     private final ReportController reportController;

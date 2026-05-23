@@ -25,11 +25,11 @@ public class UserDAODemo implements UserDAO {
         User user1 = new User(4, "Giovanni", "Rossi", "giovanni.rossi@azienda.it", DEMO_CREDENTIAL_HASH, Role.USER);
         User user2 = new User(5, "Sara", "Neri", "sara.neri@azienda.it", DEMO_CREDENTIAL_HASH, Role.USER);
 
-        STORE.put(admin.obtainEmail(), admin);
-        STORE.put(tech1.obtainEmail(), tech1);
-        STORE.put(tech2.obtainEmail(), tech2);
-        STORE.put(user1.obtainEmail(), user1);
-        STORE.put(user2.obtainEmail(), user2);
+        STORE.put(admin.getEmail(), admin);
+        STORE.put(tech1.getEmail(), tech1);
+        STORE.put(tech2.getEmail(), tech2);
+        STORE.put(user1.getEmail(), user1);
+        STORE.put(user2.getEmail(), user2);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class UserDAODemo implements UserDAO {
         }
         List<User> result = new ArrayList<>();
         for (User u : STORE.values()) {
-            if (u.obtainRole() == role) {
+            if (u.getRole() == role) {
                 result.add(u);
             }
         }
@@ -59,9 +59,9 @@ public class UserDAODemo implements UserDAO {
         if (user == null) {
             throw new DAOException("User non può essere null");
         }
-        if (STORE.containsKey(user.obtainEmail())) {
-            throw new DAOException("Utente già esistente: " + user.obtainEmail());
+        if (STORE.containsKey(user.getEmail())) {
+            throw new DAOException("Utente già esistente: " + user.getEmail());
         }
-        STORE.put(user.obtainEmail(), user);
+        STORE.put(user.getEmail(), user);
     }
 }
