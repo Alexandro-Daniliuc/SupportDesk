@@ -1,4 +1,4 @@
-// Lasciato per scopi dimostrativi â€” pattern Chain of Responsibility non implementato a livello applicativo.
+// Lasciato per scopi dimostrativi — pattern Chain of Responsibility non implementato a livello applicativo.
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;

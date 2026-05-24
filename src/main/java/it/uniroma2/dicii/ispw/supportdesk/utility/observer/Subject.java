@@ -15,7 +15,7 @@ public abstract class Subject {
         observers.remove(o);
     }
 
-    public void notifyObservers(EventType event, Object payload) {
+    protected void notifyObservers(EventType event, Object payload) {
         for (Observer o : observers) {
             o.update(event, payload);
         }

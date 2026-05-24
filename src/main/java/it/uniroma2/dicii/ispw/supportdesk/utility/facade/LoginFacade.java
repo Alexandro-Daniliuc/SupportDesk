@@ -6,6 +6,7 @@ import it.uniroma2.dicii.ispw.supportdesk.exception.AuthenticationException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
+import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 
 public final class LoginFacade {
 
@@ -26,5 +27,9 @@ public final class LoginFacade {
     public LoginRecord login(LoginBean bean)
             throws ValidationException, AuthenticationException, DAOException {
         return loginController.authenticate(bean);
+    }
+
+    public void logout() {
+        UserSession.getInstanceSingleton().clear();
     }
 }

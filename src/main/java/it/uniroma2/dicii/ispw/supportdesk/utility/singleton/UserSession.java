@@ -22,9 +22,9 @@ public final class UserSession {
 
     public void setUser(User user) {
         this.email   = user.getEmail();
-        this.name    = user.getName();
+        this.name    = user.obtainName();
         this.surname = user.getSurname();
-        this.role    = user.getRole();
+        this.role    = user.obtainRole();
     }
 
     public void clear() {

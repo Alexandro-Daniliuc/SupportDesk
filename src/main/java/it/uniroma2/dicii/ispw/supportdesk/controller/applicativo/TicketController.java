@@ -3,6 +3,8 @@ package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 import it.uniroma2.dicii.ispw.supportdesk.bean.NotificationBean;
 import it.uniroma2.dicii.ispw.supportdesk.bean.TicketBean;
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
+import it.uniroma2.dicii.ispw.supportdesk.enumerator.Category;
+import it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
@@ -33,6 +35,8 @@ public class TicketController extends Subject {
     private static final long   SLA_WARNING_HOURS = 2;
     private static final ScheduledExecutorService SLA_SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
+    private final LoginController loginController = new LoginController();
+
     private NotificationBean buildNotification(EventType eventType) {
         String message = switch (eventType) {
             case TICKET_OPEN          -> "Nuovo ticket aperto - in attesa di assegnazione.";
@@ -49,17 +53,27 @@ public class TicketController extends Subject {
 
     public TicketRecord openTicket(TicketBean bean, String authorEmail)
             throws ValidationException, DAOException {
-        if (!bean.isValid()) {
-            throw new ValidationException("Dati ticket non validi");
+        if (!loginController.isUserLogged()) {
+            throw new ValidationException("Utente non autenticato");
         }
-        List<Ticket> all = PersistenceLayerFactory.getInstance().findAllTickets();
-        int nextId = all.stream().mapToInt(Ticket::getId).max().orElse(0) + 1;
-        Ticket ticket = new Ticket.Builder(nextId, bean.getTitle(), bean.getDescription(),
-                bean.getCategory(), bean.getPriority())
-                .authorEmail(authorEmail)
-                .build();
+        String cat = bean.getCategory() != null ? bean.getCategory().name() : null;
+        String pri = bean.getPriority() != null ? bean.getPriority().name() : null;
+        if (!validateInput(bean.getTitle(), bean.getDescription(), cat, pri)) {
+            if (bean.getTitle() == null || bean.getTitle().isBlank())
+                throw new ValidationException("title", "Il titolo è obbligatorio");
+            if (bean.getDescription() == null || bean.getDescription().isBlank())
+                throw new ValidationException("description", "La descrizione è obbligatoria");
+            if (bean.getCategory() == null)
+                throw new ValidationException("category", "La categoria è obbligatoria");
+            throw new ValidationException("priority", "La priorità è obbligatoria");
+        }
+        User author = PersistenceLayerFactory.getInstance().findUserByEmail(authorEmail);
+        if (author == null) {
+            throw new DAOException("Utente non trovato: " + authorEmail);
+        }
+        Ticket ticket = createTicket(author, bean.getTitle(), bean.getDescription(),
+                bean.getCategory(), bean.getPriority());
         notifyObservers(EventType.TICKET_OPEN, buildNotification(EventType.TICKET_OPEN));
-        PersistenceLayerFactory.getInstance().saveTicket(ticket);
         launchBackgroundTasks(ticket);
         log.info("Ticket {} aperto da {}", ticket.getId(), authorEmail);
         return toRecord(ticket);
@@ -151,12 +165,31 @@ public class TicketController extends Subject {
         return PersistenceLayerFactory.getInstance()
                 .findUsersByRole(Role.TECHNICIAN)
                 .stream()
-                .map(u -> new UserRecord(u.getId(), u.getName(), u.getSurname(),
-                        u.getEmail(), u.getRole(), u.getSpecialization()))
+                .map(u -> new UserRecord(u.obtainId(), u.obtainName(), u.getSurname(),
+                        u.getEmail(), u.obtainRole(), u.obtainSpecialization()))
                 .toList();
     }
 
-    public void changePriority(int ticketId, it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority newPriority)
+    public boolean validateInput(String title, String description, String category, String priority) {
+        return title != null && !title.isBlank()
+            && description != null && !description.isBlank()
+            && category != null && !category.isBlank()
+            && priority != null && !priority.isBlank();
+    }
+
+    public Ticket createTicket(User user, String title, String description, Category category, Priority priority)
+            throws DAOException {
+        List<Ticket> all = PersistenceLayerFactory.getInstance().findAllTickets();
+        int nextId = all.stream().mapToInt(Ticket::getId).max().orElse(0) + 1;
+        Ticket ticket = new Ticket.Builder(nextId, title, description, category, priority)
+                .authorEmail(user.getEmail())
+                .build();
+        PersistenceLayerFactory.getInstance().saveTicket(ticket);
+        log.info("Ticket {} creato da {}", ticket.getId(), user.getEmail());
+        return ticket;
+    }
+
+    public void changePriority(int ticketId, Priority newPriority)
             throws DAOException, TicketNotFoundException {
         Ticket t = PersistenceLayerFactory.getInstance().getTicketById(ticketId);
         Ticket updated = new Ticket.Builder(t.getId(), t.getTitle(), t.getDescription(), t.getCategory(), newPriority)
@@ -185,7 +218,7 @@ public class TicketController extends Subject {
 
     public static TicketRecord toRecord(Ticket t) {
         String techName = t.getAssignedTechnician() != null
-                ? t.getAssignedTechnician().getName() + " " + t.getAssignedTechnician().getSurname()
+                ? t.getAssignedTechnician().obtainName() + " " + t.getAssignedTechnician().getSurname()
                 : null;
         return new TicketRecord(t.getId(), t.getTitle(), t.getDescription(),
                 t.getCategory(), t.getPriority(), t.getStatus(),

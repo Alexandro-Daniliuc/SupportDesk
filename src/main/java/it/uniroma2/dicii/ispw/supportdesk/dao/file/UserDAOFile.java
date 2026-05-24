@@ -26,7 +26,7 @@ public class UserDAOFile implements UserDAO {
     public List<User> findByRole(Role role) throws DAOException {
         List<User> result = new ArrayList<>();
         for (User u : readAll()) {
-            if (u.getRole() == role) result.add(u);
+            if (u.obtainRole() == role) result.add(u);
         }
         return result;
     }
@@ -62,16 +62,16 @@ public class UserDAOFile implements UserDAO {
     }
 
     private String buildLine(int id, User u) {
-        String spec = u.getSpecialization() != null ? u.getSpecialization() : NULL_TOKEN;
-        return id + SEP + u.getName() + SEP + u.getSurname() + SEP
+        String spec = u.obtainSpecialization() != null ? u.obtainSpecialization() : NULL_TOKEN;
+        return id + SEP + u.obtainName() + SEP + u.getSurname() + SEP
             + u.getEmail() + SEP + u.getPasswordHash() + SEP
-            + u.getRole().name() + SEP + spec;
+            + u.obtainRole().name() + SEP + spec;
     }
 
     private int computeNextId() throws DAOException {
         int max = 0;
         for (User u : readAll()) {
-            if (u.getId() > max) max = u.getId();
+            if (u.obtainId() > max) max = u.obtainId();
         }
         return max + 1;
     }

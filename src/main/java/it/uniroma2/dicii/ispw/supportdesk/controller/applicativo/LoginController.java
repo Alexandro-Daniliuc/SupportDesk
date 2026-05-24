@@ -53,13 +53,17 @@ public class LoginController {
         }
     }
 
+    public boolean isUserLogged() {
+        return UserSession.getInstanceSingleton().isLoggedIn();
+    }
+
     private LoginRecord toRecord(User user) {
         return new LoginRecord(
-                user.getId(),
-                user.getName(),
+                user.obtainId(),
+                user.obtainName(),
                 user.getSurname(),
                 user.getEmail(),
-                user.getRole()
+                user.obtainRole()
         );
     }
 }

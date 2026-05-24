@@ -12,7 +12,7 @@ public abstract class TicketDecorator implements TicketComponent {
 
     protected final Ticket ticket;
 
-    protected TicketDecorator(Ticket ticket) {
+    public TicketDecorator(Ticket ticket) {
         this.ticket = ticket;
     }
 

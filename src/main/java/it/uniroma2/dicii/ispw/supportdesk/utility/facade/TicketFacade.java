@@ -40,12 +40,10 @@ public final class TicketFacade {
     }
 
     public TicketBean openTicketWithWorkflow(TicketBean bean) throws ValidationException, DAOException {
-        if (bean == null || !bean.isValid()) {
-            throw new ValidationException("TicketBean non valido o incompleto");
+        if (bean == null) {
+            throw new ValidationException("TicketBean non può essere null");
         }
-        String authorEmail = UserSession.getInstanceSingleton().isLoggedIn()
-                ? UserSession.getInstanceSingleton().getEmail()
-                : "unknown";
+        String authorEmail = UserSession.getInstanceSingleton().getEmail();
         TicketRecord record = ticketCtrl.openTicket(bean, authorEmail);
         bean.setId(record.id());
         return bean;

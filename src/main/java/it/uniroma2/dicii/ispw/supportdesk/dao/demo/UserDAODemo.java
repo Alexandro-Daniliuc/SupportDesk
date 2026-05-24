@@ -47,7 +47,7 @@ public class UserDAODemo implements UserDAO {
         }
         List<User> result = new ArrayList<>();
         for (User u : STORE.values()) {
-            if (u.getRole() == role) {
+            if (u.obtainRole() == role) {
                 result.add(u);
             }
         }

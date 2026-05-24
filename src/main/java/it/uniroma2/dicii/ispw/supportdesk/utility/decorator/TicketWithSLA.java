@@ -3,7 +3,6 @@ package it.uniroma2.dicii.ispw.supportdesk.utility.decorator;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
 import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
-import it.uniroma2.dicii.ispw.supportdesk.utility.observer.EventType;
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.Subject;
 
 import java.time.LocalDateTime;
@@ -24,7 +23,6 @@ public final class TicketWithSLA extends TicketDecorator {
     @Override
     public void changeStatus(TicketStatus newStatus) throws InvalidTransitionException {
         ticket.changeStatus(newStatus);
-        notifier.notifyObservers(EventType.TICKET_CAMBIO_STATO, ticket);
     }
 
     @Override

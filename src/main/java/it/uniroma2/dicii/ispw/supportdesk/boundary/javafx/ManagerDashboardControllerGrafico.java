@@ -10,7 +10,7 @@ import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.UserRecord;
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.SlaFacade;
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.ViewTicketsFacade;
-import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
+import it.uniroma2.dicii.ispw.supportdesk.utility.facade.LoginFacade;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -127,7 +127,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
 
     @FXML
     public void onLogout() throws IOException {
-        UserSession.getInstanceSingleton().clear();
+        LoginFacade.getInstanceSingleton().logout();
         SessionContext.clear();
         SceneNavigator.navigateTo("login.fxml", "Login");
     }
