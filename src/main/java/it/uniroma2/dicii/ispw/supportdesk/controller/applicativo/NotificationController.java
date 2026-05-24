@@ -1,6 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
+import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.model.Notification;
@@ -20,18 +20,18 @@ public class NotificationController {
     public NotificationRecord createNotification(String message, Role targetRole, int ticketId)
             throws DAOException {
         Notification n = new Notification(idGen.getAndIncrement(), message, targetRole, ticketId);
-        PersistenceLayer.getInstanceSingleton().saveNotification(n);
+        PersistenceLayerFactory.getInstance().saveNotification(n);
         log.info("Notifica creata per ticket {}", ticketId);
         return toRecord(n);
     }
 
     public List<NotificationRecord> getNotificationsForRole(Role targetRole) throws DAOException {
-        return PersistenceLayer.getInstanceSingleton().findNotificationsByRole(targetRole)
+        return PersistenceLayerFactory.getInstance().findNotificationsByRole(targetRole)
                 .stream().map(this::toRecord).toList();
     }
 
     public void markAsRead(int notificationId) throws DAOException {
-        PersistenceLayer.getInstanceSingleton().markNotificationAsRead(notificationId);
+        PersistenceLayerFactory.getInstance().markNotificationAsRead(notificationId);
     }
 
     private NotificationRecord toRecord(Notification n) {

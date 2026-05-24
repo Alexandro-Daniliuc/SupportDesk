@@ -6,8 +6,7 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.SupportDeskException;
 import it.uniroma2.dicii.ispw.supportdesk.fx.SceneNavigator;
-import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
-import it.uniroma2.dicii.ispw.supportdesk.utility.facade.SubmitTicketFacade;
+import it.uniroma2.dicii.ispw.supportdesk.utility.facade.TicketFacade;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -17,12 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-/**
- * Boundary JavaFX per il caso d'uso UC1 — Submit Ticket.
- * Corrisponde a SubmitTicketGUI nel VOPC e a OpenTicketGraphicController nel Sequence Diagram.
- */
 public class OpenTicketControllerGrafico {
-
 
     @FXML private TextField           titleField;
     @FXML private TextArea            descriptionArea;
@@ -32,17 +26,16 @@ public class OpenTicketControllerGrafico {
 
     private static final Logger log = LoggerFactory.getLogger(OpenTicketControllerGrafico.class);
 
-    private SubmitTicketFacade ticketFacade;
+    private TicketFacade ticketFacade;
 
     @FXML
     public void initialize() {
-        ticketFacade = SubmitTicketFacade.getInstanceSingleton();   // step 3 SD: Initialize TicketFacade
+        ticketFacade = TicketFacade.getInstanceSingleton();
         categoryBox.setItems(FXCollections.observableArrayList(Category.values()));
         priorityBox.setItems(FXCollections.observableArrayList(Priority.values()));
         showForm();
     }
 
-    /** step VOPC: showForm() — prepara la vista per l'inserimento */
     public void showForm() {
         errorLabel.setText("");
         titleField.clear();
@@ -51,7 +44,6 @@ public class OpenTicketControllerGrafico {
         priorityBox.setValue(null);
     }
 
-    /** step 4 SD: utente preme "Invia" — step 5: boundary chiama ticketFacade.openTicketWithWorkflow() */
     @FXML
     public void onSubmitTicket() {
         errorLabel.setText("");
@@ -62,7 +54,6 @@ public class OpenTicketControllerGrafico {
         submitTicket(title, description, category, priority);
     }
 
-    /** VOPC: submitTicket(title, description, category, priority) */
     public void submitTicket(String title, String description, Category category, Priority priority) {
         TicketBean bean = new TicketBean();
         bean.setTitle(title);
@@ -71,8 +62,8 @@ public class OpenTicketControllerGrafico {
         bean.setPriority(priority);
 
         try {
-            TicketRecord result = ticketFacade.openTicketWithWorkflow(bean);
-            showConfirmation(result.id());
+            TicketBean result = ticketFacade.openTicketWithWorkflow(bean);
+            showConfirmation(result.getId());
         } catch (DAOException e) {
             log.error("Errore DAO apertura ticket", e);
             showError("Errore interno del sistema. Riprovare.");
@@ -81,11 +72,10 @@ public class OpenTicketControllerGrafico {
         }
     }
 
-    /** VOPC: showConfirmation(ticketId) */
     public void showConfirmation(int ticketId) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Ticket aperto");
-        alert.setContentText("Il tuo ticket #" + ticketId + " è stato aperto con successo.");
+        alert.setContentText("Il tuo ticket #" + ticketId + " e stato aperto con successo.");
         alert.showAndWait();
         try {
             SceneNavigator.navigateTo("user-dashboard.fxml", "Dashboard Utente");
@@ -94,7 +84,6 @@ public class OpenTicketControllerGrafico {
         }
     }
 
-    /** VOPC: showError(message) */
     public void showError(String message) {
         errorLabel.setText(message);
     }

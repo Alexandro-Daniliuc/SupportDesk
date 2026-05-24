@@ -19,15 +19,15 @@ import java.util.List;
 
 public final class ViewTicketsFacade {
 
-    private final TicketController ticketController;
+    private final TicketController  ticketController;
     private final CommentController commentController;
 
     private ViewTicketsFacade() {
-        ticketController = new TicketController();
+        ticketController  = new TicketController();
         commentController = new CommentController();
-        ticketController.attach(new UserNotificationObserver());
-        ticketController.attach(new ManagerNotificationObserver());
-        ticketController.attach(new TechnicianNotificationObserver());
+        ticketController.addObserver(new UserNotificationObserver());
+        ticketController.addObserver(new ManagerNotificationObserver());
+        ticketController.addObserver(new TechnicianNotificationObserver());
     }
 
     private static final class Holder {
@@ -46,20 +46,18 @@ public final class ViewTicketsFacade {
         return ticketController.getTicketsByUser(email);
     }
 
-    public TicketRecord changeStatus(int ticketId, TicketStatus newStatus)
+    public void changeStatus(int ticketId, TicketStatus newStatus)
             throws DAOException, TicketNotFoundException, InvalidTransitionException {
-        return ticketController.changeStatus(ticketId, newStatus);
+        ticketController.changeStatus(ticketId, newStatus);
     }
 
     public void changePriority(int ticketId, String priorityName)
-            throws it.uniroma2.dicii.ispw.supportdesk.exception.DAOException,
-                   it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException {
+            throws DAOException, TicketNotFoundException {
         ticketController.changePriority(ticketId,
                 it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority.valueOf(priorityName));
     }
 
-    public void addComment(CommentBean bean)
-            throws ValidationException, DAOException {
+    public void addComment(CommentBean bean) throws ValidationException, DAOException {
         commentController.addComment(bean.getTicketId(), bean.getAuthorEmail(), bean.getText());
     }
 

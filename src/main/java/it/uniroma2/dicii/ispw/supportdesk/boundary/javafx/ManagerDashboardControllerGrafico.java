@@ -30,7 +30,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
 
     @FXML private Label welcomeLabel;
 
-    // Tab 1 — Tutti i ticket
+    // Tab 1 â€” Tutti i ticket
     @FXML private TableView<TicketRecord>       allTicketsTable;
     @FXML private TableColumn<TicketRecord, Integer> colId;
     @FXML private TableColumn<TicketRecord, String>  colTitle;
@@ -40,7 +40,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
     @FXML private TableColumn<TicketRecord, String>  colTech;
     @FXML private TableColumn<TicketRecord, String>  colSla;
 
-    // Tab 2 — SLA
+    // Tab 2 â€” SLA
     @FXML private TableView<TicketRecord>       slaTable;
     @FXML private TableColumn<TicketRecord, Integer> slaColId;
     @FXML private TableColumn<TicketRecord, String>  slaColTitle;
@@ -48,7 +48,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
     @FXML private TableColumn<TicketRecord, String>  slaColStatus;
     @FXML private TableColumn<TicketRecord, String>  slaColSla;
 
-    // Tab 3 — Correlati
+    // Tab 3 â€” Correlati
     @FXML private TextField                     correlationIdField;
     @FXML private Label                         correlationErrorLabel;
     @FXML private TableView<TicketRecord>       correlatedTable;
@@ -127,7 +127,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
 
     @FXML
     public void onLogout() throws IOException {
-        UserSession.getInstanceSingleton().logout();
+        UserSession.getInstanceSingleton().clear();
         SessionContext.clear();
         SceneNavigator.navigateTo("login.fxml", "Login");
     }
@@ -250,3 +250,4 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
         correlatedTable.getSelectionModel().clearSelection();
     }
 }
+

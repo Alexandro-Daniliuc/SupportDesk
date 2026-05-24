@@ -1,6 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
+import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ReportException;
 import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
@@ -20,9 +20,9 @@ public class ReportController {
     public ReportBuilder.Report generateReport(String title, LocalDateTime start, LocalDateTime end)
             throws ReportException, DAOException {
         if (title == null || title.isBlank()) {
-            throw new ReportException("Titolo del report è obbligatorio");
+            throw new ReportException("Titolo del report Ã¨ obbligatorio");
         }
-        List<Ticket> all = PersistenceLayer.getInstanceSingleton().findAllTickets();
+        List<Ticket> all = PersistenceLayerFactory.getInstance().findAllTickets();
         List<Ticket> filtered = filterByPeriod(all, start, end);
         log.info("Report generato: {} ticket", filtered.size());
         return new ReportBuilder()
@@ -44,3 +44,4 @@ public class ReportController {
         return afterStart && beforeEnd;
     }
 }
+

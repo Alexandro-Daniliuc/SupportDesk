@@ -1,6 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
+import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.KnowledgeBaseException;
 import it.uniroma2.dicii.ispw.supportdesk.model.KnowledgeEntry;
@@ -23,12 +23,12 @@ public class KnowledgeBaseController {
         if (title == null || title.isBlank() || content == null || content.isBlank()) {
             throw new KnowledgeBaseException("Titolo e contenuto sono obbligatori");
         }
-        User author = PersistenceLayer.getInstanceSingleton().findUserByEmail(authorEmail);
+        User author = PersistenceLayerFactory.getInstance().findUserByEmail(authorEmail);
         if (author == null) {
             throw new KnowledgeBaseException("Autore non trovato: " + authorEmail);
         }
         KnowledgeEntry entry = new KnowledgeEntry(idGen.getAndIncrement(), title, content, author);
-        PersistenceLayer.getInstanceSingleton().saveKnowledgeEntry(entry);
+        PersistenceLayerFactory.getInstance().saveKnowledgeEntry(entry);
         log.info("Voce knowledge base aggiunta: {}", title);
         return toRecord(entry);
     }
@@ -38,12 +38,12 @@ public class KnowledgeBaseController {
         if (keyword == null || keyword.isBlank()) {
             throw new KnowledgeBaseException("Keyword di ricerca non valida");
         }
-        return PersistenceLayer.getInstanceSingleton().findKnowledgeEntriesByKeyword(keyword)
+        return PersistenceLayerFactory.getInstance().findKnowledgeEntriesByKeyword(keyword)
                 .stream().map(this::toRecord).toList();
     }
 
     public List<KnowledgeEntryRecord> getAllEntries() throws DAOException {
-        return PersistenceLayer.getInstanceSingleton().findAllKnowledgeEntries()
+        return PersistenceLayerFactory.getInstance().findAllKnowledgeEntries()
                 .stream().map(this::toRecord).toList();
     }
 

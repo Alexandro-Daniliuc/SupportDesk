@@ -1,7 +1,7 @@
-// Lasciato per scopi dimostrativi — pattern Chain of Responsibility non implementato a livello applicativo.
+// Lasciato per scopi dimostrativi â€” pattern Chain of Responsibility non implementato a livello applicativo.
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
+import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.AssignmentException;
@@ -29,14 +29,14 @@ public class AssignmentController {
 
     public void assign(Ticket ticket)
             throws DAOException, AssignmentException, TicketNotFoundException, InvalidTransitionException {
-        List<User> technicians = PersistenceLayer.getInstanceSingleton().findUsersByRole(Role.TECHNICIAN);
-        List<Ticket> allTickets = PersistenceLayer.getInstanceSingleton().findAllTickets();
+        List<User> technicians = PersistenceLayerFactory.getInstance().findUsersByRole(Role.TECHNICIAN);
+        List<Ticket> allTickets = PersistenceLayerFactory.getInstance().findAllTickets();
         Map<String, Integer> workloadMap = computeWorkloadMap(allTickets);
         AssignmentHandler chain = buildChain(workloadMap);
         User technician = chain.handle(ticket, technicians);
         ticket.setAssignedTechnician(technician);
-        ticket.cambiaStato(TicketStatus.ASSIGNED);
-        PersistenceLayer.getInstanceSingleton().updateTicket(ticket);
+        ticket.changeStatus(TicketStatus.ASSIGNED);
+        PersistenceLayerFactory.getInstance().updateTicket(ticket);
         if (log.isInfoEnabled()) {
             log.info("Ticket {} assegnato a {}", ticket.getId(), technician.getEmail());
         }
@@ -63,3 +63,4 @@ public class AssignmentController {
         return map;
     }
 }
+

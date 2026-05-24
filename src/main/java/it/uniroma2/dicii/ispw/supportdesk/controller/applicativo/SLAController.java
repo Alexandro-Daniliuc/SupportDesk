@@ -1,6 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
+import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
@@ -16,11 +16,20 @@ import java.util.List;
 public class SLAController {
 
     private static final Logger log = LoggerFactory.getLogger(SLAController.class);
-
     private static final long SLA_WARNING_HOURS = 2;
 
+    public void start() {
+        log.info("SLA monitoring avviato");
+    }
+
+    public void checkSLA(Ticket ticket) {
+        if (LocalDateTime.now().isAfter(ticket.getScadenzaSla())) {
+            log.warn("SLA violato per ticket {}", ticket.getId());
+        }
+    }
+
     public boolean isSlaViolated(int ticketId) throws DAOException, TicketNotFoundException {
-        Ticket ticket = PersistenceLayer.getInstanceSingleton().getTicketById(ticketId);
+        Ticket ticket = PersistenceLayerFactory.getInstance().getTicketById(ticketId);
         boolean violated = LocalDateTime.now().isAfter(ticket.getScadenzaSla());
         if (violated) {
             log.warn("SLA violato per ticket {}", ticketId);
@@ -30,7 +39,7 @@ public class SLAController {
 
     public List<TicketRecord> getTicketsWithSlaExpiringSoon() throws DAOException {
         LocalDateTime threshold = LocalDateTime.now().plusHours(SLA_WARNING_HOURS);
-        return PersistenceLayer.getInstanceSingleton().findAllTickets().stream()
+        return PersistenceLayerFactory.getInstance().findAllTickets().stream()
                 .filter(t -> !isTerminated(t) && !t.getScadenzaSla().isAfter(threshold))
                 .map(TicketController::toRecord)
                 .toList();

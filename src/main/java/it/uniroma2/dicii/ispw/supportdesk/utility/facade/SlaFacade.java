@@ -2,7 +2,7 @@ package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.SLAController;
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.TicketController;
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
+import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
@@ -12,13 +12,13 @@ import java.util.List;
 
 public final class SlaFacade {
 
-    private final SLAController slaController;
+    private final SLAController    slaController;
     private final TicketController ticketController;
 
     private SlaFacade() {
-        slaController = new SLAController();
+        slaController    = new SLAController();
         ticketController = new TicketController();
-        ticketController.attach(new ManagerNotificationObserver());
+        ticketController.addObserver(new ManagerNotificationObserver());
     }
 
     private static final class Holder {
@@ -34,7 +34,7 @@ public final class SlaFacade {
     }
 
     public void rescheduleAllSlaTimers() throws DAOException {
-        PersistenceLayer.getInstanceSingleton().findAllTickets().stream()
+        PersistenceLayerFactory.getInstance().findAllTickets().stream()
                 .filter(t -> t.getStatus() != TicketStatus.RESOLVED && t.getStatus() != TicketStatus.CLOSED)
                 .forEach(ticketController::schedulaSlaTimer);
     }

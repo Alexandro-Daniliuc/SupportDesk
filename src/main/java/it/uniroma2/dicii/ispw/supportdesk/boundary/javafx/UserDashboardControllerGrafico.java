@@ -81,7 +81,7 @@ public class UserDashboardControllerGrafico extends AbstractDashboardControllerG
         bean.setAuthorEmail(SessionContext.getCurrentUser().email());
         bean.setText(text);
         if (!bean.isValid()) {
-            actionErrorLabel.setText("Il commento non può essere vuoto.");
+            actionErrorLabel.setText("Il commento non puÃ² essere vuoto.");
             return;
         }
         actionErrorLabel.setText("");
@@ -130,7 +130,7 @@ public class UserDashboardControllerGrafico extends AbstractDashboardControllerG
 
     @FXML
     public void onLogout() throws IOException {
-        UserSession.getInstanceSingleton().logout();
+        UserSession.getInstanceSingleton().clear();
         SessionContext.clear();
         SceneNavigator.navigateTo("login.fxml", "Login");
     }
@@ -170,3 +170,4 @@ public class UserDashboardControllerGrafico extends AbstractDashboardControllerG
         }
     }
 }
+

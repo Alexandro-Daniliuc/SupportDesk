@@ -84,7 +84,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
         }
         if (selected.status() == TicketStatus.IN_PROGRESS) {
             actionErrorLabel.setStyle(STYLE_INFO);
-            actionErrorLabel.setText("Ticket già preso in carico.");
+            actionErrorLabel.setText("Ticket giÃ  preso in carico.");
             return;
         }
         actionErrorLabel.setText("");
@@ -112,7 +112,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
         }
         if (selected.status() == TicketStatus.RESOLVED) {
             actionErrorLabel.setStyle(STYLE_INFO);
-            actionErrorLabel.setText("Ticket già risolto.");
+            actionErrorLabel.setText("Ticket giÃ  risolto.");
             return;
         }
         changeStatus(selected.id(), TicketStatus.RESOLVED);
@@ -159,7 +159,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
 
     @FXML
     public void onLogout() throws IOException {
-        UserSession.getInstanceSingleton().logout();
+        UserSession.getInstanceSingleton().clear();
         SessionContext.clear();
         SceneNavigator.navigateTo("login.fxml", "Login");
     }
@@ -223,3 +223,4 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
         }
     }
 }
+

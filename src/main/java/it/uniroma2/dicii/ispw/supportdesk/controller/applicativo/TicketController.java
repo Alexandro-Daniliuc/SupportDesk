@@ -2,21 +2,20 @@ package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.bean.NotificationBean;
 import it.uniroma2.dicii.ispw.supportdesk.bean.TicketBean;
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
+import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
-import it.uniroma2.dicii.ispw.supportdesk.model.User;
-import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
+import it.uniroma2.dicii.ispw.supportdesk.model.User;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
 import it.uniroma2.dicii.ispw.supportdesk.record.UserRecord;
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.EventType;
-import it.uniroma2.dicii.ispw.supportdesk.utility.observer.TicketObserver;
-import it.uniroma2.dicii.ispw.supportdesk.utility.observer.TicketSubject;
+import it.uniroma2.dicii.ispw.supportdesk.utility.observer.Subject;
+import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,44 +23,22 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
-public class TicketController implements TicketSubject {
+public class TicketController extends Subject {
 
     private static final Logger log             = LoggerFactory.getLogger(TicketController.class);
     private static final long   SLA_WARNING_HOURS = 2;
     private static final ScheduledExecutorService SLA_SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
-    private final List<TicketObserver> observers = new CopyOnWriteArrayList<>();
-
-    @Override
-    public void attach(TicketObserver observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void detach(TicketObserver observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers(EventType eventType) {
-        NotificationBean notification = buildNotification(eventType);
-        for (TicketObserver o : observers) {
-            o.update(notification);
-        }
-    }
-
     private NotificationBean buildNotification(EventType eventType) {
         String message = switch (eventType) {
-            case TICKET_OPEN          -> "Nuovo ticket aperto — in attesa di assegnazione.";
-            case TICKET_IN_CARICO     -> "Il ticket è stato preso in carico da un tecnico.";
+            case TICKET_OPEN          -> "Nuovo ticket aperto - in attesa di assegnazione.";
+            case TICKET_IN_CARICO     -> "Il ticket e stato preso in carico da un tecnico.";
             case TICKET_CAMBIO_STATO  -> "Cambio stato ticket rilevato.";
-            case TICKET_RISOLTO       -> "Ticket risolto — notifica inviata all'utente richiedente.";
+            case TICKET_RISOLTO       -> "Ticket risolto - notifica inviata all'utente richiedente.";
             case SLA_IN_SCADENZA      -> "SLA in scadenza rilevato.";
             case SLA_VIOLATO          -> "SLA VIOLATO rilevato.";
             case ASSEGNAZIONE_MANUALE -> "Ticket richiede assegnazione manuale.";
@@ -75,52 +52,51 @@ public class TicketController implements TicketSubject {
         if (!bean.isValid()) {
             throw new ValidationException("Dati ticket non validi");
         }
-        List<Ticket> all = PersistenceLayer.getInstanceSingleton().findAllTickets();
+        List<Ticket> all = PersistenceLayerFactory.getInstance().findAllTickets();
         int nextId = all.stream().mapToInt(Ticket::getId).max().orElse(0) + 1;
         Ticket ticket = new Ticket.Builder(nextId, bean.getTitle(), bean.getDescription(),
                 bean.getCategory(), bean.getPriority())
                 .authorEmail(authorEmail)
                 .build();
-        notifyObservers(EventType.TICKET_OPEN);
-        PersistenceLayer.getInstanceSingleton().saveTicket(ticket);
+        notifyObservers(EventType.TICKET_OPEN, buildNotification(EventType.TICKET_OPEN));
+        PersistenceLayerFactory.getInstance().saveTicket(ticket);
         launchBackgroundTasks(ticket);
         log.info("Ticket {} aperto da {}", ticket.getId(), authorEmail);
         return toRecord(ticket);
     }
 
     public TicketRecord getTicket(int id) throws DAOException, TicketNotFoundException {
-        return toRecord(PersistenceLayer.getInstanceSingleton().getTicketById(id));
+        return toRecord(PersistenceLayerFactory.getInstance().getTicketById(id));
     }
 
     public List<TicketRecord> getAllTickets() throws DAOException {
-        return PersistenceLayer.getInstanceSingleton().findAllTickets()
+        return PersistenceLayerFactory.getInstance().findAllTickets()
                 .stream().map(TicketController::toRecord).toList();
     }
 
     public List<TicketRecord> getTicketsByUser(String email) throws DAOException {
-        return PersistenceLayer.getInstanceSingleton().getTicketsByUser(email)
+        return PersistenceLayerFactory.getInstance().getTicketsByUser(email)
                 .stream().map(TicketController::toRecord).toList();
     }
 
-    public TicketRecord changeStatus(int id, TicketStatus newStatus)
+    public void changeStatus(int ticketId, TicketStatus newStatus)
             throws DAOException, TicketNotFoundException, InvalidTransitionException {
         if (newStatus == TicketStatus.REOPENED) {
-            User caller = UserSession.getInstanceSingleton().getCurrentUser();
-            if (caller == null || caller.getRole() != Role.USER) {
-                throw new InvalidTransitionException("Solo l'utente può riaprire un ticket");
+            if (!UserSession.getInstanceSingleton().isLoggedIn()
+                    || UserSession.getInstanceSingleton().getRole() != Role.USER) {
+                throw new InvalidTransitionException("Solo l'utente puo riaprire un ticket");
             }
         }
-        Ticket ticket = PersistenceLayer.getInstanceSingleton().getTicketById(id);
-        ticket.cambiaStato(newStatus);
-        PersistenceLayer.getInstanceSingleton().updateTicket(ticket);
-        notifyObservers(EventType.TICKET_CAMBIO_STATO);
+        Ticket ticket = PersistenceLayerFactory.getInstance().getTicketById(ticketId);
+        ticket.changeStatus(newStatus);
+        PersistenceLayerFactory.getInstance().updateTicket(ticket);
+        notifyObservers(EventType.TICKET_CAMBIO_STATO, buildNotification(EventType.TICKET_CAMBIO_STATO));
         if (newStatus == TicketStatus.IN_PROGRESS) {
-            notifyObservers(EventType.TICKET_IN_CARICO);
+            notifyObservers(EventType.TICKET_IN_CARICO, buildNotification(EventType.TICKET_IN_CARICO));
         } else if (newStatus == TicketStatus.RESOLVED) {
-            notifyObservers(EventType.TICKET_RISOLTO);
+            notifyObservers(EventType.TICKET_RISOLTO, buildNotification(EventType.TICKET_RISOLTO));
         }
-        log.info("Ticket {} passato a stato {}", id, newStatus);
-        return toRecord(ticket);
+        log.info("Ticket {} passato a stato {}", ticketId, newStatus);
     }
 
     public void schedulaSlaTimer(Ticket ticket) {
@@ -129,27 +105,28 @@ public class TicketController implements TicketSubject {
         long msToWarning = Duration.between(now, ticket.getScadenzaSla().minusHours(SLA_WARNING_HOURS)).toMillis();
 
         if (msToExpiry <= 0) {
-            notifyObservers(EventType.SLA_VIOLATO);
+            notifyObservers(EventType.SLA_VIOLATO, buildNotification(EventType.SLA_VIOLATO));
             return;
         }
 
         if (msToWarning > 0) {
-            SLA_SCHEDULER.schedule(() -> notifyObservers(EventType.SLA_IN_SCADENZA),
-                    msToWarning, TimeUnit.MILLISECONDS);
+            SLA_SCHEDULER.schedule(
+                () -> notifyObservers(EventType.SLA_IN_SCADENZA, buildNotification(EventType.SLA_IN_SCADENZA)),
+                msToWarning, TimeUnit.MILLISECONDS);
         } else {
-            notifyObservers(EventType.SLA_IN_SCADENZA);
+            notifyObservers(EventType.SLA_IN_SCADENZA, buildNotification(EventType.SLA_IN_SCADENZA));
         }
 
         SLA_SCHEDULER.schedule(() -> {
-                try {
-                    Ticket current = PersistenceLayer.getInstanceSingleton().getTicketById(ticket.getId());
-                    if (!isTerminated(current)) {
-                        notifyObservers(EventType.SLA_VIOLATO);
-                    }
-                } catch (Exception e) {
-                    log.warn("Controllo SLA fallito per ticket {}", ticket.getId());
+            try {
+                Ticket current = PersistenceLayerFactory.getInstance().getTicketById(ticket.getId());
+                if (!isTerminated(current)) {
+                    notifyObservers(EventType.SLA_VIOLATO, buildNotification(EventType.SLA_VIOLATO));
                 }
-            }, msToExpiry, TimeUnit.MILLISECONDS);
+            } catch (Exception e) {
+                log.warn("Controllo SLA fallito per ticket {}", ticket.getId());
+            }
+        }, msToExpiry, TimeUnit.MILLISECONDS);
     }
 
     private boolean isTerminated(Ticket t) {
@@ -167,12 +144,11 @@ public class TicketController implements TicketSubject {
                 log.info("Correlazione non disponibile per ticket {}", id);
             }
         });
-
         correlation.start();
     }
 
     public List<UserRecord> getAvailableTechnicians() throws DAOException {
-        return PersistenceLayer.getInstanceSingleton()
+        return PersistenceLayerFactory.getInstance()
                 .findUsersByRole(Role.TECHNICIAN)
                 .stream()
                 .map(u -> new UserRecord(u.getId(), u.getName(), u.getSurname(),
@@ -182,27 +158,27 @@ public class TicketController implements TicketSubject {
 
     public void changePriority(int ticketId, it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority newPriority)
             throws DAOException, TicketNotFoundException {
-        Ticket t = PersistenceLayer.getInstanceSingleton().getTicketById(ticketId);
+        Ticket t = PersistenceLayerFactory.getInstance().getTicketById(ticketId);
         Ticket updated = new Ticket.Builder(t.getId(), t.getTitle(), t.getDescription(), t.getCategory(), newPriority)
                 .authorEmail(t.getAuthorEmail())
                 .dataApertura(t.getDataApertura())
                 .status(t.getStatus())
                 .build();
         updated.setAssignedTechnician(t.getAssignedTechnician());
-        PersistenceLayer.getInstanceSingleton().updateTicket(updated);
-        log.info("Priorità ticket {} aggiornata a {}", ticketId, newPriority);
+        PersistenceLayerFactory.getInstance().updateTicket(updated);
+        log.info("Priorita ticket {} aggiornata a {}", ticketId, newPriority);
     }
 
     public TicketRecord assignTechnician(int ticketId, String techEmail)
             throws DAOException, TicketNotFoundException, InvalidTransitionException {
-        Ticket ticket = PersistenceLayer.getInstanceSingleton().getTicketById(ticketId);
-        User tech = PersistenceLayer.getInstanceSingleton().findUserByEmail(techEmail);
+        Ticket ticket = PersistenceLayerFactory.getInstance().getTicketById(ticketId);
+        User tech = PersistenceLayerFactory.getInstance().findUserByEmail(techEmail);
         ticket.setAssignedTechnician(tech);
         if (ticket.getStatus() == TicketStatus.OPEN || ticket.getStatus() == TicketStatus.REOPENED) {
-            ticket.cambiaStato(TicketStatus.ASSIGNED);
+            ticket.changeStatus(TicketStatus.ASSIGNED);
         }
-        PersistenceLayer.getInstanceSingleton().updateTicket(ticket);
-        notifyObservers(EventType.ASSEGNAZIONE_MANUALE);
+        PersistenceLayerFactory.getInstance().updateTicket(ticket);
+        notifyObservers(EventType.ASSEGNAZIONE_MANUALE, buildNotification(EventType.ASSEGNAZIONE_MANUALE));
         log.info("Ticket {} assegnato a {}", ticketId, techEmail);
         return toRecord(ticket);
     }

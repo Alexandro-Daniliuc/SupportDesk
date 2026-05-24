@@ -9,10 +9,15 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority;
  */
 public class TicketBean {
 
+    private int    id;
     private String title;
     private String description;
     private Category category;
     private Priority priority;
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public TicketBean() {
         // no-arg required by bean contract
@@ -58,3 +63,4 @@ public class TicketBean {
                 && priority != null;
     }
 }
+

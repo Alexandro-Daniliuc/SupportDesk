@@ -1,14 +1,12 @@
 package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.bean.LoginBean;
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayer;
-import it.uniroma2.dicii.ispw.supportdesk.enumerator.ApplicationMode;
+import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.exception.AuthenticationException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.model.User;
 import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
-import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.ApplicationModeManager;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 
 import org.slf4j.Logger;
@@ -22,37 +20,23 @@ public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    private static final String DEMO_CREDENTIAL_HASH  = "DEMO_HASH_PLACEHOLDER";
-    private static final String SHA_256                = "SHA-256";
-    private static final String ERR_CREDENZIALI        = "Credenziali non valide";
-    private static final String ERR_CREDENZIALI_MISSING = "Credenziali mancanti o non valide";
+    private static final String SHA_256                  = "SHA-256";
+    private static final String ERR_CREDENZIALI          = "Credenziali non valide";
+    private static final String ERR_CREDENZIALI_MISSING  = "Credenziali mancanti o non valide";
 
     public LoginRecord authenticate(LoginBean bean)
             throws ValidationException, AuthenticationException, DAOException {
         if (!bean.isValid()) {
             throw new ValidationException(ERR_CREDENZIALI_MISSING);
         }
-        User user = PersistenceLayer.getInstanceSingleton().findUserByEmail(bean.getEmail());
+        String hash = sha256(bean.getPassword());
+        User user = PersistenceLayerFactory.getInstance().login(bean.getEmail(), hash);
         if (user == null) {
             throw new AuthenticationException(ERR_CREDENZIALI);
         }
-        String inputHash = sha256(bean.getPassword());
-        verifyPassword(inputHash, user);
-        UserSession.getInstanceSingleton().login(user);
+        UserSession.getInstanceSingleton().setUser(user);
         log.info("Autenticazione riuscita per {}", bean.getEmail());
         return toRecord(user);
-    }
-
-    private void verifyPassword(String inputHash, User user) throws AuthenticationException {
-        boolean valid;
-        if (ApplicationModeManager.getInstanceSingleton().getMode() == ApplicationMode.DEMO) {
-            valid = DEMO_CREDENTIAL_HASH.equals(inputHash) || DEMO_CREDENTIAL_HASH.equals(user.getPasswordHash());
-        } else {
-            valid = user.getPasswordHash().equals(inputHash);
-        }
-        if (!valid) {
-            throw new AuthenticationException(ERR_CREDENZIALI);
-        }
     }
 
     private String sha256(String input) throws AuthenticationException {
