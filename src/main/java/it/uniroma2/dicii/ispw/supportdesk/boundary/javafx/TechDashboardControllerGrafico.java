@@ -1,4 +1,4 @@
-package it.uniroma2.dicii.ispw.supportdesk.boundary.javafx;
+﻿package it.uniroma2.dicii.ispw.supportdesk.boundary.javafx;
 
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.KnowledgeBaseFacade;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
@@ -84,7 +84,7 @@ public class TechDashboardControllerGrafico extends AbstractDashboardControllerG
         }
         if (selected.status() == TicketStatus.IN_PROGRESS) {
             actionErrorLabel.setStyle(STYLE_INFO);
-            actionErrorLabel.setText("Ticket giÃ  preso in carico.");
+            actionErrorLabel.setText("Ticket preso in carico.");
             return;
         }
         actionErrorLabel.setText("");
