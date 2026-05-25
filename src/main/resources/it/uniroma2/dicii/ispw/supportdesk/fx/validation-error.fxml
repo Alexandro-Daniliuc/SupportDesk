@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="it.uniroma2.dicii.ispw.supportdesk.boundary.javafx.ValidationErrorControllerGrafico"
+            style="-fx-background-color: #ECEFF1;">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12"
+              style="-fx-background-color: #1A237E; -fx-padding: 14 20;">
+            <Label text="SupportDesk"
+                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label text="/ Errore di Validazione"
+                   style="-fx-text-fill: #90CAF9; -fx-font-size: 14px;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER">
+            <padding><Insets top="32" bottom="32" left="32" right="32"/></padding>
+
+            <VBox alignment="CENTER" spacing="20" maxWidth="480"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 8;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 8, 0, 0, 2);">
+                <padding><Insets top="40" bottom="40" left="32" right="32"/></padding>
+
+                <Label text="⚠" style="-fx-font-size: 48px; -fx-text-fill: #C62828;"/>
+
+                <Label text="Dati non validi"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #B71C1C;"/>
+
+                <Label text="Compila tutti i campi obbligatori: Titolo, Descrizione, Categoria, Priorità."
+                       wrapText="true"
+                       style="-fx-font-size: 13px; -fx-text-fill: #424242;" textAlignment="CENTER"/>
+
+                <Separator/>
+
+                <Button text="OK — Torna al Form"
+                        onAction="#onOk"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: #C62828;
+                               -fx-text-fill: white;
+                               -fx-font-weight: bold;
+                               -fx-padding: 10;
+                               -fx-background-radius: 4;
+                               -fx-cursor: hand;"/>
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,25 @@
+2026-05-24 16:50:23.194 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara.neri@azienda.it
+2026-05-24 16:50:44.806 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco.bianchi@supportdesk.it
+2026-05-24 16:50:55.873 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket richiede assegnazione manuale.
+2026-05-24 16:50:55.874 [JavaFX Application Thread] WARN  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Ticket richiede assegnazione manuale.
+2026-05-24 16:50:55.877 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Ticket richiede assegnazione manuale.
+2026-05-24 16:50:55.877 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 10 assegnato a marco.bianchi@supportdesk.it
+2026-05-24 16:50:55.877 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Cambio stato ticket rilevato.
+2026-05-24 16:50:55.877 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Cambio stato ticket rilevato.
+2026-05-24 16:50:55.877 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Il ticket e stato preso in carico da un tecnico.
+2026-05-24 16:50:55.878 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Il ticket e stato preso in carico da un tecnico.
+2026-05-24 16:50:55.878 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 10 passato a stato IN_PROGRESS
+2026-05-24 16:54:38.585 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Cambio stato ticket rilevato.
+2026-05-24 16:54:38.585 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Cambio stato ticket rilevato.
+2026-05-24 16:54:38.585 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket risolto - notifica inviata all'utente richiedente.
+2026-05-24 16:54:38.585 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Ticket risolto - notifica inviata all'utente richiedente.
+2026-05-24 16:54:38.585 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 10 passato a stato RESOLVED
+2026-05-24 16:54:50.071 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara.neri@azienda.it
+2026-05-24 16:54:53.194 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Cambio stato ticket rilevato.
+2026-05-24 16:54:53.195 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Cambio stato ticket rilevato.
+2026-05-24 16:54:53.195 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 10 passato a stato REOPENED
+2026-05-24 16:55:12.202 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
+2026-05-24 16:55:24.329 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket richiede assegnazione manuale.
+2026-05-24 16:55:24.329 [JavaFX Application Thread] WARN  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Ticket richiede assegnazione manuale.
+2026-05-24 16:55:24.329 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Ticket richiede assegnazione manuale.
+2026-05-24 16:55:24.329 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 10 assegnato a laura.verdi@supportdesk.it
