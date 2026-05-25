@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * EntitÃ  centrale del sistema. Contiene la logica della state machine
  * e il calcolo automatico della scadenza SLA.
  */
-public class Ticket {
+public class Ticket implements TicketComponent {
 
     private final int id;
     private final String title;
@@ -128,6 +128,11 @@ public class Ticket {
 
     public void setAssignedTechnician(User technician) {
         this.assignedTechnician = technician;
+    }
+
+    @Override
+    public String getDisplaySummary() {
+        return String.format("[#%d] %s (%s)", id, title, status.name());
     }
 }
 

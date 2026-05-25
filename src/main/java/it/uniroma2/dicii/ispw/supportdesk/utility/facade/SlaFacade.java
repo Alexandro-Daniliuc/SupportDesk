@@ -2,8 +2,6 @@ package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.SLAController;
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.TicketController;
-import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
-import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.ManagerNotificationObserver;
@@ -34,8 +32,6 @@ public final class SlaFacade {
     }
 
     public void rescheduleAllSlaTimers() throws DAOException {
-        PersistenceLayerFactory.getInstance().findAllTickets().stream()
-                .filter(t -> t.getStatus() != TicketStatus.RESOLVED && t.getStatus() != TicketStatus.CLOSED)
-                .forEach(ticketController::schedulaSlaTimer);
+        ticketController.rescheduleAllSlaTimers();
     }
 }

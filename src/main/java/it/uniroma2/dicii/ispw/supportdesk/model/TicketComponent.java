@@ -1,4 +1,4 @@
-package it.uniroma2.dicii.ispw.supportdesk.utility.decorator;
+package it.uniroma2.dicii.ispw.supportdesk.model;
 
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Category;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority;

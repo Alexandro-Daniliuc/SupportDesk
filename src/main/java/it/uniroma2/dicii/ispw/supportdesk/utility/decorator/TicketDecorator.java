@@ -3,33 +3,25 @@ package it.uniroma2.dicii.ispw.supportdesk.utility.decorator;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Category;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
-import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
-import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
+import it.uniroma2.dicii.ispw.supportdesk.model.TicketComponent;
 
 import java.time.LocalDateTime;
 
 public abstract class TicketDecorator implements TicketComponent {
 
-    protected final Ticket ticket;
+    protected final TicketComponent component;
 
-    public TicketDecorator(Ticket ticket) {
-        this.ticket = ticket;
+    protected TicketDecorator(TicketComponent component) {
+        this.component = component;
     }
 
-    public Ticket getTicket() {
-        return ticket;
-    }
-
-    public void changeStatus(TicketStatus newStatus) throws InvalidTransitionException {
-        ticket.changeStatus(newStatus);
-    }
-
-    public int getId()                     { return ticket.getId(); }
-    public String getTitle()               { return ticket.getTitle(); }
-    public String getDescription()         { return ticket.getDescription(); }
-    public Category getCategory()          { return ticket.getCategory(); }
-    public Priority getPriority()          { return ticket.getPriority(); }
-    public TicketStatus getStatus()        { return ticket.getStatus(); }
-    public LocalDateTime getDataApertura() { return ticket.getDataApertura(); }
-    public LocalDateTime getScadenzaSla()  { return ticket.getScadenzaSla(); }
+    @Override public int getId()                     { return component.getId(); }
+    @Override public String getTitle()               { return component.getTitle(); }
+    @Override public String getDescription()         { return component.getDescription(); }
+    @Override public Category getCategory()          { return component.getCategory(); }
+    @Override public Priority getPriority()          { return component.getPriority(); }
+    @Override public TicketStatus getStatus()        { return component.getStatus(); }
+    @Override public LocalDateTime getDataApertura() { return component.getDataApertura(); }
+    @Override public LocalDateTime getScadenzaSla()  { return component.getScadenzaSla(); }
+    @Override public String getDisplaySummary()      { return component.getDisplaySummary(); }
 }

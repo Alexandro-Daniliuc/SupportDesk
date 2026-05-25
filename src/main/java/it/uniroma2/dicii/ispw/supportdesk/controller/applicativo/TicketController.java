@@ -216,6 +216,12 @@ public class TicketController extends Subject {
         return toRecord(ticket);
     }
 
+    public void rescheduleAllSlaTimers() throws DAOException {
+        PersistenceLayerFactory.getInstance().findAllTickets().stream()
+                .filter(t -> t.getStatus() != TicketStatus.RESOLVED && t.getStatus() != TicketStatus.CLOSED)
+                .forEach(this::schedulaSlaTimer);
+    }
+
     public static TicketRecord toRecord(Ticket t) {
         String techName = t.getAssignedTechnician() != null
                 ? t.getAssignedTechnician().obtainName() + " " + t.getAssignedTechnician().getSurname()

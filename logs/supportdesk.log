@@ -1,1 +1,10 @@
 2026-05-25 15:24:17.617 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara.neri@azienda.it
+2026-05-25 15:24:50.420 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 11 creato da sara.neri@azienda.it
+2026-05-25 15:24:50.422 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
+2026-05-25 15:24:50.423 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
+2026-05-25 15:24:50.425 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 11 aperto da sara.neri@azienda.it
+2026-05-25 15:28:47.457 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 12 creato da sara.neri@azienda.it
+2026-05-25 15:28:47.458 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
+2026-05-25 15:28:47.458 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
+2026-05-25 15:28:47.458 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.TicketController - Ticket 12 aperto da sara.neri@azienda.it
+2026-05-25 21:24:50.429 [pool-3-thread-1] WARN  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] SLA in scadenza rilevato.
