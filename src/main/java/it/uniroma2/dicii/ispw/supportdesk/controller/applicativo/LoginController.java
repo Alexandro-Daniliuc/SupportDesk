@@ -59,11 +59,11 @@ public class LoginController {
 
     private LoginRecord toRecord(User user) {
         return new LoginRecord(
-                user.obtainId(),
-                user.obtainName(),
+                user.getId(),
+                user.getName(),
                 user.getSurname(),
                 user.getEmail(),
-                user.obtainRole()
+                user.getRole()
         );
     }
 }

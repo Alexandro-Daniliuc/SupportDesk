@@ -41,7 +41,7 @@ public class SLAController {
         LocalDateTime threshold = LocalDateTime.now().plusHours(SLA_WARNING_HOURS);
         return PersistenceLayerFactory.getInstance().findAllTickets().stream()
                 .filter(t -> !isTerminated(t) && !t.getScadenzaSla().isAfter(threshold))
-                .map(TicketController::toRecord)
+                .map(SubmitTicketController::toRecord)
                 .toList();
     }
 

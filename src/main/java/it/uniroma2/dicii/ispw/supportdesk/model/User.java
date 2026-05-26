@@ -25,11 +25,11 @@ public class User {
         this.role = role;
     }
 
-    public int obtainId() {
+    public int getId() {
         return id;
     }
 
-    public String obtainName() {
+    public String getName() {
         return name;
     }
 
@@ -45,11 +45,11 @@ public class User {
         return passwordHash;
     }
 
-    public Role obtainRole() {
+    public Role getRole() {
         return role;
     }
 
-    public String obtainSpecialization() {
+    public String getSpecialization() {
         return specialization;
     }
 

@@ -1,7 +1,7 @@
 package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.CorrelationController;
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.TicketController;
+import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.SubmitTicketController;
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
 import it.uniroma2.dicii.ispw.supportdesk.exception.CorrelationEngineException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
@@ -31,6 +31,6 @@ public final class CorrelationFacade {
             throws DAOException, TicketNotFoundException, CorrelationEngineException {
         Ticket target = PersistenceLayerFactory.getInstance().getTicketById(ticketId);
         List<Ticket> correlated = correlationController.findCorrelations(target);
-        return correlated.stream().map(TicketController::toRecord).toList();
+        return correlated.stream().map(SubmitTicketController::toRecord).toList();
     }
 }

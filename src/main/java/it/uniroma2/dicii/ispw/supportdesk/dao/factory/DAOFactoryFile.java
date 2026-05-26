@@ -1,9 +1,13 @@
 package it.uniroma2.dicii.ispw.supportdesk.dao.factory;
 
 import it.uniroma2.dicii.ispw.supportdesk.dao.CommentDAO;
+import it.uniroma2.dicii.ispw.supportdesk.dao.KnowledgeBaseDAO;
+import it.uniroma2.dicii.ispw.supportdesk.dao.NotificationDAO;
 import it.uniroma2.dicii.ispw.supportdesk.dao.TicketDAO;
 import it.uniroma2.dicii.ispw.supportdesk.dao.UserDAO;
 import it.uniroma2.dicii.ispw.supportdesk.dao.file.CommentDAOFile;
+import it.uniroma2.dicii.ispw.supportdesk.dao.file.KnowledgeBaseDAOFile;
+import it.uniroma2.dicii.ispw.supportdesk.dao.file.NotificationDAOFile;
 import it.uniroma2.dicii.ispw.supportdesk.dao.file.TicketDAOFile;
 import it.uniroma2.dicii.ispw.supportdesk.dao.file.UserDAOFile;
 
@@ -25,12 +29,12 @@ public class DAOFactoryFile extends DAOAbstractFactory {
     }
 
     @Override
-    public it.uniroma2.dicii.ispw.supportdesk.dao.KnowledgeBaseDAO createKnowledgeBaseDAO() {
-        throw new UnsupportedOperationException("KnowledgeBaseDAO non implementato per questa modalità");
+    public KnowledgeBaseDAO createKnowledgeBaseDAO() {
+        return new KnowledgeBaseDAOFile();
     }
 
     @Override
-    public it.uniroma2.dicii.ispw.supportdesk.dao.NotificationDAO createNotificationDAO() {
-        throw new UnsupportedOperationException("NotificationDAO non implementato per questa modalità");
+    public NotificationDAO createNotificationDAO() {
+        return new NotificationDAOFile();
     }
 }

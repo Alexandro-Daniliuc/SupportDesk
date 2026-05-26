@@ -48,7 +48,7 @@ public class KnowledgeBaseController {
     }
 
     private KnowledgeEntryRecord toRecord(KnowledgeEntry e) {
-        String authorName = e.getAuthor().obtainName() + " " + e.getAuthor().getSurname();
+        String authorName = e.getAuthor().getName() + " " + e.getAuthor().getSurname();
         return new KnowledgeEntryRecord(e.getId(), e.getTitle(), e.getContent(), authorName, e.getCreatedAt());
     }
 }

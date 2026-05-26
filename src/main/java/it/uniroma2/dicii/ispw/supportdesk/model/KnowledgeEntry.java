@@ -22,6 +22,14 @@ public class KnowledgeEntry {
         this.createdAt = LocalDateTime.now();
     }
 
+    public KnowledgeEntry(int id, String title, String content, User author, LocalDateTime createdAt) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.createdAt = createdAt;
+    }
+
     public int getId() {
         return id;
     }

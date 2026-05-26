@@ -29,9 +29,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class TicketController extends Subject {
+public class SubmitTicketController extends Subject {
 
-    private static final Logger log             = LoggerFactory.getLogger(TicketController.class);
+    private static final Logger log             = LoggerFactory.getLogger(SubmitTicketController.class);
     private static final long   SLA_WARNING_HOURS = 2;
     private static final ScheduledExecutorService SLA_SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
@@ -85,12 +85,12 @@ public class TicketController extends Subject {
 
     public List<TicketRecord> getAllTickets() throws DAOException {
         return PersistenceLayerFactory.getInstance().findAllTickets()
-                .stream().map(TicketController::toRecord).toList();
+                .stream().map(SubmitTicketController::toRecord).toList();
     }
 
     public List<TicketRecord> getTicketsByUser(String email) throws DAOException {
         return PersistenceLayerFactory.getInstance().getTicketsByUser(email)
-                .stream().map(TicketController::toRecord).toList();
+                .stream().map(SubmitTicketController::toRecord).toList();
     }
 
     public void changeStatus(int ticketId, TicketStatus newStatus)
@@ -165,8 +165,8 @@ public class TicketController extends Subject {
         return PersistenceLayerFactory.getInstance()
                 .findUsersByRole(Role.TECHNICIAN)
                 .stream()
-                .map(u -> new UserRecord(u.obtainId(), u.obtainName(), u.getSurname(),
-                        u.getEmail(), u.obtainRole(), u.obtainSpecialization()))
+                .map(u -> new UserRecord(u.getId(), u.getName(), u.getSurname(),
+                        u.getEmail(), u.getRole(), u.getSpecialization()))
                 .toList();
     }
 
@@ -224,7 +224,7 @@ public class TicketController extends Subject {
 
     public static TicketRecord toRecord(Ticket t) {
         String techName = t.getAssignedTechnician() != null
-                ? t.getAssignedTechnician().obtainName() + " " + t.getAssignedTechnician().getSurname()
+                ? t.getAssignedTechnician().getName() + " " + t.getAssignedTechnician().getSurname()
                 : null;
         return new TicketRecord(t.getId(), t.getTitle(), t.getDescription(),
                 t.getCategory(), t.getPriority(), t.getStatus(),

@@ -25,6 +25,15 @@ public class Notification {
         this.read = false;
     }
 
+    public Notification(int id, String message, Role targetRole, int ticketId, LocalDateTime createdAt, boolean read) {
+        this.id = id;
+        this.message = message;
+        this.targetRole = targetRole;
+        this.ticketId = ticketId;
+        this.createdAt = createdAt;
+        this.read = read;
+    }
+
     public int getId() {
         return id;
     }

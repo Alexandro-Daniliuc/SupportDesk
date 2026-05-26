@@ -7,7 +7,7 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import java.time.LocalDateTime;
 
 /**
- * Snapshot immutabile di un Ticket restituito dal TicketController alla boundary.
+ * Snapshot immutabile di un Ticket restituito dal SubmitTicketController alla boundary.
  * Non espone mai l'entità model Ticket.
  */
 public record TicketRecord(

@@ -2,7 +2,7 @@ package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.bean.CommentBean;
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.CommentController;
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.TicketController;
+import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.SubmitTicketController;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
@@ -19,11 +19,11 @@ import java.util.List;
 
 public final class ViewTicketsFacade {
 
-    private final TicketController  ticketController;
+    private final SubmitTicketController  ticketController;
     private final CommentController commentController;
 
     private ViewTicketsFacade() {
-        ticketController  = new TicketController();
+        ticketController  = new SubmitTicketController();
         commentController = new CommentController();
         ticketController.addObserver(new UserNotificationObserver());
         ticketController.addObserver(new ManagerNotificationObserver());

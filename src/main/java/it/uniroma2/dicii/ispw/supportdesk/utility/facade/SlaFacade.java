@@ -1,7 +1,7 @@
 package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.SLAController;
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.TicketController;
+import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.SubmitTicketController;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.record.TicketRecord;
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.ManagerNotificationObserver;
@@ -11,11 +11,11 @@ import java.util.List;
 public final class SlaFacade {
 
     private final SLAController    slaController;
-    private final TicketController ticketController;
+    private final SubmitTicketController ticketController;
 
     private SlaFacade() {
         slaController    = new SLAController();
-        ticketController = new TicketController();
+        ticketController = new SubmitTicketController();
         ticketController.addObserver(new ManagerNotificationObserver());
     }
 
