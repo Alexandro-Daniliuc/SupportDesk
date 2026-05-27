@@ -27,7 +27,11 @@ public class TicketConfirmationControllerGrafico {
     }
 
     @FXML
-    public void onBack() throws IOException {
-        SceneNavigator.navigateTo("open-ticket.fxml", "Apri Ticket");
+    public void onBack() {
+        try {
+            SceneNavigator.navigateTo("open-ticket.fxml", "Apri Ticket");
+        } catch (IOException e) {
+            log.error("Errore durante la navigazione alla schermata Apri Ticket", e);
+        }
     }
 }

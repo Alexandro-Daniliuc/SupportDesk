@@ -1,9 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.utility.facade;
 
 import it.uniroma2.dicii.ispw.supportdesk.bean.TicketBean;
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.AssignmentController;
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.CorrelationController;
-import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.SLAController;
 import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.SubmitTicketController;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
@@ -17,16 +14,10 @@ import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 
 public final class TicketFacade {
 
-    private final SubmitTicketController      ticketCtrl;
-    private final AssignmentController  assignmentCtrl;
-    private final CorrelationController correlationCtrl;
-    private final SLAController         slaCtrl;
+    private final SubmitTicketController ticketCtrl;
 
     private TicketFacade() {
-        ticketCtrl      = new SubmitTicketController();
-        assignmentCtrl  = new AssignmentController();
-        correlationCtrl = new CorrelationController();
-        slaCtrl         = new SLAController();
+        ticketCtrl = new SubmitTicketController();
         ticketCtrl.addObserver(new TechnicianNotificationObserver());
         ticketCtrl.addObserver(new ManagerNotificationObserver());
     }
