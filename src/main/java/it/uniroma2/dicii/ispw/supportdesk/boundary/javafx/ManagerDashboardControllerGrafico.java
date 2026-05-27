@@ -1,5 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.boundary.javafx;
 
+import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.utility.facade.CorrelationFacade;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
@@ -78,7 +79,15 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
         bindAssignTable();
 
         allTicketsTable.getSelectionModel().selectedItemProperty().addListener(
-                (obs, o, n) -> { if (n != null) populateDetail(n); else hideDetail(); });
+                (obs, o, n) -> {
+                    if (n != null) {
+                        populateDetail(n);
+                        correlationIdField.setText(String.valueOf(n.id()));
+                        onFindCorrelated();
+                    } else {
+                        hideDetail();
+                    }
+                });
         slaTable.getSelectionModel().selectedItemProperty().addListener(
                 (obs, o, n) -> { if (n != null) populateDetail(n); else hideDetail(); });
         correlatedTable.getSelectionModel().selectedItemProperty().addListener(
@@ -196,8 +205,11 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
 
     private void loadAssignTickets() {
         try {
-            assignTicketTable.setItems(FXCollections.observableArrayList(
-                    ViewTicketsFacade.getInstanceSingleton().getAllTickets()));
+            List<TicketRecord> assignable = ViewTicketsFacade.getInstanceSingleton().getAllTickets()
+                    .stream()
+                    .filter(t -> t.status() != TicketStatus.RESOLVED && t.status() != TicketStatus.CLOSED)
+                    .toList();
+            assignTicketTable.setItems(FXCollections.observableArrayList(assignable));
         } catch (DAOException e) {
             log.error("Errore caricamento ticket assegnazione", e);
             showError(ERR_TITLE, "Impossibile caricare i ticket.");
