@@ -13,7 +13,6 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("LoginController Tests")
 class LoginControllerTest {
 
     private LoginController loginController;
@@ -30,7 +29,6 @@ class LoginControllerTest {
     }
 
     @Test
-    @DisplayName("Login valido: ritorna LoginRecord non null e popola UserSession con email e ruolo")
     void loginValido_ritornaLoginRecord_e_settaUserSession() throws Exception {
         LoginBean bean = new LoginBean();
         bean.setEmail("giovanni.rossi@azienda.it");
@@ -44,7 +42,6 @@ class LoginControllerTest {
     }
 
     @Test
-    @DisplayName("Email formato non valido: lancia ValidationException")
     void emailFormatoNonValido_lancia_ValidationException() {
         LoginBean bean = new LoginBean();
         bean.setEmail("emailsenzachiocciola.com");
@@ -54,7 +51,6 @@ class LoginControllerTest {
     }
 
     @Test
-    @DisplayName("Email valida ma non registrata nel sistema: lancia AuthenticationException")
     void emailValidaMaNonPresente_lancia_AuthenticationException() {
         LoginBean bean = new LoginBean();
         bean.setEmail("nonexistent@example.com");

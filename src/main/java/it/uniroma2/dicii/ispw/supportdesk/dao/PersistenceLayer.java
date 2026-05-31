@@ -17,7 +17,7 @@ public abstract class PersistenceLayer {
     protected KnowledgeBaseDAO knowledgeBaseDAO;
     protected NotificationDAO  notificationDAO;
 
-    // -- Abstract factory methods (PNG 10) ------------------------------------
+    // -- Operazioni astratte (variano tra DEMO, FILE e DB) --------------------
 
     public abstract void saveTicket(Ticket ticket) throws DAOException;
 

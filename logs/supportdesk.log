@@ -1,50 +1,12 @@
-2026-05-27 01:45:39.981 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-05-27 01:45:39.998 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-05-27 01:45:40.007 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da giovanni.rossi@azienda.it
-2026-05-27 01:45:40.008 [main] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 01:45:40.009 [main] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 01:45:40.011 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da giovanni.rossi@azienda.it
-2026-05-27 14:24:22.083 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara.neri@azienda.it
-2026-05-27 14:24:34.028 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da sara.neri@azienda.it
-2026-05-27 14:24:34.031 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 14:24:34.031 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 14:24:34.033 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da sara.neri@azienda.it
-2026-05-27 14:24:59.369 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.CommentController - Commento 1 aggiunto al ticket 11 da sara.neri@azienda.it
-2026-05-27 14:25:27.017 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco.bianchi@supportdesk.it
-2026-05-27 14:25:58.411 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Priorita ticket 11 aggiornata a CRITICAL
-2026-05-27 14:26:01.196 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket richiede assegnazione manuale.
-2026-05-27 14:26:01.196 [JavaFX Application Thread] WARN  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Ticket richiede assegnazione manuale.
-2026-05-27 14:26:01.196 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Ticket richiede assegnazione manuale.
-2026-05-27 14:26:01.196 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 assegnato a marco.bianchi@supportdesk.it
-2026-05-27 14:26:01.197 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Cambio stato ticket rilevato.
-2026-05-27 14:26:01.197 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Cambio stato ticket rilevato.
-2026-05-27 14:26:01.197 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Il ticket e stato preso in carico da un tecnico.
-2026-05-27 14:26:01.197 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Il ticket e stato preso in carico da un tecnico.
-2026-05-27 14:26:01.197 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 passato a stato IN_PROGRESS
-2026-05-27 14:26:11.299 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Cambio stato ticket rilevato.
-2026-05-27 14:26:11.299 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Cambio stato ticket rilevato.
-2026-05-27 14:26:11.299 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket risolto - notifica inviata all'utente richiedente.
-2026-05-27 14:26:11.299 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Ticket risolto - notifica inviata all'utente richiedente.
-2026-05-27 14:26:11.299 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 passato a stato RESOLVED
-2026-05-27 14:26:28.432 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
-2026-05-27 14:43:48.335 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
-2026-05-27 14:53:47.457 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
-2026-05-27 15:06:54.490 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
-2026-05-27 15:09:20.007 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-05-27 15:09:20.031 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-05-27 15:09:20.044 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da giovanni.rossi@azienda.it
-2026-05-27 15:09:20.047 [main] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 15:09:20.047 [main] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 15:09:20.049 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da giovanni.rossi@azienda.it
-2026-05-27 15:13:01.396 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-05-27 15:13:01.407 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-05-27 15:13:01.418 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da giovanni.rossi@azienda.it
-2026-05-27 15:13:01.420 [main] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 15:13:01.421 [main] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 15:13:01.423 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da giovanni.rossi@azienda.it
-2026-05-27 15:13:10.237 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-05-27 15:13:10.250 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-05-27 15:13:10.258 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da giovanni.rossi@azienda.it
-2026-05-27 15:13:10.260 [main] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 15:13:10.261 [main] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
-2026-05-27 15:13:10.263 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da giovanni.rossi@azienda.it
+2026-06-01 00:20:55.131 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
+2026-06-01 00:20:55.147 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
+2026-06-01 00:20:55.154 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da giovanni.rossi@azienda.it
+2026-06-01 00:20:55.156 [main] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
+2026-06-01 00:20:55.157 [main] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
+2026-06-01 00:20:55.158 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da giovanni.rossi@azienda.it
+2026-06-01 00:21:16.107 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
+2026-06-01 00:21:16.116 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
+2026-06-01 00:21:16.121 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da giovanni.rossi@azienda.it
+2026-06-01 00:21:16.128 [main] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
+2026-06-01 00:21:16.129 [main] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
+2026-06-01 00:21:16.130 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da giovanni.rossi@azienda.it

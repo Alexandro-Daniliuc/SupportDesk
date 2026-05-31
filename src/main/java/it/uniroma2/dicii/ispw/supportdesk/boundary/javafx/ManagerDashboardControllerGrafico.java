@@ -31,7 +31,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
 
     @FXML private Label welcomeLabel;
 
-    // Tab 1 â€” Tutti i ticket
+    // Tab 1 - Tutti i ticket
     @FXML private TableView<TicketRecord>       allTicketsTable;
     @FXML private TableColumn<TicketRecord, Integer> colId;
     @FXML private TableColumn<TicketRecord, String>  colTitle;
@@ -41,7 +41,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
     @FXML private TableColumn<TicketRecord, String>  colTech;
     @FXML private TableColumn<TicketRecord, String>  colSla;
 
-    // Tab 2 â€” SLA
+    // Tab 2 - SLA
     @FXML private TableView<TicketRecord>       slaTable;
     @FXML private TableColumn<TicketRecord, Integer> slaColId;
     @FXML private TableColumn<TicketRecord, String>  slaColTitle;
@@ -49,7 +49,7 @@ public class ManagerDashboardControllerGrafico extends AbstractDashboardControll
     @FXML private TableColumn<TicketRecord, String>  slaColStatus;
     @FXML private TableColumn<TicketRecord, String>  slaColSla;
 
-    // Tab 3 â€” Correlati
+    // Tab 3 - Correlati
     @FXML private TextField                     correlationIdField;
     @FXML private Label                         correlationErrorLabel;
     @FXML private TableView<TicketRecord>       correlatedTable;

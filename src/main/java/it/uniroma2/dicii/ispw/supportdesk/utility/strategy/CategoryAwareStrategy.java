@@ -1,16 +1,9 @@
 package it.uniroma2.dicii.ispw.supportdesk.utility.strategy;
 
 /**
- * Strategia di correlazione multi-criterio. Un ticket candidato è correlato
- * al target se si verifica almeno una delle seguenti condizioni:
- * <ol>
- *   <li>Similarità testuale molto alta (≥ {@value #TEXT_THRESHOLD}),
- *       indipendentemente dalla categoria.</li>
- *   <li>Stessa categoria <em>e</em> similarità testuale moderata
- *       (≥ {@value #CATEGORY_TEXT_THRESHOLD}).</li>
- *   <li>Stessa categoria <em>e</em> almeno una keyword significativa
- *       in comune (keywordOverlap &gt; 0).</li>
- * </ol>
+ * Strategy (GoF) multi-criterio per la correlazione tra ticket.
+ * Correla se: alta similarità TF-IDF, oppure stessa categoria
+ * con similarità moderata o almeno una keyword in comune.
  */
 public class CategoryAwareStrategy implements CorrelationStrategy {
 

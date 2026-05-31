@@ -9,7 +9,6 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Ticket State Machine Tests")
 class TicketStateMachineTest {
 
     private Ticket buildTicket() {
@@ -19,7 +18,6 @@ class TicketStateMachineTest {
     }
 
     @Test
-    @DisplayName("Percorso completo: OPEN → ASSIGNED → IN_PROGRESS → RESOLVED → CLOSED")
     void percorsoCompleto_OPEN_to_CLOSED() throws InvalidTransitionException {
         Ticket ticket = buildTicket();
         assertEquals(TicketStatus.OPEN, ticket.getStatus());
@@ -38,7 +36,6 @@ class TicketStateMachineTest {
     }
 
     @Test
-    @DisplayName("Percorso riapertura: RESOLVED → REOPENED → ASSIGNED")
     void percorsoRiapertura_RESOLVED_REOPENED_ASSIGNED() throws InvalidTransitionException {
         Ticket ticket = buildTicket();
         ticket.changeStatus(TicketStatus.ASSIGNED);
@@ -53,7 +50,6 @@ class TicketStateMachineTest {
     }
 
     @Test
-    @DisplayName("Transizione non valida OPEN → RESOLVED: lancia InvalidTransitionException")
     void transizioneNonValida_OPEN_RESOLVED_lancia_eccezione() {
         Ticket ticket = buildTicket();
         assertThrows(InvalidTransitionException.class,
@@ -61,7 +57,6 @@ class TicketStateMachineTest {
     }
 
     @Test
-    @DisplayName("Stato terminale CLOSED: nessuna transizione consentita")
     void statoCLOSED_nessunaTranisizioneConsentita() throws InvalidTransitionException {
         Ticket ticket = buildTicket();
         ticket.changeStatus(TicketStatus.ASSIGNED);

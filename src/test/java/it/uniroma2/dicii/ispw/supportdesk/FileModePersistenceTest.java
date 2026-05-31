@@ -9,7 +9,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("FULL_FILE Persistence Integration Tests")
 class FileModePersistenceTest {
 
     private UserDAOFile userDAO;
@@ -20,7 +19,6 @@ class FileModePersistenceTest {
     }
 
     @Test
-    @DisplayName("findByEmail: admin esistente → User con ruolo MANAGER")
     void findByEmail_adminEsistente_ritornaUserManager() throws Exception {
         User user = userDAO.findByEmail("admin@supportdesk.it");
         assertNotNull(user);
@@ -29,7 +27,6 @@ class FileModePersistenceTest {
     }
 
     @Test
-    @DisplayName("findByEmail: user esistente → nome e cognome coerenti col CSV")
     void findByEmail_userEsistente_ritornaUserCorretto() throws Exception {
         User user = userDAO.findByEmail("giovanni@azienda.it");
         assertNotNull(user);
@@ -39,14 +36,12 @@ class FileModePersistenceTest {
     }
 
     @Test
-    @DisplayName("findByEmail: email non presente nel CSV → null")
     void findByEmail_emailInesistente_ritornaNull() throws Exception {
         User user = userDAO.findByEmail("nonexistent@example.com");
         assertNull(user);
     }
 
     @Test
-    @DisplayName("findByRole: TECHNICIAN → esattamente 2 tecnici nel CSV")
     void findByRole_technician_ritornaDueTecnici() throws Exception {
         List<User> technicians = userDAO.findByRole(Role.TECHNICIAN);
         assertEquals(2, technicians.size());

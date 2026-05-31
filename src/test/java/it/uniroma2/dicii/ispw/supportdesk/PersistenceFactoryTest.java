@@ -15,7 +15,6 @@ import it.uniroma2.dicii.ispw.supportdesk.dao.file.NotificationDAOFile;
 import it.uniroma2.dicii.ispw.supportdesk.dao.file.TicketDAOFile;
 import it.uniroma2.dicii.ispw.supportdesk.dao.file.UserDAOFile;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.ApplicationMode;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -23,7 +22,6 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-@DisplayName("Persistence Factory Wiring Tests")
 class PersistenceFactoryTest {
 
     static Stream<ApplicationMode> demoModeProvider() {
@@ -40,7 +38,6 @@ class PersistenceFactoryTest {
 
     @ParameterizedTest
     @MethodSource("demoModeProvider")
-    @DisplayName("DEMO → DAOFactoryDemo con DAO demo")
     void demoMode_ritornaFactoryEDaoCorretti(ApplicationMode mode) {
         DAOAbstractFactory factory = DAOAbstractFactory.getFactory(mode);
         assertInstanceOf(DAOFactoryDemo.class, factory);
@@ -50,7 +47,6 @@ class PersistenceFactoryTest {
 
     @ParameterizedTest
     @MethodSource("fullDbModeProvider")
-    @DisplayName("FULL_DB → DAOFactoryDB con tutti i DAO DB")
     void fullDbMode_ritornaFactoryEDaoCorretti(ApplicationMode mode) {
         DAOAbstractFactory factory = DAOAbstractFactory.getFactory(mode);
         assertInstanceOf(DAOFactoryDB.class,       factory);
@@ -62,7 +58,6 @@ class PersistenceFactoryTest {
 
     @ParameterizedTest
     @MethodSource("fullFileModeProvider")
-    @DisplayName("FULL_FILE → DAOFactoryFile con tutti i DAO file")
     void fullFileMode_ritornaFactoryEDaoCorretti(ApplicationMode mode) {
         DAOAbstractFactory factory = DAOAbstractFactory.getFactory(mode);
         assertInstanceOf(DAOFactoryFile.class,       factory);

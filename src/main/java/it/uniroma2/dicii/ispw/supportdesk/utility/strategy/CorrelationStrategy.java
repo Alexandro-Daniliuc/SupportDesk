@@ -1,9 +1,9 @@
 package it.uniroma2.dicii.ispw.supportdesk.utility.strategy;
 
 /**
- * Strategy per la correlazione tra ticket. Ogni implementazione definisce
- * un criterio diverso basandosi esclusivamente sulle metriche pre-calcolate
- * contenute nel {@link CorrelationContext} — non accede ai dati grezzi dei ticket.
+ * Interfaccia Strategy (GoF) per la correlazione tra ticket.
+ * Ogni implementazione valuta le metriche del CorrelationContext
+ * senza accedere ai dati grezzi del ticket.
  */
 public interface CorrelationStrategy {
     boolean isCorrelated(CorrelationContext context);

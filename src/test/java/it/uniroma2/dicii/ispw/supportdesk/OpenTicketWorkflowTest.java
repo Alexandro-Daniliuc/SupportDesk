@@ -17,7 +17,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("OpenTicket Integration Tests")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class OpenTicketWorkflowTest {
 
@@ -34,7 +33,6 @@ class OpenTicketWorkflowTest {
 
     @Test
     @Order(1)
-    @DisplayName("Ticket valido: ID assegnato e recuperabile per utente (Facade -> Controller -> DAO demo)")
     void openTicketValido_idAssegnato_e_recuperabile() throws Exception {
         TicketBean bean = new TicketBean();
         bean.setTitle("Problema accesso rete");
@@ -53,7 +51,6 @@ class OpenTicketWorkflowTest {
 
     @Test
     @Order(2)
-    @DisplayName("Ticket senza titolo: lancia ValidationException")
     void openTicketSenzaTitolo_lancia_ValidationException() {
         TicketBean bean = new TicketBean();
         bean.setDescription("Descrizione presente");
@@ -66,7 +63,6 @@ class OpenTicketWorkflowTest {
 
     @Test
     @Order(3)
-    @DisplayName("Ticket senza categoria: lancia ValidationException")
     void openTicketSenzaCategoria_lancia_ValidationException() {
         TicketBean bean = new TicketBean();
         bean.setTitle("Titolo presente");

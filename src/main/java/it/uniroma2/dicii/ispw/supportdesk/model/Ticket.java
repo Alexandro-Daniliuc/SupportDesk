@@ -8,7 +8,7 @@ import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
 import java.time.LocalDateTime;
 
 /**
- * EntitÃ  centrale del sistema. Contiene la logica della state machine
+ * Entità centrale del sistema. Contiene la logica della state machine
  * e il calcolo automatico della scadenza SLA.
  */
 public class Ticket implements TicketComponent {
@@ -77,7 +77,7 @@ public class Ticket implements TicketComponent {
     /**
      * Unico metodo business del model: cambia stato rispettando la state machine.
      *
-     * @throws InvalidTransitionException se la transizione non Ã¨ consentita
+     * @throws InvalidTransitionException se la transizione non è consentita
      */
     public void changeStatus(TicketStatus nuovoStato) throws InvalidTransitionException {
         if (!this.status.canTransitionTo(nuovoStato)) {
