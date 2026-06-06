@@ -9,3 +9,4 @@
 2026-06-06 14:14:41.068 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
 2026-06-06 14:14:41.068 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 2 aperto da sara@azienda.it
 2026-06-06 14:14:57.930 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
+2026-06-06 18:00:39.057 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara.neri@azienda.it

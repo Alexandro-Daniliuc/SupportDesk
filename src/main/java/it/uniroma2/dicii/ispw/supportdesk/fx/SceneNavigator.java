@@ -28,9 +28,13 @@ public final class SceneNavigator {
     public static void navigateTo(String fxml, String title) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 SceneNavigator.class.getResource(fxml));
-        Scene scene = new Scene(loader.load(), SCENE_WIDTH, SCENE_HEIGHT);
+        Scene scene = new Scene(loader.load());
         stage.setTitle("SupportDesk — " + title);
         stage.setScene(scene);
+        if (!stage.isShowing()) {
+            stage.setWidth(SCENE_WIDTH);
+            stage.setHeight(SCENE_HEIGHT);
+        }
         stage.show();
     }
 }

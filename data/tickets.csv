@@ -1,2 +1,2 @@
-1|Problemi con il Wi-fi|la rete Wi-fi è piuttosto lenta|NETWORK|MEDIUM|OPEN|2026-06-06T14:13:45.497901200|2026-06-07T14:13:45.497901200|sara@azienda.it|null
-2|Problemi con la connessione internet|la mia connessione va e viene, non so come risolvere|NETWORK|MEDIUM|OPEN|2026-06-06T14:14:41.067423700|2026-06-07T14:14:41.067423700|sara@azienda.it|null
+1|Problemi con il Wi-fi|la rete Wi-fi è piuttosto lenta|NETWORK|LOW|RESOLVED|2026-06-06T14:13:45.497901200|2026-06-09T14:13:45.497901200|sara@azienda.it|null
+2|Problemi con la connessione internet|la mia connessione va e viene, non so come risolvere|NETWORK|MEDIUM|IN_PROGRESS|2026-06-06T14:14:41.067423700|2026-06-07T14:14:41.067423700|sara@azienda.it|null
