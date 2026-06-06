@@ -4,10 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
-           fx:controller="it.uniroma2.dicii.ispw.supportdesk.boundary.javafx.LoginControllerGrafico"
+           fx:controller="it.uniroma2.dicii.ispw.supportdesk.boundary.javafx.RegistrationControllerGrafico"
            style="-fx-background-color: transparent;">
 
     <ImageView fitWidth="1920" fitHeight="1080" preserveRatio="false" mouseTransparent="true">
@@ -16,8 +15,7 @@
 
     <VBox alignment="CENTER" spacing="0" maxWidth="420">
 
-        <!-- ── CARD ─────────────────────────────────────────── -->
-        <VBox spacing="18"
+        <VBox spacing="16"
               style="-fx-background-color: white;
                      -fx-background-radius: 12;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 20, 0, 0, 6);">
@@ -25,20 +23,42 @@
                 <Insets top="40" bottom="40" left="40" right="40"/>
             </padding>
 
-            <!-- Logo / Titolo -->
             <VBox alignment="CENTER" spacing="6">
                 <Label text="SupportDesk"
                        style="-fx-font-size: 30px;
                               -fx-font-weight: bold;
                               -fx-text-fill: #1A237E;"/>
-                <Label text="Sistema di gestione IT Support"
+                <Label text="Crea il tuo account"
                        style="-fx-font-size: 13px;
                               -fx-text-fill: #757575;"/>
             </VBox>
 
             <Separator/>
 
-            <!-- Email -->
+            <VBox spacing="5">
+                <Label text="Nome"
+                       style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #424242;"/>
+                <TextField fx:id="nameField"
+                           promptText="es. Mario"
+                           style="-fx-font-size: 14px;
+                                  -fx-padding: 10;
+                                  -fx-background-radius: 6;
+                                  -fx-border-color: #BDBDBD;
+                                  -fx-border-radius: 6;"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Cognome"
+                       style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #424242;"/>
+                <TextField fx:id="surnameField"
+                           promptText="es. Rossi"
+                           style="-fx-font-size: 14px;
+                                  -fx-padding: 10;
+                                  -fx-background-radius: 6;
+                                  -fx-border-color: #BDBDBD;
+                                  -fx-border-radius: 6;"/>
+            </VBox>
+
             <VBox spacing="5">
                 <Label text="Email"
                        style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #424242;"/>
@@ -51,7 +71,6 @@
                                   -fx-border-radius: 6;"/>
             </VBox>
 
-            <!-- Password -->
             <VBox spacing="5">
                 <Label text="Password"
                        style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #424242;"/>
@@ -64,16 +83,26 @@
                                       -fx-border-radius: 6;"/>
             </VBox>
 
-            <!-- Messaggio di errore -->
+            <VBox spacing="5">
+                <Label text="Conferma password"
+                       style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #424242;"/>
+                <PasswordField fx:id="confirmPasswordField"
+                               promptText="••••••••"
+                               style="-fx-font-size: 14px;
+                                      -fx-padding: 10;
+                                      -fx-background-radius: 6;
+                                      -fx-border-color: #BDBDBD;
+                                      -fx-border-radius: 6;"/>
+            </VBox>
+
             <Label fx:id="errorLabel"
                    text=""
                    wrapText="true"
                    style="-fx-text-fill: #C62828;
                           -fx-font-size: 12px;"/>
 
-            <!-- Bottone Accedi -->
-            <Button text="Accedi"
-                    onAction="#onLogin"
+            <Button text="Registrati"
+                    onAction="#onRegister"
                     maxWidth="Infinity"
                     style="-fx-background-color: #1565C0;
                            -fx-text-fill: white;
@@ -83,8 +112,8 @@
                            -fx-background-radius: 6;
                            -fx-cursor: hand;"/>
 
-            <Label text="Non hai un account? Registrati"
-                   onMouseClicked="#onGoToRegister"
+            <Label text="Hai già un account? Accedi"
+                   onMouseClicked="#onGoToLogin"
                    style="-fx-font-size: 12px;
                           -fx-text-fill: #1565C0;
                           -fx-cursor: hand;"

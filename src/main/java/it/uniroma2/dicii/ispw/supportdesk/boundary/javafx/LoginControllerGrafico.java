@@ -59,6 +59,15 @@ public class LoginControllerGrafico {
         }
     }
 
+    @FXML
+    public void onGoToRegister() {
+        try {
+            SceneNavigator.navigateTo("registration.fxml", "Registrazione");
+        } catch (IOException e) {
+            log.error("Errore navigazione registrazione", e);
+        }
+    }
+
     private void showError(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
