@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 public class SLAController {
@@ -23,14 +24,14 @@ public class SLAController {
     }
 
     public void checkSLA(Ticket ticket) {
-        if (LocalDateTime.now().isAfter(ticket.getScadenzaSla())) {
+        if (LocalDateTime.now(ZoneId.systemDefault()).isAfter(ticket.getScadenzaSla())) {
             log.warn("SLA violato per ticket {}", ticket.getId());
         }
     }
 
     public boolean isSlaViolated(int ticketId) throws DAOException, TicketNotFoundException {
         Ticket ticket = PersistenceLayerFactory.getInstance().getTicketById(ticketId);
-        boolean violated = LocalDateTime.now().isAfter(ticket.getScadenzaSla());
+        boolean violated = LocalDateTime.now(ZoneId.systemDefault()).isAfter(ticket.getScadenzaSla());
         if (violated) {
             log.warn("SLA violato per ticket {}", ticketId);
         }
@@ -38,7 +39,7 @@ public class SLAController {
     }
 
     public List<TicketRecord> getTicketsWithSlaExpiringSoon() throws DAOException {
-        LocalDateTime threshold = LocalDateTime.now().plusHours(SLA_WARNING_HOURS);
+        LocalDateTime threshold = LocalDateTime.now(ZoneId.systemDefault()).plusHours(SLA_WARNING_HOURS);
         return PersistenceLayerFactory.getInstance().findAllTickets().stream()
                 .filter(t -> !isTerminated(t) && !t.getScadenzaSla().isAfter(threshold))
                 .map(SubmitTicketController::toRecord)

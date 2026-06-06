@@ -1,6 +1,7 @@
 package it.uniroma2.dicii.ispw.supportdesk.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class Comment {
 
@@ -15,7 +16,7 @@ public class Comment {
         this.ticketId    = ticketId;
         this.authorEmail = authorEmail;
         this.text        = text;
-        this.createdAt   = LocalDateTime.now();
+        this.createdAt   = LocalDateTime.now(ZoneId.systemDefault());
     }
 
     public Comment(int id, int ticketId, String authorEmail, String text, LocalDateTime createdAt) {

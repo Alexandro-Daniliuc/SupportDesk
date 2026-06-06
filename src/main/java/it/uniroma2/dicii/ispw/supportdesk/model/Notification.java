@@ -3,6 +3,7 @@ package it.uniroma2.dicii.ispw.supportdesk.model;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * Notifica generata dal sistema verso un utente. Dumb data holder.
@@ -21,7 +22,7 @@ public class Notification {
         this.message = message;
         this.targetRole = targetRole;
         this.ticketId = ticketId;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.read = false;
     }
 

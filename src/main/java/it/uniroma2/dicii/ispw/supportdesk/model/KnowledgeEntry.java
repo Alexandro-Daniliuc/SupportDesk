@@ -1,6 +1,7 @@
 package it.uniroma2.dicii.ispw.supportdesk.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * Articolo della knowledge base — soluzione documentata a un problema ricorrente.
@@ -19,7 +20,7 @@ public class KnowledgeEntry {
         this.title = title;
         this.content = content;
         this.author = author;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
     }
 
     public KnowledgeEntry(int id, String title, String content, User author, LocalDateTime createdAt) {

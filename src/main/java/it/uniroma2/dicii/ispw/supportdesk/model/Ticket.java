@@ -6,6 +6,7 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.InvalidTransitionException;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * Entità centrale del sistema. Contiene la logica della state machine
@@ -43,7 +44,7 @@ public class Ticket implements TicketComponent {
         private final Category category;
         private final Priority priority;
         private String authorEmail;
-        private LocalDateTime dataApertura = LocalDateTime.now();
+        private LocalDateTime dataApertura = LocalDateTime.now(ZoneId.systemDefault());
         private TicketStatus status = TicketStatus.OPEN;
 
         public Builder(int id, String title, String description, Category category, Priority priority) {

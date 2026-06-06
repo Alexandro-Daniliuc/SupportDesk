@@ -4,6 +4,7 @@ import it.uniroma2.dicii.ispw.supportdesk.model.TicketComponent;
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.Subject;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public final class TicketWithSLA extends TicketDecorator {
@@ -30,6 +31,6 @@ public final class TicketWithSLA extends TicketDecorator {
 
     private boolean isScaduto() {
         return component.getScadenzaSla() != null
-                && LocalDateTime.now().isAfter(component.getScadenzaSla());
+                && LocalDateTime.now(ZoneId.systemDefault()).isAfter(component.getScadenzaSla());
     }
 }
