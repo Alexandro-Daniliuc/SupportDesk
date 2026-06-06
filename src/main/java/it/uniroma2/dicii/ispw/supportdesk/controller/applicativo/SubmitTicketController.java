@@ -23,7 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -114,9 +115,10 @@ public class SubmitTicketController extends Subject {
     }
 
     public void schedulaSlaTimer(Ticket ticket) {
-        LocalDateTime now = LocalDateTime.now();
-        long msToExpiry = Duration.between(now, ticket.getScadenzaSla()).toMillis();
-        long msToWarning = Duration.between(now, ticket.getScadenzaSla().minusHours(SLA_WARNING_HOURS)).toMillis();
+        Instant now = Instant.now();
+        Instant slaExpiry = ticket.getScadenzaSla().atZone(ZoneId.systemDefault()).toInstant();
+        long msToExpiry = Duration.between(now, slaExpiry).toMillis();
+        long msToWarning = Duration.between(now, slaExpiry.minusSeconds(SLA_WARNING_HOURS * 3600)).toMillis();
 
         if (msToExpiry <= 0) {
             notifyObservers(EventType.SLA_VIOLATO, buildNotification(EventType.SLA_VIOLATO));
