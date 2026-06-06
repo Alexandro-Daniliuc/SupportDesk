@@ -76,7 +76,7 @@ public class Ticket implements TicketComponent {
     }
 
     /**
-     * Unico metodo business del model: cambia stato rispettando la state machine.
+     * cambia stato rispettando la state machine.
      *
      * @throws InvalidTransitionException se la transizione non è consentita
      */

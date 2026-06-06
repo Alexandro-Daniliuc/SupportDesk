@@ -28,9 +28,9 @@ public final class CorrelationEngine {
         this.strategy = strategy;
     }
 
-    // -------------------------------------------------------------------------
+
     // API pubblica
-    // -------------------------------------------------------------------------
+
 
     public List<Ticket> findCorrelatedTickets(Ticket target, List<Ticket> candidates) {
         List<String> docs  = prepareDocuments(target, candidates);
@@ -39,9 +39,9 @@ public final class CorrelationEngine {
         return filterByStrategy(target, candidates, vecs);
     }
 
-    // -------------------------------------------------------------------------
+
     // Preparazione documenti TF-IDF
-    // -------------------------------------------------------------------------
+
 
     private List<String> prepareDocuments(Ticket target, List<Ticket> candidates) {
         List<String> docs = new ArrayList<>();
@@ -83,9 +83,9 @@ public final class CorrelationEngine {
         return vec;
     }
 
-    // -------------------------------------------------------------------------
+
     // Calcolo metriche e delegazione alla strategy
-    // -------------------------------------------------------------------------
+
 
     private List<Ticket> filterByStrategy(Ticket target, List<Ticket> candidates,
                                           Map<Integer, double[]> vecs) {
@@ -105,9 +105,9 @@ public final class CorrelationEngine {
         return correlated;
     }
 
-    // -------------------------------------------------------------------------
+
     // Keyword overlap (indice di Jaccard su parole significative)
-    // -------------------------------------------------------------------------
+
 
     private double computeKeywordOverlap(Ticket target, Ticket candidate) {
         Set<String> targetWords    = extractKeywords(target);
@@ -127,9 +127,9 @@ public final class CorrelationEngine {
                 .collect(Collectors.toSet());
     }
 
-    // -------------------------------------------------------------------------
+
     // Utility
-    // -------------------------------------------------------------------------
+
 
     private double cosine(double[] a, double[] b) {
         double dot = 0;

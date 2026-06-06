@@ -10,3 +10,34 @@
 2026-06-06 14:14:41.068 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 2 aperto da sara@azienda.it
 2026-06-06 14:14:57.930 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
 2026-06-06 18:00:39.057 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara.neri@azienda.it
+2026-06-06 18:07:24.073 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara@azienda.it
+2026-06-06 18:08:09.536 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara@azienda.it
+2026-06-06 18:12:33.588 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco@supportdesk.it
+2026-06-06 18:13:25.738 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
+2026-06-06 18:18:19.812 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco@supportdesk.it
+2026-06-06 18:18:48.571 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket richiede assegnazione manuale.
+2026-06-06 18:18:48.573 [JavaFX Application Thread] WARN  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Ticket richiede assegnazione manuale.
+2026-06-06 18:18:48.573 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Ticket richiede assegnazione manuale.
+2026-06-06 18:18:48.573 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 2 assegnato a marco@supportdesk.it
+2026-06-06 18:18:48.574 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Cambio stato ticket rilevato.
+2026-06-06 18:18:48.574 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Cambio stato ticket rilevato.
+2026-06-06 18:18:48.574 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Il ticket e stato preso in carico da un tecnico.
+2026-06-06 18:18:48.574 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Il ticket e stato preso in carico da un tecnico.
+2026-06-06 18:18:48.574 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 2 passato a stato IN_PROGRESS
+2026-06-06 18:19:32.049 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
+2026-06-06 18:19:53.288 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Priorita ticket 1 aggiornata a LOW
+2026-06-06 18:21:20.560 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket richiede assegnazione manuale.
+2026-06-06 18:21:20.560 [JavaFX Application Thread] WARN  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Ticket richiede assegnazione manuale.
+2026-06-06 18:21:20.560 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Ticket richiede assegnazione manuale.
+2026-06-06 18:21:20.560 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 1 assegnato a marco@supportdesk.it
+2026-06-06 18:21:38.968 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per marco@supportdesk.it
+2026-06-06 18:22:13.696 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Cambio stato ticket rilevato.
+2026-06-06 18:22:13.696 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Cambio stato ticket rilevato.
+2026-06-06 18:22:13.696 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Il ticket e stato preso in carico da un tecnico.
+2026-06-06 18:22:13.696 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Il ticket e stato preso in carico da un tecnico.
+2026-06-06 18:22:13.696 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 1 passato a stato IN_PROGRESS
+2026-06-06 18:22:20.008 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Cambio stato ticket rilevato.
+2026-06-06 18:22:20.008 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICO] Cambio stato ticket rilevato.
+2026-06-06 18:22:20.008 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.UserNotificationObserver - [NOTIFICA UTENTE] Ticket risolto - notifica inviata all'utente richiedente.
+2026-06-06 18:22:20.008 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Ticket risolto - notifica inviata all'utente richiedente.
+2026-06-06 18:22:20.008 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 1 passato a stato RESOLVED

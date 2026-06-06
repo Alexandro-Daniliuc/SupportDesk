@@ -5,7 +5,7 @@ import java.time.ZoneId;
 
 /**
  * Articolo della knowledge base — soluzione documentata a un problema ricorrente.
- * Dumb data holder.
+ * data holder.
  */
 public class KnowledgeEntry {
 
