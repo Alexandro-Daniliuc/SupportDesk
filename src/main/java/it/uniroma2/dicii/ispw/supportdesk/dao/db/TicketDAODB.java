@@ -8,6 +8,7 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
 import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
+import it.uniroma2.dicii.ispw.supportdesk.model.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -125,10 +126,19 @@ public class TicketDAODB implements TicketDAO {
         TicketStatus status = TicketStatus.valueOf(rs.getString("status"));
         LocalDateTime data  = rs.getTimestamp("data_apertura").toLocalDateTime();
         String authorEmail  = rs.getString("author_email");
-        return new Ticket.Builder(id, title, description, category, priority)
+        Ticket ticket = new Ticket.Builder(id, title, description, category, priority)
                 .dataApertura(data)
                 .status(status)
                 .authorEmail(authorEmail)
                 .build();
+        String techEmail = rs.getString("assigned_technician_email");
+        if (techEmail != null) {
+            try {
+                ticket.setAssignedTechnician(new UserDAODB().findByEmail(techEmail));
+            } catch (DAOException e) {
+                throw new SQLException("Errore caricamento tecnico assegnato: " + techEmail, e);
+            }
+        }
+        return ticket;
     }
 }

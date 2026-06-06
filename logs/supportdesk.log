@@ -1,12 +1,11 @@
-2026-06-01 00:20:55.131 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-06-01 00:20:55.147 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-06-01 00:20:55.154 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da giovanni.rossi@azienda.it
-2026-06-01 00:20:55.156 [main] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
-2026-06-01 00:20:55.157 [main] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
-2026-06-01 00:20:55.158 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da giovanni.rossi@azienda.it
-2026-06-01 00:21:16.107 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-06-01 00:21:16.116 [main] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per giovanni.rossi@azienda.it
-2026-06-01 00:21:16.121 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 creato da giovanni.rossi@azienda.it
-2026-06-01 00:21:16.128 [main] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
-2026-06-01 00:21:16.129 [main] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
-2026-06-01 00:21:16.130 [main] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 11 aperto da giovanni.rossi@azienda.it
+2026-06-06 14:03:05.574 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
+2026-06-06 14:12:50.601 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per sara@azienda.it
+2026-06-06 14:13:45.504 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 1 creato da sara@azienda.it
+2026-06-06 14:13:45.506 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
+2026-06-06 14:13:45.507 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
+2026-06-06 14:13:45.508 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 1 aperto da sara@azienda.it
+2026-06-06 14:14:41.068 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 2 creato da sara@azienda.it
+2026-06-06 14:14:41.068 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.TechnicianNotificationObserver - [NOTIFICA TECNICI] Nuovo ticket aperto - in attesa di assegnazione.
+2026-06-06 14:14:41.068 [JavaFX Application Thread] INFO  i.u.d.i.s.u.o.ManagerNotificationObserver - [NOTIFICA MANAGER] Nuovo ticket aperto - in attesa di assegnazione.
+2026-06-06 14:14:41.068 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.SubmitTicketController - Ticket 2 aperto da sara@azienda.it
+2026-06-06 14:14:57.930 [JavaFX Application Thread] INFO  i.u.d.i.s.c.a.LoginController - Autenticazione riuscita per admin@supportdesk.it
