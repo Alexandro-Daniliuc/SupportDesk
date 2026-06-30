@@ -12,11 +12,8 @@ public final class TicketWithSLA extends TicketDecorator {
     private static final DateTimeFormatter FMT           = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final String            LABEL_SCADUTO = " [SLA SCADUTO]";
 
-    private final Subject notifier;
-
     public TicketWithSLA(TicketComponent component, Subject notifier) {
         super(component);
-        this.notifier = notifier;
     }
 
     @Override

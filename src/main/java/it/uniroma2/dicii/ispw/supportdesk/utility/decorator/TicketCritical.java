@@ -8,11 +8,8 @@ public final class TicketCritical extends TicketDecorator {
 
     private static final String CRITICAL_TAG = "[CRITICO] ";
 
-    private final Subject notifier;
-
     public TicketCritical(TicketComponent component, Subject notifier) {
         super(component);
-        this.notifier = notifier;
     }
 
     @Override

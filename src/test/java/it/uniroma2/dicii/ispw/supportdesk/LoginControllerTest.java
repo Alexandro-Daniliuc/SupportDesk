@@ -6,7 +6,7 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.ApplicationMode;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 import it.uniroma2.dicii.ispw.supportdesk.exception.AuthenticationException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
-import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
+
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.ApplicationModeManager;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 import org.junit.jupiter.api.*;
@@ -34,9 +34,7 @@ class LoginControllerTest {
         bean.setEmail("giovanni.rossi@azienda.it");
         bean.setPassword("password");
 
-        LoginRecord loginRecord = loginController.authenticate(bean);
-
-        assertNotNull(loginRecord);
+        assertNotNull(loginController.authenticate(bean));
         assertEquals("giovanni.rossi@azienda.it", UserSession.getInstanceSingleton().getEmail());
         assertEquals(Role.USER, UserSession.getInstanceSingleton().getRole());
     }
