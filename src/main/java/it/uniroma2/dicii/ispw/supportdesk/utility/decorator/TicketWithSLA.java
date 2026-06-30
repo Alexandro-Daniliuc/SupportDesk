@@ -1,7 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.utility.decorator;
 
 import it.uniroma2.dicii.ispw.supportdesk.model.TicketComponent;
-import it.uniroma2.dicii.ispw.supportdesk.utility.observer.Subject;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -12,7 +11,7 @@ public final class TicketWithSLA extends TicketDecorator {
     private static final DateTimeFormatter FMT           = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final String            LABEL_SCADUTO = " [SLA SCADUTO]";
 
-    public TicketWithSLA(TicketComponent component, Subject notifier) {
+    public TicketWithSLA(TicketComponent component) {
         super(component);
     }
 
