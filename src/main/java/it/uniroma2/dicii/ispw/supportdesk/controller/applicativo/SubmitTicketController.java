@@ -96,11 +96,10 @@ public class SubmitTicketController extends Subject {
 
     public void changeStatus(int ticketId, TicketStatus newStatus)
             throws DAOException, TicketNotFoundException, InvalidTransitionException {
-        if (newStatus == TicketStatus.REOPENED) {
-            if (!UserSession.getInstanceSingleton().isLoggedIn()
-                    || UserSession.getInstanceSingleton().getRole() != Role.USER) {
-                throw new InvalidTransitionException("Solo l'utente puo riaprire un ticket");
-            }
+        if (newStatus == TicketStatus.REOPENED
+                && (!UserSession.getInstanceSingleton().isLoggedIn()
+                    || UserSession.getInstanceSingleton().getRole() != Role.USER)) {
+            throw new InvalidTransitionException("Solo l'utente puo riaprire un ticket");
         }
         Ticket ticket = PersistenceLayerFactory.getInstance().getTicketById(ticketId);
         ticket.changeStatus(newStatus);

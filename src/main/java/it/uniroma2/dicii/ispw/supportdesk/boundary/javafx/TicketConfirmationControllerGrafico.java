@@ -23,6 +23,10 @@ public class TicketConfirmationControllerGrafico {
     @FXML
     public void initialize() {
         ticketIdLabel.setText("Il tuo ticket #" + pendingTicketId + " è stato registrato nel sistema.");
+        clearPendingTicketId();
+    }
+
+    private static void clearPendingTicketId() {
         pendingTicketId = 0;
     }
 

@@ -42,7 +42,7 @@ public class OpenTicketControllerGrafico {
             descriptionArea.setText(pendingData.description());
             categoryBox.setValue(pendingData.category());
             priorityBox.setValue(pendingData.priority());
-            pendingData = null;
+            clearPendingData();
         }
     }
 
@@ -55,7 +55,7 @@ public class OpenTicketControllerGrafico {
         Priority priority  = priorityBox.getValue();
 
         if (title.isBlank() || description.isBlank() || category == null || priority == null) {
-            pendingData = new PendingFormData(title, description, category, priority);
+            savePendingData(title, description, category, priority);
             try {
                 SceneNavigator.navigateTo("validation-error.fxml", "Errore di Validazione");
             } catch (IOException e) {
@@ -92,5 +92,13 @@ public class OpenTicketControllerGrafico {
     @FXML
     public void onBack() throws IOException {
         SceneNavigator.navigateTo("user-dashboard.fxml", "Dashboard Utente");
+    }
+
+    private static void savePendingData(String title, String description, Category category, Priority priority) {
+        pendingData = new PendingFormData(title, description, category, priority);
+    }
+
+    private static void clearPendingData() {
+        pendingData = null;
     }
 }

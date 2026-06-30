@@ -8,7 +8,6 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.TicketStatus;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.TicketNotFoundException;
 import it.uniroma2.dicii.ispw.supportdesk.model.Ticket;
-import it.uniroma2.dicii.ispw.supportdesk.model.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;

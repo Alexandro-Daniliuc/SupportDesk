@@ -34,7 +34,7 @@ class LoginControllerTest {
         bean.setEmail("giovanni.rossi@azienda.it");
         bean.setPassword("password");
 
-        LoginRecord record = loginController.authenticate(bean);
+        LoginRecord loginRecord = loginController.authenticate(bean);
 
         assertNotNull(record);
         assertEquals("giovanni.rossi@azienda.it", UserSession.getInstanceSingleton().getEmail());

@@ -35,8 +35,8 @@ public final class TicketFacade {
             throw new ValidationException("TicketBean non può essere null");
         }
         String authorEmail = UserSession.getInstanceSingleton().getEmail();
-        TicketRecord record = ticketCtrl.openTicket(bean, authorEmail);
-        bean.setId(record.id());
+        TicketRecord ticketRecord = ticketCtrl.openTicket(bean, authorEmail);
+        bean.setId(ticketRecord.id());
         return bean;
     }
 

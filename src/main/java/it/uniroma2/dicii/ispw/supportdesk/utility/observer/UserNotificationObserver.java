@@ -7,14 +7,15 @@ import org.slf4j.LoggerFactory;
 public class UserNotificationObserver implements Observer {
 
     private static final Logger log = LoggerFactory.getLogger(UserNotificationObserver.class);
+    private static final String NOTIFICA_FORMAT = "[NOTIFICA UTENTE] {}";
 
     @Override
     public void update(EventType event, Object payload) {
         NotificationBean notification = (NotificationBean) payload;
         switch (event) {
-            case TICKET_IN_CARICO     -> log.info("[NOTIFICA UTENTE] {}", notification.getMessage());
-            case TICKET_RISOLTO       -> log.info("[NOTIFICA UTENTE] {}", notification.getMessage());
-            case ASSEGNAZIONE_MANUALE -> log.info("[NOTIFICA UTENTE] {}", notification.getMessage());
+            case TICKET_IN_CARICO     -> log.info(NOTIFICA_FORMAT, notification.getMessage());
+            case TICKET_RISOLTO       -> log.info(NOTIFICA_FORMAT, notification.getMessage());
+            case ASSEGNAZIONE_MANUALE -> log.info(NOTIFICA_FORMAT, notification.getMessage());
             default -> { /* eventi non di competenza dell'utente */ }
         }
     }
