@@ -36,7 +36,7 @@ class LoginControllerTest {
 
         LoginRecord loginRecord = loginController.authenticate(bean);
 
-        assertNotNull(record);
+        assertNotNull(loginRecord);
         assertEquals("giovanni.rossi@azienda.it", UserSession.getInstanceSingleton().getEmail());
         assertEquals(Role.USER, UserSession.getInstanceSingleton().getRole());
     }
