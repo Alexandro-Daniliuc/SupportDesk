@@ -3,6 +3,7 @@ package it.uniroma2.dicii.ispw.supportdesk.utility.singleton;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 import it.uniroma2.dicii.ispw.supportdesk.model.User;
 
+@SuppressWarnings("java:S6548")
 public final class UserSession {
 
     private String email;

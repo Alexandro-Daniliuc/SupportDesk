@@ -12,6 +12,7 @@ import it.uniroma2.dicii.ispw.supportdesk.utility.observer.ManagerNotificationOb
 import it.uniroma2.dicii.ispw.supportdesk.utility.observer.TechnicianNotificationObserver;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 
+@SuppressWarnings("java:S6548")
 public final class TicketFacade {
 
     private final SubmitTicketController ticketCtrl;

@@ -8,6 +8,7 @@ import it.uniroma2.dicii.ispw.supportdesk.utility.observer.ManagerNotificationOb
 
 import java.util.List;
 
+@SuppressWarnings("java:S6548")
 public final class SlaFacade {
 
     private final SLAController    slaController;

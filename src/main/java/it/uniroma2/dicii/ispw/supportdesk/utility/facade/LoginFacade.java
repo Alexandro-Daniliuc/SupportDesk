@@ -8,6 +8,7 @@ import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 
+@SuppressWarnings("java:S6548")
 public final class LoginFacade {
 
     private final LoginController loginController;

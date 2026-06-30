@@ -5,6 +5,7 @@ import it.uniroma2.dicii.ispw.supportdesk.utility.configloader.ConfigLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("java:S6548")
 public final class ApplicationModeManager {
 
     private static final String MODE_KEY = "app.mode";

@@ -17,6 +17,7 @@ import it.uniroma2.dicii.ispw.supportdesk.utility.observer.UserNotificationObser
 
 import java.util.List;
 
+@SuppressWarnings("java:S6548")
 public final class ViewTicketsFacade {
 
     private final SubmitTicketController  ticketController;

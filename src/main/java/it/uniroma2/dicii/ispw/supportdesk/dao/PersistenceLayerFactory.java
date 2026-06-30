@@ -3,6 +3,7 @@ package it.uniroma2.dicii.ispw.supportdesk.dao;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.ApplicationMode;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.ApplicationModeManager;
 
+@SuppressWarnings("java:S6548")
 public class PersistenceLayerFactory {
 
     private PersistenceLayerFactory() {}

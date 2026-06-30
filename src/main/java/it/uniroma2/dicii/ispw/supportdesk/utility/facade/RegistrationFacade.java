@@ -5,6 +5,7 @@ import it.uniroma2.dicii.ispw.supportdesk.controller.applicativo.RegistrationCon
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 
+@SuppressWarnings("java:S6548")
 public final class RegistrationFacade {
 
     private final RegistrationController registrationController;

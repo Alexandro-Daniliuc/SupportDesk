@@ -8,6 +8,7 @@ import it.uniroma2.dicii.ispw.supportdesk.utility.strategy.CorrelationStrategy;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("java:S6548")
 public final class CorrelationEngine {
 
     private CorrelationStrategy strategy;
