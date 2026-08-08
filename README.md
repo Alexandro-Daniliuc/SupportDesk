@@ -52,7 +52,7 @@ Così la logica delle transizioni sta in un unico punto e non deve essere ricont
 
 ---
 
-## La parte di cui vado più fiero: il motore di correlazione
+## Implementazione di algoritmi: il motore di correlazione
 
 Non volevo un semplice confronto per parole chiave, quindi ho implementato una piccola pipeline di *information retrieval*, roba vista più su algoritmi/basi di dati che a ISPW, ma che mi sembrava perfetta per questo caso d'uso:
 
