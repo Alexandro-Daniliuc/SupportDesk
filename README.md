@@ -1,5 +1,118 @@
 # SupportDesk
 
+🇬🇧 [English](#english) · 🇮🇹 [Italiano](#italiano)
+
+---
+
+<a id="english"></a>
+## 🇬🇧 English
+
+Project developed for the **Software Engineering (ISPW)** exam — Uniroma2, DICII, final year of the bachelor's degree.
+
+It's a **JavaFX** desktop application for managing a help desk: users open support tickets, technicians work on them, managers keep an eye on SLAs and notifications. I used it mainly as a way to put into practice what we studied in class (GoF patterns, layered architecture, abstract persistence) on a real project, rather than a toy exercise.
+
+In this README I try to explain the theory behind the choices I made, rather than just describing what the app does.
+
+---
+
+### Architecture: Boundary–Control–Entity
+
+To structure the project I followed the BCE scheme seen in class (a variant of MVC), with the goal of keeping the UI separate from the domain logic:
+
+| Layer | Package | What it does |
+|---|---|---|
+| **Boundary** | `boundary/javafx` + `.fxml` files | The JavaFX graphical controllers: they just read user input, they contain no application logic |
+| **Control** | `controller/applicativo` | One controller per use case (login, ticket opening, assignment, SLA, correlation, comments, knowledge base, registration) |
+| **Entity** | `model` | The domain classes (`Ticket`, `User`, `Comment`, `KnowledgeEntry`, `Notification`), with no dependency on JavaFX or the database |
+| **Bean / Record** | `bean`, `record` | Immutable DTOs used to pass data between layers without directly exposing the entities |
+
+The rule I always tried to respect is that boundary and control never talk to each other directly: in between there's always a **Facade** (`utility/facade`, one per use case). At first it seemed like an unnecessary complication, but as the project grew it turned out to be the thing that saved me the most trouble when I had to modify a screen without breaking the logic underneath.
+
+---
+
+### Design patterns used (and why I chose them)
+
+#### Singleton
+I needed a single shared instance for things like the user session or the correlation engine, without `synchronized` everywhere. I used the **initialization-on-demand holder idiom**: an inner static class loaded by the JVM only on first access, which guarantees thread-safety without explicit locks. I applied it to 13 classes in total (`UserSession`, `ApplicationModeManager`, `CorrelationEngine`, `ConfigLoader`, `ConnectionManager`, `PersistenceLayerFactory` and all the Facades).
+
+#### Abstract Factory + DAO
+I wanted to be able to run the app with three different persistence modes (in-memory, file, database) without filling the code with scattered `if`s. `DAOAbstractFactory` defines the common interface, and three concrete factories (`DAOFactoryDB`, `DAOFactoryFile`, `DAOFactoryDemo`) implement it. The choice of which one to use is made only once at startup, based on the configured mode.
+
+#### Decorator
+I needed to add optional "labels" to a ticket (expired SLA, criticality) without creating a subclass for every possible combination. `TicketDecorator` wraps a `TicketComponent` and delegates everything except what it needs to modify; `TicketWithSLA` and `TicketCritical` can be stacked on top of each other.
+
+#### Strategy
+The ticket correlation engine needed to be able to change its decision criterion without touching the metric computation. `CorrelationStrategy` evaluates a `CorrelationContext` (the already-computed metrics) and decides whether two tickets are correlated; `CategoryAwareStrategy` is the implementation I use by default.
+
+#### Observer
+When a ticket changes status, different roles need to be notified about different things (the manager about violated SLAs, the technician about assignments, the user about the resolution). `Subject` holds the list of `Observer`s and notifies a typed `EventType`; each observer (`ManagerNotificationObserver`, `TechnicianNotificationObserver`, `UserNotificationObserver`) only reacts to what it cares about.
+
+#### State
+I wanted to avoid invalid state transitions for a ticket (like going straight from open to closed). I encapsulated the state machine directly inside the `TicketStatus` enum, where each constant implements its own `nextStates()` method:
+
+```
+OPEN → ASSIGNED → IN_PROGRESS → RESOLVED → CLOSED
+                                     ↳ REOPENED → ASSIGNED
+```
+
+This way the transition logic lives in a single place and doesn't need to be re-checked by every controller.
+
+---
+
+### Algorithm implementation: the correlation engine
+
+I didn't want a simple keyword comparison, so I implemented a small *information retrieval* pipeline — stuff seen more in algorithms/databases courses than in ISPW, but that seemed like a perfect fit for this use case:
+
+1. normalize the title + description text;
+2. build a **TF-IDF** vector for each ticket (high weight for terms frequent in the document but rare elsewhere);
+3. compute the **cosine similarity** between the new ticket and each candidate;
+4. also compute the **Jaccard index** on the most significant keywords, as a complementary metric;
+5. all these metrics end up in a `CorrelationContext` that I pass to the `CorrelationStrategy` — this keeps feature computation separate from the rule that decides whether they're "correlated" or not.
+
+---
+
+### Multi-mode persistence
+
+The `ApplicationMode` enum allows the app to run in three different modes, without touching the controllers:
+
+- **DEMO** — everything in memory, handy for trying out the app quickly;
+- **FULL_FILE** — CSV persistence;
+- **FULL_DB** — MySQL persistence via JDBC.
+
+---
+
+### Domain
+
+- Roles: `USER`, `TECHNICIAN`, `MANAGER`
+- Priority with SLA included in the enum itself (not in a config file): `LOW` 72h, `MEDIUM` 24h, `HIGH` 8h, `CRITICAL` 4h
+- Categories: `HARDWARE`, `SOFTWARE`, `NETWORK`, `EMAIL`, `SECURITY`, `OTHER`
+- Knowledge base queryable by the correlation engine
+
+---
+
+### Tests and code quality
+
+I wrote JUnit 5 tests on the parts that seemed riskiest to me: the ticket state machine, the correlation strategy, the persistence factory, file mode, login, and the full ticket-opening flow.
+
+I also hooked up **SonarCloud** to the project and gradually fixed the warnings it reported (mutable static fields, unused imports, nested ifs, duplicated literals), which helped me understand what "clean code" really means beyond the theory seen in class.
+
+---
+
+### Stack
+
+Java 21 · JavaFX 21 · MySQL · SLF4J/Logback · JUnit 5 · Maven · SonarCloud · Git
+
+---
+
+### What I'm taking away from this project
+
+This was the first sufficiently large project where I had to think about the architecture *before* writing code, instead of improvising as I went. I clashed quite a bit with the difference between "knowing a pattern" and "understanding when it actually makes sense to use it" — a couple of times I added patterns that I later removed because they complicated things for no reason. In the end I think I understood concepts like separation of concerns, low coupling and testability better not so much from the theory, but from having to apply them and see what happened when I respected them (or didn't).
+
+---
+
+<a id="italiano"></a>
+## 🇮🇹 Italiano
+
 Progetto sviluppato per l'esame di **Ingegneria del Software (ISPW)** — Uniroma2, DICII, ultimo anno della triennale.
 
 È un'applicazione desktop in **JavaFX** per la gestione di un help desk: gli utenti aprono ticket di assistenza, i tecnici li lavorano, i manager tengono d'occhio SLA e notifiche. L'ho usata soprattutto come palestra per mettere in pratica quello che avevamo studiato a lezione (pattern GoF, architettura a livelli, persistenza astratta) su un progetto vero, non su un esercizio giocattolo.
