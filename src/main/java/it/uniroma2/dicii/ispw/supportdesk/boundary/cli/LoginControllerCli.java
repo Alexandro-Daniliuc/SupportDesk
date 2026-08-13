@@ -32,9 +32,9 @@ final class LoginControllerCli {
         bean.setPassword(password);
 
         try {
-            LoginRecord record = LoginFacade.getInstanceSingleton().login(bean);
-            System.out.println("Accesso effettuato. Benvenuto, " + record.name() + " " + record.surname() + ".");
-            return record;
+            LoginRecord loginRecord = LoginFacade.getInstanceSingleton().login(bean);
+            System.out.println("Accesso effettuato. Benvenuto, " + loginRecord.name() + " " + loginRecord.surname() + ".");
+            return loginRecord;
         } catch (DAOException e) {
             log.error("Errore DAO durante il login", e);
             System.out.println(CliFormatter.MSG_ERRORE_INTERNO + " Riprovare.");
