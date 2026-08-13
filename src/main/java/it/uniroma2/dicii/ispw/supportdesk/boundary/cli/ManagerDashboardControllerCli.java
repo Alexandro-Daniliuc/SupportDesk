@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
+@SuppressWarnings("java:S106")
 final class ManagerDashboardControllerCli {
 
     private static final Logger log = LoggerFactory.getLogger(ManagerDashboardControllerCli.class);
@@ -42,7 +43,7 @@ final class ManagerDashboardControllerCli {
                 case "4" -> assignTechnician(sc);
                 case "5" -> changePriority(sc);
                 case "6" -> inDashboard = false;
-                default -> System.out.println("Scelta non valida.");
+                default -> System.out.println(CliFormatter.MSG_SCELTA_NON_VALIDA);
             }
         }
         LoginFacade.getInstanceSingleton().logout();
@@ -63,31 +64,31 @@ final class ManagerDashboardControllerCli {
             CliFormatter.printTicketTable(SlaFacade.getInstanceSingleton().getTicketsWithSlaExpiringSoon());
         } catch (DAOException e) {
             log.error("Errore controllo SLA", e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         }
     }
 
     private void findCorrelated(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         if (id <= 0) {
-            System.out.println("ID non valido.");
+            System.out.println(CliFormatter.MSG_ID_NON_VALIDO);
             return;
         }
         try {
             List<TicketRecord> correlated = CorrelationFacade.getInstanceSingleton().findCorrelations(id);
             CliFormatter.printTicketTable(correlated);
         } catch (TicketNotFoundException | CorrelationEngineException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
         } catch (DAOException e) {
             log.error("Errore ricerca ticket correlati", e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         }
     }
 
     private void assignTechnician(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         if (id <= 0) {
-            System.out.println("ID non valido.");
+            System.out.println(CliFormatter.MSG_ID_NON_VALIDO);
             return;
         }
         List<UserRecord> technicians;
@@ -109,7 +110,7 @@ final class ManagerDashboardControllerCli {
         }
         int idx = CliFormatter.readInt("> ", sc) - 1;
         if (idx < 0 || idx >= technicians.size()) {
-            System.out.println("Scelta non valida.");
+            System.out.println(CliFormatter.MSG_SCELTA_NON_VALIDA);
             return;
         }
         try {
@@ -121,14 +122,14 @@ final class ManagerDashboardControllerCli {
             System.out.println("Transizione non valida per questo ticket.");
         } catch (DAOException e) {
             log.error("Errore assegnazione ticket {}", id, e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         }
     }
 
     private void changePriority(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         if (id <= 0) {
-            System.out.println("ID non valido.");
+            System.out.println(CliFormatter.MSG_ID_NON_VALIDO);
             return;
         }
         Priority priority = choosePriority(sc);
@@ -137,7 +138,7 @@ final class ManagerDashboardControllerCli {
             System.out.println("Priorita' aggiornata.");
         } catch (DAOException | TicketNotFoundException e) {
             log.error("Errore aggiornamento priorita' ticket {}", id, e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         }
     }
 
@@ -152,7 +153,7 @@ final class ManagerDashboardControllerCli {
             if (idx >= 0 && idx < values.length) {
                 return values[idx];
             }
-            System.out.println("Scelta non valida.");
+            System.out.println(CliFormatter.MSG_SCELTA_NON_VALIDA);
         }
     }
 }

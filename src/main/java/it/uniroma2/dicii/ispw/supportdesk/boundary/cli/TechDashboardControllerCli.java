@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
+@SuppressWarnings("java:S106")
 final class TechDashboardControllerCli {
 
     private static final Logger log = LoggerFactory.getLogger(TechDashboardControllerCli.class);
@@ -46,7 +47,7 @@ final class TechDashboardControllerCli {
                 case "6" -> searchKb(sc);
                 case "7" -> addKbEntry(sc);
                 case "8" -> inDashboard = false;
-                default -> System.out.println("Scelta non valida.");
+                default -> System.out.println(CliFormatter.MSG_SCELTA_NON_VALIDA);
             }
         }
         LoginFacade.getInstanceSingleton().logout();
@@ -63,7 +64,7 @@ final class TechDashboardControllerCli {
     }
 
     private void showDetail(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         TicketRecord t = findTicket(id);
         if (t == null) {
             return;
@@ -78,7 +79,7 @@ final class TechDashboardControllerCli {
     }
 
     private void takeCharge(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         TicketRecord t = findTicket(id);
         if (t == null) {
             return;
@@ -96,14 +97,14 @@ final class TechDashboardControllerCli {
             System.out.println("Ticket preso in carico.");
         } catch (DAOException e) {
             log.error("Errore presa in carico ticket {}", id, e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         } catch (SupportDeskException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
         }
     }
 
     private void resolve(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         TicketRecord t = findTicket(id);
         if (t == null) {
             return;
@@ -117,14 +118,14 @@ final class TechDashboardControllerCli {
             System.out.println("Ticket segnato come risolto.");
         } catch (DAOException e) {
             log.error("Errore risoluzione ticket {}", id, e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         } catch (SupportDeskException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
         }
     }
 
     private void changePriority(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         if (findTicket(id) == null) {
             return;
         }
@@ -134,7 +135,7 @@ final class TechDashboardControllerCli {
             System.out.println("Priorita' aggiornata.");
         } catch (DAOException | TicketNotFoundException e) {
             log.error("Errore aggiornamento priorita' ticket {}", id, e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         }
     }
 
@@ -145,10 +146,10 @@ final class TechDashboardControllerCli {
             List<KnowledgeEntryRecord> results = KnowledgeBaseFacade.getInstanceSingleton().searchEntries(keyword);
             CliFormatter.printKbEntries(results);
         } catch (KnowledgeBaseException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
         } catch (DAOException e) {
             log.error("Errore ricerca knowledge base", e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         }
     }
 
@@ -162,16 +163,16 @@ final class TechDashboardControllerCli {
                     .addEntry(title, content, UserSession.getInstanceSingleton().getEmail());
             System.out.println("Voce aggiunta alla knowledge base.");
         } catch (KnowledgeBaseException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
         } catch (DAOException e) {
             log.error("Errore aggiunta voce knowledge base", e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         }
     }
 
     private TicketRecord findTicket(int id) {
         if (id <= 0) {
-            System.out.println("ID non valido.");
+            System.out.println(CliFormatter.MSG_ID_NON_VALIDO);
             return null;
         }
         try {
@@ -200,7 +201,7 @@ final class TechDashboardControllerCli {
             if (idx >= 0 && idx < values.length) {
                 return values[idx];
             }
-            System.out.println("Scelta non valida.");
+            System.out.println(CliFormatter.MSG_SCELTA_NON_VALIDA);
         }
     }
 }

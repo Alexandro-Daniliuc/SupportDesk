@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
+@SuppressWarnings("java:S106")
 final class UserDashboardControllerCli {
 
     private static final Logger log = LoggerFactory.getLogger(UserDashboardControllerCli.class);
@@ -38,7 +39,7 @@ final class UserDashboardControllerCli {
                 case "4" -> reopenTicket(sc);
                 case "5" -> OpenTicketControllerCli.openTicket(sc);
                 case "6" -> inDashboard = false;
-                default -> System.out.println("Scelta non valida.");
+                default -> System.out.println(CliFormatter.MSG_SCELTA_NON_VALIDA);
             }
         }
         LoginFacade.getInstanceSingleton().logout();
@@ -57,7 +58,7 @@ final class UserDashboardControllerCli {
     }
 
     private void showDetail(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         TicketRecord t = findMyTicket(id);
         if (t == null) {
             return;
@@ -72,7 +73,7 @@ final class UserDashboardControllerCli {
     }
 
     private void addComment(Scanner sc) {
-        int id = CliFormatter.readInt("ID ticket: ", sc);
+        int id = CliFormatter.readInt(CliFormatter.PROMPT_ID_TICKET, sc);
         if (findMyTicket(id) == null) {
             return;
         }
@@ -90,7 +91,7 @@ final class UserDashboardControllerCli {
             log.error("Errore aggiunta commento al ticket {}", id, e);
             System.out.println("Impossibile salvare il commento.");
         } catch (SupportDeskException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
         }
     }
 
@@ -109,15 +110,15 @@ final class UserDashboardControllerCli {
             System.out.println("Ticket riaperto.");
         } catch (DAOException e) {
             log.error("Errore riapertura ticket {}", id, e);
-            System.out.println("Errore interno del sistema.");
+            CliFormatter.printInternalError();
         } catch (SupportDeskException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
         }
     }
 
     private TicketRecord findMyTicket(int id) {
         if (id <= 0) {
-            System.out.println("ID non valido.");
+            System.out.println(CliFormatter.MSG_ID_NON_VALIDO);
             return null;
         }
         try {

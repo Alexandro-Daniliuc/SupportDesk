@@ -5,6 +5,7 @@ import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
 import java.util.Scanner;
 
 
+@SuppressWarnings("java:S106")
 public final class Main {
 
     private Main() {
@@ -23,7 +24,7 @@ public final class Main {
                 case "1" -> handleLogin(sc);
                 case "2" -> RegistrationControllerCli.register(sc);
                 case "3" -> running = false;
-                default -> System.out.println("Scelta non valida.");
+                default -> System.out.println(CliFormatter.MSG_SCELTA_NON_VALIDA);
             }
         }
         System.out.println("Arrivederci.");

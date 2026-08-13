@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
 
+@SuppressWarnings("java:S106")
 final class OpenTicketControllerCli {
 
     private static final Logger log = LoggerFactory.getLogger(OpenTicketControllerCli.class);
@@ -42,7 +43,7 @@ final class OpenTicketControllerCli {
                 return;
             } catch (DAOException e) {
                 log.error("Errore DAO apertura ticket", e);
-                System.out.println("Errore interno del sistema. Riprovare piu' tardi.");
+                System.out.println(CliFormatter.MSG_ERRORE_INTERNO + " Riprovare piu' tardi.");
                 return;
             } catch (SupportDeskException e) {
                 System.out.println("Errore di validazione: " + e.getMessage());
@@ -61,7 +62,7 @@ final class OpenTicketControllerCli {
             if (idx >= 0 && idx < values.length) {
                 return values[idx];
             }
-            System.out.println("Scelta non valida.");
+            System.out.println(CliFormatter.MSG_SCELTA_NON_VALIDA);
         }
     }
 }

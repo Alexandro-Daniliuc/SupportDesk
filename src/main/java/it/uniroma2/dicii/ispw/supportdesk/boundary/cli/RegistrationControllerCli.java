@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
 
+@SuppressWarnings("java:S106")
 final class RegistrationControllerCli {
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationControllerCli.class);
@@ -43,9 +44,9 @@ final class RegistrationControllerCli {
             System.out.println("Registrazione completata. Ora puoi effettuare il login.");
         } catch (DAOException e) {
             log.error("Errore DAO durante la registrazione", e);
-            System.out.println("Errore interno del sistema. Riprovare.");
+            System.out.println(CliFormatter.MSG_ERRORE_INTERNO + " Riprovare.");
         } catch (SupportDeskException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
         }
     }
 }

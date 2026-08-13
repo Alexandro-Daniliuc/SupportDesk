@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
 
+@SuppressWarnings("java:S106")
 final class LoginControllerCli {
 
     private static final Logger log = LoggerFactory.getLogger(LoginControllerCli.class);
@@ -36,10 +37,10 @@ final class LoginControllerCli {
             return record;
         } catch (DAOException e) {
             log.error("Errore DAO durante il login", e);
-            System.out.println("Errore interno del sistema. Riprovare.");
+            System.out.println(CliFormatter.MSG_ERRORE_INTERNO + " Riprovare.");
             return null;
         } catch (SupportDeskException e) {
-            System.out.println("Errore: " + e.getMessage());
+            CliFormatter.printError(e.getMessage());
             return null;
         }
     }

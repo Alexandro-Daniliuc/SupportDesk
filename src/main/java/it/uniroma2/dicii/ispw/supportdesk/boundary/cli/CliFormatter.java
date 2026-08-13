@@ -8,9 +8,24 @@ import java.util.List;
 import java.util.Scanner;
 
 
+@SuppressWarnings("java:S106")
 final class CliFormatter {
 
+    static final String PROMPT_ID_TICKET      = "ID ticket: ";
+    static final String MSG_ID_NON_VALIDO     = "ID non valido.";
+    static final String MSG_SCELTA_NON_VALIDA = "Scelta non valida.";
+    static final String MSG_ERRORE_INTERNO    = "Errore interno del sistema.";
+    static final String MSG_ERRORE_PREFIX     = "Errore: ";
+
     private CliFormatter() {
+    }
+
+    static void printError(String message) {
+        System.out.println(MSG_ERRORE_PREFIX + message);
+    }
+
+    static void printInternalError() {
+        System.out.println(MSG_ERRORE_INTERNO);
     }
 
     static void printTicketTable(List<TicketRecord> tickets) {
