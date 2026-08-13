@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 /**
  * Snapshot immutabile di un Ticket restituito dal SubmitTicketController alla boundary.
- * Non espone mai l'entità model Ticket.
  */
 public record TicketRecord(
         int id,

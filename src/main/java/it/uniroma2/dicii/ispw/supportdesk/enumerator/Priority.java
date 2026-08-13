@@ -1,9 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.enumerator;
 
-/**
- * Priorità di un ticket con SLA massimo incorporato.
- * Le ore SLA sono parte del dominio: appartengono qui, non in un file di config.
- */
+
 public enum Priority {
 
     LOW(72),

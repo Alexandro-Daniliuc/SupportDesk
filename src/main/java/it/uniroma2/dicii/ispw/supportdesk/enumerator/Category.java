@@ -1,7 +1,7 @@
 package it.uniroma2.dicii.ispw.supportdesk.enumerator;
 
 /**
- * Categoria merceologica del ticket di supporto.
+ * Categoria del ticket di supporto.
  */
 public enum Category {
     HARDWARE,

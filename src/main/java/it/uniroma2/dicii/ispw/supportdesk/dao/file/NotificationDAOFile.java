@@ -12,7 +12,7 @@ import java.util.List;
 public class NotificationDAOFile implements NotificationDAO {
 
     private static final String SEP = "|";
-    // format: id|targetRole|ticketId|createdAt|isRead|message  (message last — may contain pipes)
+    // format: id|targetRole|ticketId|createdAt|isRead|message
     private static final int FIELDS = 6;
     private static final String DATA_FILE = FilePathResolver.resolve("notifications.csv");
 

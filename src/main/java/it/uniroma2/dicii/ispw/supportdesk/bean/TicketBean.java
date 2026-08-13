@@ -3,10 +3,7 @@ package it.uniroma2.dicii.ispw.supportdesk.bean;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Category;
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Priority;
 
-/**
- * Bean per il form di apertura ticket. Validazione sintattica via isValid().
- * Nessuna logica di dominio: solo trasporto dati dalla boundary al controller.
- */
+
 public class TicketBean {
 
     private int    id;
@@ -55,7 +52,7 @@ public class TicketBean {
         this.priority = priority;
     }
 
-    /** Validazione sintattica: tutti i campi obbligatori presenti e non vuoti. */
+    /**  tutti i campi obbligatori presenti e non vuoti. */
     public boolean isValid() {
         return title != null && !title.isBlank()
                 && description != null && !description.isBlank()

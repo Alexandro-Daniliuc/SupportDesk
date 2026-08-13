@@ -1,9 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.bean;
 
-/**
- * Bean per il form di aggiunta commento. Validazione sintattica via isValid().
- * Nessuna logica di dominio: solo trasporto dati dalla boundary al controller.
- */
+
 public class CommentBean {
 
     private int ticketId;
@@ -38,7 +35,7 @@ public class CommentBean {
         this.text = text;
     }
 
-    /** Validazione sintattica: ticket valido e testo non vuoto. */
+    /** ticket valido e testo non vuoto. */
     public boolean isValid() {
         return ticketId > 0
                 && authorEmail != null && !authorEmail.isBlank()

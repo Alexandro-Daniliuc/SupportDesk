@@ -2,10 +2,7 @@ package it.uniroma2.dicii.ispw.supportdesk.model;
 
 import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 
-/**
- * Utente del sistema. data holder: nessuna logica di dominio.
- * Il campo passwordHash non contiene mai la password in chiaro.
- */
+
 public class User {
 
     private final int id;

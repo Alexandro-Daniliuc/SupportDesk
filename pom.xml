@@ -117,6 +117,16 @@
                 <version>3.2.5</version>
             </plugin>
 
+            <!-- ── CLI runner (mvn compile exec:java) ────────────── -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <mainClass>it.uniroma2.dicii.ispw.supportdesk.boundary.cli.Main</mainClass>
+                </configuration>
+            </plugin>
+
             <!-- ── SonarCloud (mvn sonar:sonar) ──────────────────── -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>

@@ -4,7 +4,6 @@ import it.uniroma2.dicii.ispw.supportdesk.enumerator.Role;
 
 /**
  * Snapshot immutabile di un User restituito dai controller alla boundary.
- * Non espone mai il campo passwordHash.
  */
 public record UserRecord(
         int id,

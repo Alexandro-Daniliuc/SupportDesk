@@ -45,9 +45,6 @@ public class TicketDAODemo implements TicketDAO {
 
     @Override
     public void insert(Ticket ticket) throws DAOException {
-        if (ticket == null) {
-            throw new DAOException("Ticket non può essere null");
-        }
         STORE.put(nextId.getAndIncrement(), ticket);
     }
 
@@ -76,9 +73,6 @@ public class TicketDAODemo implements TicketDAO {
 
     @Override
     public void update(Ticket ticket) throws DAOException, TicketNotFoundException {
-        if (ticket == null) {
-            throw new DAOException("Ticket non può essere null");
-        }
         if (!STORE.containsKey(ticket.getId())) {
             throw new TicketNotFoundException("Ticket non trovato con id: " + ticket.getId());
         }

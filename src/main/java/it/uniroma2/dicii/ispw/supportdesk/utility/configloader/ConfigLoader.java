@@ -8,11 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Carica il file {@code db.properties} dal classpath.
- * Chiavi supportate: {@code app.mode}, {@code scene.width}, {@code scene.height},
- * {@code db.url}, {@code db.user}, {@code db.credential}.
- */
+
 @SuppressWarnings("java:S6548")
 public final class ConfigLoader {
 

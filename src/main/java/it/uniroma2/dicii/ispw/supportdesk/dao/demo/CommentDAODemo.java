@@ -15,7 +15,6 @@ public class CommentDAODemo implements CommentDAO {
 
     @Override
     public void insert(Comment comment) throws DAOException {
-        if (comment == null) throw new DAOException("Commento non può essere null");
         STORE.put(comment.getId(), comment);
     }
 

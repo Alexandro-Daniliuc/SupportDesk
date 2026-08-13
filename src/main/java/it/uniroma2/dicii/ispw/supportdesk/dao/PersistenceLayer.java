@@ -25,8 +25,6 @@ public abstract class PersistenceLayer {
 
     public abstract List<Ticket> getTicketsByUser(String email) throws DAOException;
 
-    public abstract User login(String email, String hash) throws DAOException;
-
     // -- Ticket ---------------------------------------------------------------
 
     public List<Ticket> findAllTickets() throws DAOException {

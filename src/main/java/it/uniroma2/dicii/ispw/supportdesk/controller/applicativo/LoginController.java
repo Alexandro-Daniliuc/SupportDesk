@@ -2,11 +2,13 @@ package it.uniroma2.dicii.ispw.supportdesk.controller.applicativo;
 
 import it.uniroma2.dicii.ispw.supportdesk.bean.LoginBean;
 import it.uniroma2.dicii.ispw.supportdesk.dao.PersistenceLayerFactory;
+import it.uniroma2.dicii.ispw.supportdesk.enumerator.ApplicationMode;
 import it.uniroma2.dicii.ispw.supportdesk.exception.AuthenticationException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.DAOException;
 import it.uniroma2.dicii.ispw.supportdesk.exception.ValidationException;
 import it.uniroma2.dicii.ispw.supportdesk.model.User;
 import it.uniroma2.dicii.ispw.supportdesk.record.LoginRecord;
+import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.ApplicationModeManager;
 import it.uniroma2.dicii.ispw.supportdesk.utility.singleton.UserSession;
 
 import org.slf4j.Logger;
@@ -24,19 +26,29 @@ public class LoginController {
     private static final String ERR_CREDENZIALI          = "Credenziali non valide";
     private static final String ERR_CREDENZIALI_MISSING  = "Credenziali mancanti o non valide";
 
+
+    private static final String DEMO_PLACEHOLDER_HASH = "DEMO_HASH_PLACEHOLDER";
+
     public LoginRecord authenticate(LoginBean bean)
             throws ValidationException, AuthenticationException, DAOException {
         if (!bean.isValid()) {
             throw new ValidationException(ERR_CREDENZIALI_MISSING);
         }
         String hash = sha256(bean.getPassword());
-        User user = PersistenceLayerFactory.getInstance().login(bean.getEmail(), hash);
-        if (user == null) {
+        User user = PersistenceLayerFactory.getInstance().findUserByEmail(bean.getEmail());
+        if (user == null || !credentialsMatch(user, hash)) {
             throw new AuthenticationException(ERR_CREDENZIALI);
         }
         UserSession.getInstanceSingleton().setUser(user);
         log.info("Autenticazione riuscita per {}", bean.getEmail());
         return toRecord(user);
+    }
+
+
+    private boolean credentialsMatch(User user, String hash) {
+        boolean isSeededDemoAccount = ApplicationModeManager.getInstanceSingleton().getMode() == ApplicationMode.DEMO
+                && DEMO_PLACEHOLDER_HASH.equals(user.getPasswordHash());
+        return isSeededDemoAccount || user.getPasswordHash().equals(hash);
     }
 
     private String sha256(String input) throws AuthenticationException {

@@ -34,17 +34,11 @@ public class UserDAODemo implements UserDAO {
 
     @Override
     public User findByEmail(String email) throws DAOException {
-        if (email == null) {
-            throw new DAOException("Email non può essere null");
-        }
         return STORE.get(email);
     }
 
     @Override
     public List<User> findByRole(Role role) throws DAOException {
-        if (role == null) {
-            throw new DAOException("Role non può essere null");
-        }
         List<User> result = new ArrayList<>();
         for (User u : STORE.values()) {
             if (u.getRole() == role) {
@@ -56,12 +50,6 @@ public class UserDAODemo implements UserDAO {
 
     @Override
     public void insert(User user) throws DAOException {
-        if (user == null) {
-            throw new DAOException("User non può essere null");
-        }
-        if (STORE.containsKey(user.getEmail())) {
-            throw new DAOException("Utente già esistente: " + user.getEmail());
-        }
         STORE.put(user.getEmail(), user);
     }
 }

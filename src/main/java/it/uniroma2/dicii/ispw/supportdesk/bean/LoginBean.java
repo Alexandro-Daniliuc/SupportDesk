@@ -1,9 +1,6 @@
 package it.uniroma2.dicii.ispw.supportdesk.bean;
 
-/**
- * Bean per il form di login. Validazione sintattica via isValid().
- * Nessuna logica di dominio: solo trasporto dati dalla boundary al controller.
- */
+
 public class LoginBean {
 
     private String email;
@@ -31,7 +28,7 @@ public class LoginBean {
 
     private static final String EMAIL_REGEX = "^[\\w.+\\-]+@[\\w.\\-]+\\.[a-zA-Z]{2,}$";
 
-    /** Validazione sintattica: formato email corretto e password non vuota. */
+    /**  formato email corretto e password non vuota. */
     public boolean isValid() {
         return email != null && email.matches(EMAIL_REGEX)
                 && password != null && !password.isBlank();
